@@ -1,4 +1,4 @@
-const router = requier('express').Router()
+const router = require('express').Router()
 
 const { TrackingHistory } = require('../models')
 
