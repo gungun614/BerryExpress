@@ -1,3 +1,4 @@
+const ItemState = require('./itemState')
 const Position = require('./position')
 const Staff = require('./staff')
 const Item = require('./item')
@@ -7,5 +8,6 @@ module.exports = {
   Position,
   Staff,
   TrackingHistory,
-  Item
+  Item,
+  ItemState
 }
