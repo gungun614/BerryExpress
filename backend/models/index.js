@@ -1,5 +1,5 @@
 const Position = require('./position')
-const Staff = require('./position')
+const Staff = require('./staff')
 const Item = require('./item')
 const TrackingHistory = require('./trackingHistory')
 
