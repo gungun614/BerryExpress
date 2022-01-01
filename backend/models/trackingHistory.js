@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 
-const sequelize = require('../utils/db')
+const { sequelize } = require('../utils/db')
 
 class TrackingHistory extends Model {}
 TrackingHistory.init({
@@ -24,7 +24,7 @@ TrackingHistory.init({
   sequelize,
   underscored: true,
   timestamps: false,
-  modelName: 'tracking_history'
+  modelName: 'trackingHistory'
 })
 
 TrackingHistory.sync()
