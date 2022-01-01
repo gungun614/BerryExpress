@@ -11,4 +11,6 @@ app.use(express.json())
 
 app.use('/api/positions', controller.positions)
 
+app.use('/api/items', controller.items)
+
 module.exports = app
