@@ -1,16 +1,9 @@
 const positions = require('./positions')
-<<<<<<< HEAD
+const items = require('./items')
 const trackingHistories = require('./trackingHistories')
 
 module.exports = {
   positions,
+  items,
   trackingHistories
-=======
-const items = require('./items')
-
-
-module.exports = {
-  positions,
-  items
->>>>>>> main
 }
