@@ -46,9 +46,12 @@ jobs:
       - name: Install all dependencies
         run: npm ci
       - name: Create .env
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PORT: ${{ secrets.PORT }}
         run: |
           touch .env
-          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
-          echo PORT=${{ secrets.PORT }} >> .env
+          echo DATABASE_URL=$DATABASE_URL >> .env
+          echo PORT=$PORT >> .env
       - name: Run project
         run: npm start
