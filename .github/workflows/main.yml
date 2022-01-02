@@ -45,9 +45,10 @@ jobs:
           node-version: 16
       - name: Install all dependencies
         run: npm ci
+      - name: Create .env
+        run: |
+          touch .env
+          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
+          echo PORT=${{ secrets.PORT }} >> .env
       - name: Run project
         run: npm start
-        env:
-          DATABASE_URL=${{ secrets.DATABASE_URL }}
-          PORT=${{ secrets.PORT }}
-
