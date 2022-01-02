@@ -54,4 +54,4 @@ jobs:
           echo DATABASE_URL=$DATABASE_URL >> .env
           echo PORT=$PORT >> .env
       - name: Run project
-        run: npm start
+        run: npm test -- tests/ci.test.js
