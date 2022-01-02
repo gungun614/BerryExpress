@@ -35,6 +35,7 @@ jobs:
       # Set up default working directory for run command
       run:
         working-directory: ./backend
+        
     steps:
       # Bring the source code into the current directory
       - uses: actions/checkout@v2
@@ -46,4 +47,7 @@ jobs:
         run: npm ci
       - name: Run project
         run: npm start
+        env:
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          PORT=${{ secrets.PORT }}
 
