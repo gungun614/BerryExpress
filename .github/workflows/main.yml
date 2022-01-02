@@ -1,0 +1,49 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test_frontend:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    defaults:
+      # Set up default working directory for run command
+      run:
+        working-directory: ./frontend
+    steps:
+      # Bring the source code into the current directory
+      - uses: actions/checkout@v2
+      # Set up node.js
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Install all dependencies
+        run: npm ci
+      - name: Build project
+        run: npm run build
+  test_backend:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    defaults:
+      # Set up default working directory for run command
+      run:
+        working-directory: ./backend
+    steps:
+      # Bring the source code into the current directory
+      - uses: actions/checkout@v2
+      # Set up node.js
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Install all dependencies
+        run: npm ci
+      - name: Build project
+        run: npm run build
+
