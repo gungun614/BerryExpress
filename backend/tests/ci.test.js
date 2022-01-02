@@ -12,6 +12,4 @@ test('Server is run correctly', async () => {
     .expect('Content-Type', /application\/json/)
 }, 100000)
 
-afterAll(() => {
-  sequelize.close()
-})
+afterAll(() => sequelize.close())
