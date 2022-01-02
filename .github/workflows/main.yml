@@ -44,6 +44,6 @@ jobs:
           node-version: 16
       - name: Install all dependencies
         run: npm ci
-      - name: Build project
-        run: npm run build
+      - name: Run project
+        run: npm start
 
