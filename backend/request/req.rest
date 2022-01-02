@@ -1,0 +1,27 @@
+GET http://localhost:3001/api/items/4
+
+
+
+# POST http://localhost:3001/api/items/ HTTP/1.1
+# content-type: application/json
+
+# {
+#     "tracking_no": "ddd",       
+#     "sender_name": "send name",      
+#     "sender_tel": "444444444",     
+#     "sender_idcard": "123445678875",    
+#     "sender_address": "address test sender",   
+#     "receiver_name": "receive name",  
+#     "receiver_tel": "444444444", 
+#     "receiver_address": "address test receive"
+# }
+
+
+
+# PUT http://localhost:3001/api/items/4 HTTP/1.1
+# content-type: application/json
+
+# {
+#   "sender_tel": "44444455",
+#   "receiver_tel": "44444455"
+# }
