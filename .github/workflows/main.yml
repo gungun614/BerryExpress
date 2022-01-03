@@ -28,6 +28,8 @@ jobs:
         run: npm ci
       - name: Build project
         run: npm run build
+        env:
+          CI: false
   test_backend:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -55,3 +57,5 @@ jobs:
           echo PORT=$PORT >> .env
       - name: Run project
         run: npm test -- tests/ci.test.js
+        env:
+          CI: false
