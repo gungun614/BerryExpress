@@ -1,8 +1,10 @@
 import React from "react"
 
 const Input = (props) => {
-    const { value, onChange, type } = props
-    return <input type={type} value={value} onChange={onChange} />
+
+    const { value, onChange, type, className } = props
+    
+    return <input className={className} type={type} value={value} onChange={onChange} />
 }
 
 export default Input
