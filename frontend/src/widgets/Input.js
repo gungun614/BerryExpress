@@ -1,6 +1,6 @@
 import React from "react"
 
-const Select = (props) => {
+const Input = (props) => {
 
     const { className, type, name, value, onChange } = props
     
