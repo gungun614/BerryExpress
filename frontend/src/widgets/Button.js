@@ -9,7 +9,11 @@ const Button = (props) => {
         onClick()
     }
 
-    return <button type={type} onClick={handleClick}>{text}</button>
+    const style = {
+        cursor: 'pointer'
+    }
+
+    return <button type={type} style={style} onClick={handleClick}>{text}</button>
 }
 
 export default Button
