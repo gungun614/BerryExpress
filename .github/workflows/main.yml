@@ -28,6 +28,8 @@ jobs:
         run: npm ci
       - name: Build project
         run: npm run build
+        env:
+          CI: false
   test_backend:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -35,6 +37,7 @@ jobs:
       # Set up default working directory for run command
       run:
         working-directory: ./backend
+        
     steps:
       # Bring the source code into the current directory
       - uses: actions/checkout@v2
@@ -44,6 +47,15 @@ jobs:
           node-version: 16
       - name: Install all dependencies
         run: npm ci
-      - name: Build project
-        run: npm run build
-
+      - name: Create .env
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PORT: ${{ secrets.PORT }}
+        run: |
+          touch .env
+          echo DATABASE_URL=$DATABASE_URL >> .env
+          echo PORT=$PORT >> .env
+      - name: Run project
+        run: npm test -- tests/ci.test.js
+        env:
+          CI: false
