@@ -2,9 +2,10 @@ import React from "react"
 
 const Input = (props) => {
 
-    const { className, type, name, value, onChange } = props
+    const { disabled, className, type, name, value, onChange } = props
     
-    return <select
+    return <input
+        disabled={disabled}
         className={className} 
         type={type} 
         name={name} 
