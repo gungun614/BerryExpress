@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom'
 import './App.css';
 import Home from "./pages/Home"
-import LoginPage from './pages/Login';
+import LoginPage from './pages/LoginPage';
 
 const App = () => {
 
