@@ -2,7 +2,7 @@ import React from "react"
 
 const Input = (props) => {
 
-    const { disabled, className, type, name, value, onChange } = props
+    const { disabled, className, type, name, value, onChange, onKeyPress } = props
     
     return <input
         disabled={disabled}
@@ -11,6 +11,7 @@ const Input = (props) => {
         name={name} 
         value={value} 
         onChange={onChange} 
+        onKeyPress={onKeyPress}
     />
 }
 
