@@ -1,12 +1,13 @@
 const express = require('express')
-
 const app = express()
 
+const cors = require('cors')
 const controller = require('./controllers')
-
 const { connectToDatabase } = require('./utils/db')
 
 connectToDatabase()
+
+app.use(cors())
 app.use(express.json())
 
 app.use('/api/positions', controller.positions)
