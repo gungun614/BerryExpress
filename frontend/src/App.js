@@ -6,6 +6,8 @@ import {
 import './App.css';
 import Home from "./pages/Home"
 import LoginPage from './pages/LoginPage';
+import Admin from './pages/Admin';
+import Staff from './pages/Staff';
 
 const App = () => {
 
@@ -18,6 +20,12 @@ const App = () => {
         </Route>
         <Route path='/login'>
           <LoginPage />
+        </Route>
+        <Route path="/admin">
+          <Admin />
+        </Route>
+        <Route path="/staff">
+          <Staff />
         </Route>
       </Switch>
     </Router>
