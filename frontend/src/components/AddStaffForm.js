@@ -18,6 +18,17 @@ const AddStaffForm = () => {
     salary: ""
   })
 
+  const inputConstraints = {
+    tel: {
+      regex: /[0-9]/,
+      length: 10
+    },
+    citizenId: {
+      regex: /[0-9]/,
+      length: 13
+    },
+  }
+
   const formStates = ["Started", "Added", "Committed"]
   const [formState, setFormState] = useState(formStates[0])
   let isDisabledForm = formState === formStates[0]? false: true
@@ -58,34 +69,102 @@ const AddStaffForm = () => {
     })
   }
 
+  const handleKeyPress = (event) => {
+    const constraint = inputConstraints[event.target.name]
+    const value = event.target.value
+    if (!constraint.regex.test(event.key) || value.length >= constraint.length) {
+      event.preventDefault()
+    }
+  }
+
   return (
     <div>
       <form>
         <Label text="ชื่อ" />
-        <Input disabled={isDisabledForm} type="text" value={staff.firstName} name="firstName" onChange={handleChange} />
+        <Input 
+          disabled={isDisabledForm} 
+          type="text" 
+          value={staff.firstName} 
+          name="firstName" 
+          onChange={handleChange} 
+        />
         <Label text="นามสกุล" />
-        <Input disabled={isDisabledForm} type="text" value={staff.lastName} name="lastName" onChange={handleChange} />
+        <Input 
+          disabled={isDisabledForm} 
+          type="text" 
+          value={staff.lastName} 
+          name="lastName" 
+          onChange={handleChange} 
+        />
         <br/>
         <Label text="เลขบัตรประชาชน" />
-        <Input disabled={isDisabledForm} type="number" value={staff.citizenId} name="citizenId" onChange={handleChange} />
+        <Input 
+          disabled={isDisabledForm} 
+          type="text" 
+          value={staff.citizenId} 
+          name="citizenId" 
+          onChange={handleChange} 
+          onKeyPress={handleKeyPress} 
+        />
         <br/>
         <Label text="วันเกิด" />
-        <Input disabled={isDisabledForm} type="date" value={staff.birthDate} name="birthDate" onChange={handleChange} />
+        <Input 
+          disabled={isDisabledForm} 
+          type="date" 
+          value={staff.birthDate} 
+          name="birthDate" 
+          onChange={handleChange} 
+        />
         <Label text="เบอร์โทร" />
-        <Input disabled={isDisabledForm} type="number" value={staff.tel} name="tel" onChange={handleChange} />
+        <Input 
+          disabled={isDisabledForm} 
+          type="text" value={staff.tel} 
+          name="tel" 
+          onChange={handleChange} 
+          onKeyPress={handleKeyPress} 
+        />
         <Label text="E-mail" />
-        <Input disabled={isDisabledForm} type="email" value={staff.email} name="email" onChange={handleChange} />
+        <Input 
+          disabled={isDisabledForm} 
+          type="email" 
+          value={staff.email} 
+          name="email" 
+          onChange={handleChange} 
+        />
         <br/>
         <Label text="ที่อยู่" />
-        <Input disabled={isDisabledForm} type="text" value={staff.address} name="address" onChange={handleChange} />
+        <Input 
+          disabled={isDisabledForm} 
+          type="text" 
+          value={staff.address} 
+          name="address" 
+          onChange={handleChange} 
+        />
         <br/>
         <Label text="สาขา" />
-        <Select disabled={isDisabledForm} value={staff.branch} name="branch" options={getAllBranches()} onChange={handleChange} />
+        <Select 
+          disabled={isDisabledForm} 
+          value={staff.branch} 
+          name="branch" 
+          options={getAllBranches()} 
+          onChange={handleChange} 
+        />
         <Label text="ตำแหน่งงาน" />
-        <Select disabled={isDisabledForm} value={staff.position} name="position" options={getAllPositions()} onChange={handleChange} />
+        <Select 
+          disabled={isDisabledForm} 
+          value={staff.position} 
+          name="position" 
+          options={getAllPositions()} 
+          onChange={handleChange} 
+        />
         <Label text="เงินเดือน" />
-        <Input disabled={isDisabledForm} type="number" value={staff.salary} name="salary" onChange={handleChange} />
-
+        <Input 
+          disabled={isDisabledForm} 
+          type="number" 
+          value={staff.salary} 
+          name="salary" 
+          onChange={handleChange} 
+        />
         <br/>
         { formState !== formStates[2]? <Button type={"submit"} text={"บันทึก"} onClick={handleSubmit} />: null }
         { formState === formStates[1]? <Button type={"button"} text={"แก้ไข"} onClick={handleEdit} />: null }
