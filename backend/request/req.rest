@@ -1,6 +1,35 @@
 GET http://localhost:3001/api/items/4
 
+###
+POST http://localhost:3001/api/staffs
+Content-Type: application/json
 
+{
+    "username": "admintest",
+    "password": "123456",
+    "positionId": 1,
+    "salary": 55555.0,
+    "shopId": 1,
+    "dateStart": "1980-01-01",
+    "firstname": "Test",
+    "lastname": "Tester",
+    "nationId": "1234567890123",
+    "dateBirth": "1980-01-01",
+    "address": "unknownnnn!",
+    "tel": "1234567890",
+    "email": "test@tester.com"
+}
+
+###
+POST http://localhost:3001/api/branches
+Content-Type: application/json
+
+{
+    "name": "Test branch",
+    "address": "Test address of this branch",
+    "tel": "1234567890",
+    "dateStart": "1980-01-01"
+}
 
 # POST http://localhost:3001/api/items/ HTTP/1.1
 # content-type: application/json
