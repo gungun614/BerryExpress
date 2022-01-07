@@ -9,10 +9,10 @@ const SelectAddress = (props) => {
 
   const filteredAddress = options
     .filter(address =>  
-      value.zipcode === `${address.zipcode}` &&
-      !value.province? true: value.province === `${address.province}` &&
-      !value.district? true: value.district === `${address.district}` &&
-      !value.subdistrict? true: value.subdistrict === `${address.subdistrict}` 
+      value.zipcode === `${address.zipcode}` //&&
+      // !value.province? true: value.province === `${address.province}` &&
+      // !value.district? true: value.district === `${address.district}` &&
+      // !value.subdistrict? true: value.subdistrict === `${address.subdistrict}` 
     )
 
   const provinces = filteredAddress
@@ -29,6 +29,9 @@ const SelectAddress = (props) => {
     })
 
   const districts = filteredAddress
+    .filter(address => 
+      value.province === `${address.province}`
+    )
     .map(address => {
       return {
         value: address.district,
@@ -42,6 +45,9 @@ const SelectAddress = (props) => {
     })
 
   const subdistricts = filteredAddress
+    .filter(address => 
+          value.district === `${address.district}`
+        )
     .map(address => {
       return {
         value: address.subdistrict,
