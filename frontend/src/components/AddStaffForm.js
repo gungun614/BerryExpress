@@ -1,10 +1,13 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Label from "../widgets/Label"
 import Button from "../widgets/Button"
 import Input from "../widgets/Input"
 import Select from "../widgets/Select"
+import SelectAddress from "./SelectAddress"
 
 const AddStaffForm = () => {
+  const [thaiAddress, setThaiAddress] = useState([])
+
   const [staff, setStaff] = useState({
     firstName: "",
     lastName: "",
@@ -13,6 +16,12 @@ const AddStaffForm = () => {
     tel: "",
     email: "",
     address: "",
+    mainAddress: {
+      zipcode: "",
+      subdistrict: "",
+      district: "",
+      province: ""
+    },
     branch: "",
     position: "",
     salary: ""
@@ -27,11 +36,20 @@ const AddStaffForm = () => {
       regex: /[0-9]/,
       length: 13
     },
+    zipcode: {
+      regex: /[0-9]/,
+      length: 5
+    }
   }
 
   const formStates = ["Started", "Added", "Committed"]
   const [formState, setFormState] = useState(formStates[0])
-  let isDisabledForm = formState === formStates[0]? false: true
+  const isDisabledForm = formState === formStates[0]? false: true
+
+  useEffect(() => {
+    const jsonAddress = require('../json/thailand_address.json')
+    setThaiAddress(jsonAddress)
+  }, [])
 
   const getAllBranches = () => {
     return [
@@ -62,16 +80,32 @@ const AddStaffForm = () => {
   }
 
   const handleChange = (event) => {
-    const newValue = event.target.value
-    setStaff({
-      ...staff,
-      [event.target.name]: newValue
-    })
+    const [parent, child] = event.target.name.split(".")
+    if (child) {
+      setStaff({
+        ...staff,
+        [parent]: {
+          ...staff[parent],
+          [child]: event.target.value
+        }
+      })
+    } else {
+      setStaff({
+        ...staff,
+        [parent]: event.target.value
+      })
+    }
   }
 
   const handleKeyPress = (event) => {
-    const constraint = inputConstraints[event.target.name]
+    const [, child] = event.target.name.split(".")
     const value = event.target.value
+    let constraint = ""
+    if (child) {
+      constraint = inputConstraints[child]
+    } else {
+      constraint = inputConstraints[event.target.name]
+    }
     if (!constraint.regex.test(event.key) || value.length >= constraint.length) {
       event.preventDefault()
     }
@@ -139,6 +173,14 @@ const AddStaffForm = () => {
           value={staff.address} 
           name="address" 
           onChange={handleChange} 
+        />
+        <SelectAddress 
+          disabled={isDisabledForm} 
+          value={staff.mainAddress} 
+          name="mainAddress" 
+          options={thaiAddress} 
+          onChange={handleChange}
+          onKeyPress={handleKeyPress}
         />
         <br/>
         <Label text="สาขา" />
