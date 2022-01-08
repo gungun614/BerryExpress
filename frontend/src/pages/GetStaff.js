@@ -8,3 +8,5 @@ const GetStaff = () => {
     </div>
   )
 }
+
+export default GetStaff
