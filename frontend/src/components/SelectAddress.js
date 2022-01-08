@@ -9,10 +9,7 @@ const SelectAddress = (props) => {
 
   const filteredAddress = options
     .filter(address =>  
-      value.zipcode === `${address.zipcode}` //&&
-      // !value.province? true: value.province === `${address.province}` &&
-      // !value.district? true: value.district === `${address.district}` &&
-      // !value.subdistrict? true: value.subdistrict === `${address.subdistrict}` 
+      value.zipcode === `${address.zipcode}` 
     )
 
   const provinces = filteredAddress
@@ -85,7 +82,6 @@ const SelectAddress = (props) => {
         name={`${name}.district`}
         options={districts}
         onChange={onChange}
-     
       />
       <Label text="ตำบล/แขวง" />
       <Select        
