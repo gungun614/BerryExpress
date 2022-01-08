@@ -18,3 +18,5 @@ Position.init({
 Position.sync()
 
 module.exports = Position
+
+
