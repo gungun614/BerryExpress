@@ -33,8 +33,9 @@ router.get('/:id', staffFinder, async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const staff = await Staff.create(req.body)
-    res.json(staff)
+
     console.log(staff)
+    res.json(staff)
   } catch (error) {
     return res.status(400).json({ error })
   }

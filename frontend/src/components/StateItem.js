@@ -2,8 +2,6 @@ import React from 'react'
 import Icon from '../widgets/Icon'
 import Label from '../widgets/Label'
 
-
-
 const StateItem = (props) => {
 
     const { state, branch, date, time } = props
