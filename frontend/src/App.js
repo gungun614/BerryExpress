@@ -11,6 +11,7 @@ import Admin from './pages/Admin';
 import Staff from './pages/Staff';
 import AddBranch from './pages/AddBranch';
 import AddParcel from './pages/AddParcel';
+import AddStaff from './pages/AddStaff';
 
 const App = () => {
 
@@ -34,6 +35,9 @@ const App = () => {
         </Route>
         <Route path="/admin/addBranch">
           <AddBranch />
+        </Route>
+        <Route path="/admin/addStaff">
+          <AddStaff />
         </Route>
         <Route path="/staff/addParcel">
           <AddParcel />
