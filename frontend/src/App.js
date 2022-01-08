@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import Admin from './pages/Admin';
 import Staff from './pages/Staff';
 import AddBranch from './pages/AddBranch';
+import AddParcel from './pages/AddParcel';
 
 const App = () => {
 
@@ -33,6 +34,9 @@ const App = () => {
         </Route>
         <Route path="/admin/addBranch">
           <AddBranch />
+        </Route>
+        <Route path="/staff/addParcel">
+          <AddParcel />
         </Route>
       </Switch>
     </Router>
