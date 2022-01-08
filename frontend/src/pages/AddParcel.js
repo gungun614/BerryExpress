@@ -3,7 +3,7 @@ import Label from "../widgets/Label";
 import Input from "../widgets/Input";
 import Button from "../widgets/Button";
 
-const Addparcel = () => {
+const AddParcel = () => {
   // mit
   const [userInput, setUserInput] = useState({
     senderName: '',
@@ -61,4 +61,4 @@ const Addparcel = () => {
   )
 }
 
-export default Addparcel
+export default AddParcel

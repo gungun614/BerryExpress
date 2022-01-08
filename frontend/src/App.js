@@ -28,7 +28,7 @@ const App = () => {
         <Route exact path="/admin">
           <Admin />
         </Route>
-        <Route path="/staff">
+        <Route exact path="/staff">
           <Staff />
         </Route>
         <Route path="/admin/addBranch">
