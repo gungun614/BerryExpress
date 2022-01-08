@@ -1,6 +1,6 @@
 import React from "react";
 
-const Addparcel = () => {
+const AddParcel = () => {
   // mit
 
   
@@ -31,4 +31,4 @@ const Addparcel = () => {
   )
 }
 
-export default Addparcel
+export default AddParcel

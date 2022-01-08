@@ -21,10 +21,10 @@ const App = () => {
         <Route path='/login'>
           <LoginPage />
         </Route>
-        <Route path="/admin">
+        <Route exact path="/admin">
           <Admin />
         </Route>
-        <Route path="/staff">
+        <Route exact path="/staff">
           <Staff />
         </Route>
       </Switch>
