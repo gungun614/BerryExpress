@@ -91,8 +91,8 @@ const AddParcel = () => {
         {/* nan */}
         {/* <Label text = "ข้อมูลผู้รับ" />
         <br/>
-        <Label text="ชื่อ" />
-        <Input type="text" value={consigneeName} onChange = {handleChangeConsigneeName} />  
+        <Label text ="ชื่อ" />
+        <Input type ="text" value={consigneeName} onChange = {handleChangeConsigneeName} />  
         <br/>
         <Label text = "นามสกุล" />
         <Input type = "text" value = {consigneeLastName} onChange = {handleChangeConsigneeLastName} /> 
@@ -117,6 +117,22 @@ const AddParcel = () => {
       </div>
       <div>
         {/* pppp */}
+        <Label text = "ใบเสร็จ" />
+        <br/>
+        <Label text = "ที่อยู่สาขาออกใบเสร็จ" />
+        <br/>
+        <Label text = "พนักงาน : " />
+        <Label text = "วันที่ : " />
+        <br/>
+        <Label text = "Tracking Number : " />
+        <Label text = "Cost" />
+        <br/>
+        <Label text = "ผู้รับ : " />
+        <br/>
+        <Label text = "Sub Total : " />
+        <br/>
+        <Button text ="พิมพ์"/>
+        <Button text ="เสร็จสิ้น"/>
       </div>
     </div>
   )
