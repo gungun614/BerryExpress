@@ -49,7 +49,6 @@ const LoginPage = () => {
   }
 
   return (
-    <Router>
       <form onSubmit={handleLogin}>
         <Label text="Berry Express" />
         <br />
@@ -63,9 +62,6 @@ const LoginPage = () => {
         <br />
         <button type="submit">Login</button>
       </form>
-
-    </Router>
-    
   )
 }
 
