@@ -25,6 +25,8 @@ const SelectAddress = (props) => {
       ))
     })
 
+  provinces.splice(0, 0, {value: "", label: "-"})
+
   const districts = filteredAddress
     .filter(address => 
       value.province === `${address.province}`
@@ -40,6 +42,7 @@ const SelectAddress = (props) => {
         item.value === address.value && item.label === address.label
       ))
     })
+  districts.splice(0, 0, {value: "", label: "-"})
 
   const subdistricts = filteredAddress
     .filter(address => 
@@ -56,6 +59,7 @@ const SelectAddress = (props) => {
         item.value === address.value && item.label === address.label
       ))
     })   
+  subdistricts.splice(0, 0, {value: "", label: "-"})
 
   return (
     <div>

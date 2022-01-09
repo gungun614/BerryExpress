@@ -8,19 +8,26 @@ import './App.css';
 import Home from "./pages/Home"
 import LoginPage from './pages/LoginPage';
 import Admin from './pages/Admin';
-import Staff from './pages/Staff';
 import AddBranch from './pages/AddBranch';
-import AddParcel from './pages/AddParcel';
 import AddStaff from './pages/AddStaff';
+import AddPosition from './pages/AddPosition';
+import AddTrackingState from './pages/AddTrackingState';
+import GetBranch  from './pages/GetBranch';
+import GetStaff from './pages/GetStaff';
+import GetPosition  from './pages/GetPosition';
+import GetTrackingState  from './pages/GetTrackingState';
+
+import Staff from './pages/Staff';
+import AddParcel from './pages/AddParcel';
 
 const App = () => {
 
   return (
     <Router>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"></link>
+      <GetPosition />
 
-
-      <Switch>
+      {/* <Switch>
         <Route exact path='/' >
           <Home />
         </Route>
@@ -39,10 +46,19 @@ const App = () => {
         <Route path="/admin/addStaff">
           <AddStaff />
         </Route>
+        <Route path="/admin/addPosition">
+          <AddPosition />
+        </Route>
+        <Route path="/admin/addTrackingState">
+          <AddTrackingState />
+        </Route>
+        <Route path="/admin/getStaff">
+          <GetStaff />
+        </Route>
         <Route path="/staff/addParcel">
           <AddParcel />
         </Route>
-      </Switch>
+      </Switch> */}
     </Router>
 
   );
