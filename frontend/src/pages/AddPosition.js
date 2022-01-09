@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import NavSideBar from "../components/NavSideBar"
 import Label from "../widgets/Label";
 import Input from "../widgets/Input";
+import HeaderBar from "../components/HeaderBar";
 
 const AddPosition = () => {
 
@@ -23,6 +24,7 @@ const AddPosition = () => {
   
   return (
     <div>
+      <HeaderBar />
       <NavSideBar />
       {`Add Position`}
       <form onSubmit={handleSubmit}>

@@ -1,14 +1,11 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
-  Switch, Route, Link, useRouteMatch, useLocation, useHistory
+  Link, useRouteMatch 
 } from 'react-router-dom'
 import './css/NavSideBar.css'
-import AddStaff from "../pages/AddStaff";
 
 const NavSideBar = () => {
 
-  const history = useHistory()
   const path = useRouteMatch().path.substring(1)
   const [mainPath, subPath] = path.split('/')
 
@@ -25,7 +22,7 @@ const NavSideBar = () => {
     ],
     staff: [
       { path: "addParcel", label: "เพิ่มพัสดุ" },
-      { path: "updateParcel", label: "อัปเดตสถานะพัสดุ" },
+      { path: "updateParcelStatus", label: "อัปเดตสถานะพัสดุ" },
     ]
   }
 

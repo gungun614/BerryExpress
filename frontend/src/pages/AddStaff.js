@@ -5,6 +5,7 @@ import Button from "../widgets/Button"
 import Input from "../widgets/Input"
 import Select from "../widgets/Select"
 import SelectAddress from "../components/SelectAddress"
+import HeaderBar from "../components/HeaderBar";
 
 
 const AddStaff = () => {
@@ -120,6 +121,7 @@ const AddStaff = () => {
 
   return (
     <div>
+      <HeaderBar />
       <NavSideBar />
       <form>
         <Label text="ชื่อ" />

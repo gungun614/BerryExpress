@@ -4,6 +4,8 @@ import Select from "../widgets/Select";
 import Input from "../widgets/Input";
 import Button from "../widgets/Button";
 import GetTableBranch from "../components/GetTableBranch"
+import HeaderBar from "../components/HeaderBar";
+import NavSideBar from "../components/NavSideBar";
 const GetBranch = () => {
 
 
@@ -36,12 +38,15 @@ const GetBranch = () => {
   }
   console.log(searchBox)
   const handleClickSearch = () =>{
-    console.log('searchBox = '+searchBox + '  ' + 'searchBy = '+searchBy )
+    console.log(`searchBox=${searchBox}`)
+    console.log(`searchBy=${searchBy}`)
   }
 
 
   return (
     <div>
+      <HeaderBar />
+      <NavSideBar />
     <Select 
         value={searchBy}
         name={"selectSearch"}

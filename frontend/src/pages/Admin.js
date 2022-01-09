@@ -1,11 +1,12 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
 
 const Admin = () => {
 
   return (
     <div>
+      <HeaderBar />
       <NavSideBar />
     </div>
   )

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import NavSideBar from "../components/NavSideBar"
 import Label from "../widgets/Label";
 import Input from "../widgets/Input";
+import HeaderBar from "../components/HeaderBar";
 
 const AddTrackingState = () => {
 
@@ -23,6 +24,7 @@ const AddTrackingState = () => {
   
   return (
     <div>
+      <HeaderBar />
       <NavSideBar />
       {`Add tracking State`}
       <form onSubmit={handleSubmit}>
