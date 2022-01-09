@@ -11,15 +11,19 @@ import Admin from './pages/Admin';
 import Staff from './pages/Staff';
 import AddBranch from './pages/AddBranch';
 import AddParcel from './pages/AddParcel';
+import GetBranch  from './pages/GetBranch';
+import GetPosition  from './pages/GetPosition';
+import GetTrackingState  from './pages/GetTrackingState';
+
 
 const App = () => {
 
   return (
     <Router>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"></link>
+      <GetPosition />
 
-
-      <Switch>
+      {/* <Switch>
         <Route exact path='/' >
           <Home />
         </Route>
@@ -38,7 +42,7 @@ const App = () => {
         <Route path="/staff/addParcel">
           <AddParcel />
         </Route>
-      </Switch>
+      </Switch> */}
     </Router>
 
   );
