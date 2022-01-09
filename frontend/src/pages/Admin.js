@@ -1,9 +1,12 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
+import NavSideBar from "../components/NavSideBar";
 
 const Admin = () => {
+
   return (
     <div>
-      {"Hey Admin"}
+      <NavSideBar />
     </div>
   )
 }
