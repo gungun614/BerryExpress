@@ -1,9 +1,12 @@
 import React from "react";
+import HeaderBar from "../components/HeaderBar";
+import NavSideBar from "../components/NavSideBar";
 
 const Staff = () => {
   return (
     <div>
-      {"Hey Staff"}
+      <HeaderBar />
+      <NavSideBar />
     </div>
   )
 }

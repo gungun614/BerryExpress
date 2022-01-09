@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Switch, Route, Link
+  Switch, Route 
 } from 'react-router-dom'
 import './App.css';
 
@@ -19,15 +19,14 @@ import GetTrackingState  from './pages/GetTrackingState';
 
 import Staff from './pages/Staff';
 import AddParcel from './pages/AddParcel';
+import UpdateParcelStatus from './pages/UpdateParcelStatus'
 
 const App = () => {
 
   return (
     <Router>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"></link>
-      <GetPosition />
-
-      {/* <Switch>
+      <Switch>
         <Route exact path='/' >
           <Home />
         </Route>
@@ -36,9 +35,6 @@ const App = () => {
         </Route>
         <Route exact path="/admin">
           <Admin />
-        </Route>
-        <Route exact path="/staff">
-          <Staff />
         </Route>
         <Route path="/admin/addBranch">
           <AddBranch />
@@ -52,13 +48,28 @@ const App = () => {
         <Route path="/admin/addTrackingState">
           <AddTrackingState />
         </Route>
+        <Route path="/admin/getBranch">
+          <GetBranch />
+        </Route>
         <Route path="/admin/getStaff">
           <GetStaff />
+        </Route>
+        <Route path="/admin/getPosition">
+          <GetPosition />
+        </Route>
+        <Route path="/admin/getTrackingState">
+          <GetTrackingState />
+        </Route>
+        <Route exact path="/staff">
+          <Staff />
         </Route>
         <Route path="/staff/addParcel">
           <AddParcel />
         </Route>
-      </Switch> */}
+        <Route path="/staff/updateParcelStatus">
+          <UpdateParcelStatus />
+        </Route>
+      </Switch>
     </Router>
 
   );

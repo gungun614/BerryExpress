@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import Label from "../widgets/Label"
 import Input from "../widgets/Input"
 import Button from "../widgets/Button"
+import NavSideBar from "../components/NavSideBar"
+import HeaderBar from "../components/HeaderBar"
 
 const AddBranch = () => {
   
@@ -26,6 +28,8 @@ const AddBranch = () => {
 
   return (
     <div>
+      <HeaderBar />
+      <NavSideBar />
 
   <Label text="เพิ่มข้อมูลสาขา" isHide = {isTitle} />
   <Label text="ยืนยันการบันทึกข้อมูล" isHide = {!isTitle} />

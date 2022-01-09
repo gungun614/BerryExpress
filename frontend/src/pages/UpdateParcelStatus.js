@@ -3,6 +3,8 @@ import Label from "../widgets/Label";
 import Input from "../widgets/Input";
 import Button from "../widgets/Button";
 import StateItem from "../components/StateItem"
+import HeaderBar from "../components/HeaderBar";
+import NavSideBar from "../components/NavSideBar";
 
 const UpdateParcelStatus = () => {
   // mit
@@ -20,6 +22,8 @@ const UpdateParcelStatus = () => {
 
   return (
     <div>
+      <HeaderBar />
+      <NavSideBar />
         <Label text ="Berry Express" />
         <br/>
         <Input type ="text" value={userInput.search} name="search" onChange={handleChange}/>
