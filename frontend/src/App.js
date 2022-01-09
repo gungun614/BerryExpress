@@ -12,6 +12,9 @@ import Staff from './pages/Staff';
 import AddBranch from './pages/AddBranch';
 import AddParcel from './pages/AddParcel';
 import AddStaff from './pages/AddStaff';
+import GetStaff from './pages/GetStaff';
+import AddPosition from './pages/AddPosition';
+import AddTrackingState from './pages/AddTrackingState';
 
 const App = () => {
 
@@ -38,6 +41,15 @@ const App = () => {
         </Route>
         <Route path="/admin/addStaff">
           <AddStaff />
+        </Route>
+        <Route path="/admin/addPosition">
+          <AddPosition />
+        </Route>
+        <Route path="/admin/addTrackingState">
+          <AddTrackingState />
+        </Route>
+        <Route path="/admin/getStaff">
+          <GetStaff />
         </Route>
         <Route path="/staff/addParcel">
           <AddParcel />

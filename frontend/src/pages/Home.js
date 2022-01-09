@@ -1,7 +1,7 @@
 import React from "react";
 import SearchParcel from "../components/SearchParcel";
 
-const HomePage = () => {
+const Home = () => {
   return (
     <div>
       <SearchParcel />
@@ -9,4 +9,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default Home
