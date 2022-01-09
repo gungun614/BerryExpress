@@ -3,6 +3,8 @@ import Label from "../widgets/Label";
 import Input from "../widgets/Input";
 import Button from "../widgets/Button";
 import Icon from "../widgets/Icon";
+import NavSideBar from "../components/NavSideBar";
+import HeaderBar from "../components/HeaderBar";
 
 const AddParcel = () => {
   // mit
@@ -48,6 +50,8 @@ const AddParcel = () => {
   return (
     <div>
       <div>
+        <HeaderBar />
+        <NavSideBar />
         {/* mit */}
         <Label text ="ข้อมูลผู้ส่ง" />
         <br/>

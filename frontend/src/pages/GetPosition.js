@@ -3,6 +3,8 @@ import Select from "../widgets/Select";
 import Input from "../widgets/Input";
 import Button from "../widgets/Button";
 import GetTablePosition from "../components/GetTablePosition"
+import HeaderBar from "../components/HeaderBar";
+import NavSideBar from "../components/NavSideBar";
 
 const GetPosition = () => {
   const testData = [
@@ -27,10 +29,14 @@ const GetPosition = () => {
   }
   console.log(searchBox)
   const handleClickSearch = () =>{
-    console.log('searchBox = '+searchBox + '  ' + 'searchBy = '+searchBy )
+    console.log(`searchBox=${searchBox}`)
+    console.log(`searchBy=${searchBy}`)
   }
+
   return (
     <div>
+      <HeaderBar />
+      <NavSideBar />
     <Select 
         value={searchBy}
         name={"selectSearch"}
