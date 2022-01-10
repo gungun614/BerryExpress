@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Staff, Position } = require('../models')
+const { Staff } = require('../models')
 
 router.post('/', async (req, res) => {
   const body = req.body
