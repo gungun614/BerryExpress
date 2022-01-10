@@ -1,6 +1,6 @@
 const router = require('express').Router()
-
 const { ItemState } = require('../models')
+const helper = require('../utils/helper')
 
 const itemStateFinder = async (req, res, next) => {
   req.itemState = await ItemState.findByPk(req.params.id)
@@ -32,7 +32,7 @@ router.get('/:id', itemStateFinder, async (req, res) => {
 // }
 router.post('/', async (req, res) => {
   try {
-    const itemState = await ItenState.create(req.body)
+    const itemState = await ItemState.create(req.body)
     res.json(itemState)
     console.log(itemState)
   } catch (error) {
@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
 // }
 router.put('/:id', itemStateFinder, async (req, res) => {
   if (req.itemState) {
-    req.itemState.stateDescription = req.body.stateDescription
+    req.itemState = await helper.genUpdate(req.itemState, req.body)
     await req.itemState.save()
     res.json(req.itemState)
     console.log(req.itemState)

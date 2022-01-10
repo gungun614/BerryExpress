@@ -20,11 +20,11 @@ Staff.init({
     type: DataTypes.DOUBLE,
     allowNull: false
   },
-  shopId: {
+  branchId: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  dateStart: {
+  dateStarted: {
     type: DataTypes.DATEONLY,
     allowNull: false
   },
@@ -36,7 +36,7 @@ Staff.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  nationId: {
+  citizenId: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -45,6 +45,22 @@ Staff.init({
     allowNull: false
   },
   address: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  subdistrict: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  district: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  province: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  zipcode: {
     type: DataTypes.STRING,
     allowNull: false
   },

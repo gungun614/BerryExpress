@@ -4,7 +4,7 @@ const { sequelize } = require('../utils/db')
 
 class ItemState extends Model {}
 ItemState.init({
-  stateDescription: {
+  description: {
     type: DataTypes.STRING,
     allowNull: false
   }

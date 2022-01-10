@@ -4,8 +4,7 @@ import Input from "../widgets/Input";
 import Label from "../widgets/Label";
 import loginService from "../services/login"
 import positionService from "../services/position";
-import { BrowserRouter as Router
-  , useHistory 
+import { useHistory 
 } from "react-router-dom";
 
 const Login = () => {
