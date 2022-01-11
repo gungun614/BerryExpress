@@ -135,7 +135,7 @@ const AddBranch = () => {
   } 
 
   const handleSubmit = () => {
-    const newName = `${branchType.label} ${branch.mainAddress.subdistrict} ${lastId + 1}`
+    let newName = `${branchType.label} ${branch.mainAddress.subdistrict}`
     const newBranch = {
       ...branch,
       name: newName
