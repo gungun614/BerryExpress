@@ -8,6 +8,10 @@ const branchFinder = async (req, res, next) => {
 }
 
 // GET
+router.get('/', async (req, res) => {
+  const branches = await Branch.findAll()
+  res.json(branches)
+})
 
 router.get('/maxId', async (req, res) => {
   const maxId = await Branch.max('id')
