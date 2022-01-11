@@ -233,10 +233,16 @@ const AddStaff = () => {
           onChange={handleChange} 
         />
         <br/>
-        { formState !== formStates[2]? 
-          <Button type={"submit"} text={"บันทึก"} onClick={handleSubmit} />: null }
-        { formState === formStates[1]? 
-          <Button type={"button"} text={"แก้ไข"} onClick={handleEdit} />: null }
+        { 
+          formState !== formStates[2]
+          ? <Button type={"submit"} text={"บันทึก"} onClick={handleSubmit} />
+          : null 
+        }
+        { 
+          formState === formStates[1]
+          ? <Button type={"button"} text={"แก้ไข"} onClick={handleEdit} />
+          : null 
+        }
 
       </form>
     </div>
