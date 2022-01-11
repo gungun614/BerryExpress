@@ -1,9 +1,39 @@
-import React, { useEffect, useState } from "react";
-import Select from 'react-select'
+import React, { useEffect, useState, useCallback } from "react";
+import Select, { components } from 'react-select'
+
+// const Input = props => <components.Input {...props} maxLength={5} />
+
+const SearchBar = props => {
+  const { handleChange, options, selectedOption, placeholder } = props;
+
+  const [ showOptions, setShowOptions ] = useState(false);
+
+  const handleInputChange = useCallback((typedOption) => {
+    if (typedOption.length >= 5 ) {
+      setShowOptions(true);
+    }
+    else {
+      setShowOptions(false);
+    }
+  }, []);
+
+  return(
+    <Select 
+      value={selectedOption} 
+      options={ showOptions ? options : [] } 
+      onChange={ handleChange }
+      onInputChange = { handleInputChange }
+      placeholder={placeholder}
+
+      // components={{ Input }}
+    />
+  )
+}
 
 const Test = () => {
 
   const [addressOpts, setAddressOpts] = useState([])
+  const [address, setAddress] = useState(null)
 
   useEffect(() => {
     const jsonAddress = require('../json/thailand_address.json')
@@ -17,12 +47,19 @@ const Test = () => {
     setAddressOpts(opts)
   }, [])
 
+  const handleChange = (change) => {
+    console.log(change)
+    setAddress(change)
+  }
+  
   return (
     <div>
       {'This is test'}
-      <Select 
+      <SearchBar
+        selectedOption={address}
         options={addressOpts}
-        defaultInputValue="10110"
+        handleChange={handleChange}
+        placeholder={`ค้นหาที่อยู่`}
       />
     </div>
   )
