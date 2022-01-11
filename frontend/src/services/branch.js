@@ -18,6 +18,11 @@ const findBranchTypeCount = async (branchTypeId) => {
   return response.data
 }
 
+const findBranchTypeWithSubdistrictCount = async (branchTypeId, subdistrict) => {
+  const response = await axios.get(`${baseUrl}/count/${branchTypeId}/${subdistrict}`)
+  return response.data
+}
+
 const add = async (branch) => {
   const response = await axios.post(baseUrl, branch)
   return response.data
@@ -27,7 +32,8 @@ const branchService = {
   findLastId,
   findBranchTypeCount,
   add,
-  findAll
+  findAll,
+  findBranchTypeWithSubdistrictCount
 }
 
 export default branchService
