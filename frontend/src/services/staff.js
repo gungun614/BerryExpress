@@ -7,19 +7,19 @@ const findById = async (positionId) => {
   const response = await axios.get(`${baseUrl}/${positionId}`)
   return response.data
 }
-const getAll = async () => {
+const findAll = async () => {
   const response = await axios.get(baseUrl)
   return response.data
 }
-const getLastId = async () => {
+const findLastId = async () => {
   const response = await axios.get(`${baseUrl}/maxId`)
   return response.data
 }
 
 const staffService = {
   findById,
-  getAll,
-  getLastId
+  findAll,
+  findLastId
 }
 
 export default staffService

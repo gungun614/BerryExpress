@@ -62,7 +62,7 @@ const AddStaff = () => {
   useEffect(() => {
     let isSubscribed = true 
     positionService
-      .getAll()
+      .findAll()
       .then(arr => {
         if (isSubscribed) {
           const newPositions = []
