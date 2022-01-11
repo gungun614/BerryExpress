@@ -18,6 +18,19 @@ router.get('/maxId', async (req, res) => {
   }
 })
 
+router.get('/count/:id', async (req, res) => {
+  const amount = await Branch.count({
+    where: {
+      branchTypeId: req.params.id
+    }
+  })
+  if (amount) {
+    res.json({ 'amount': amount })
+  } else {
+    res.json({ 'amount': 0})
+  }
+})
+
 router.get('/:id', branchFinder, async (req, res) => {
   if (req.branch) {
     res.json(req.branch)
@@ -25,6 +38,7 @@ router.get('/:id', branchFinder, async (req, res) => {
     res.status(404).end()
   }
 })
+
 
 // POST
 router.post('/', async (req, res) => {
