@@ -12,6 +12,7 @@ import Select from "../widgets/Select"
 // Services
 import branchTypeService from "../services/branchType"
 import branchService from "../services/branch"
+import { useHistory } from "react-router-dom"
 
 const AddBranch = () => {
 
@@ -57,6 +58,9 @@ const AddBranch = () => {
   const [isDisabledTitle, setIsDisabledTitle] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
   const [isDisabledButton, setIsDisabledButton] = useState(false)
+  const [isDisabledSubmit, setIsDisabledSubmit] = useState(true)
+
+  const history = useHistory()
 
   useEffect(() => {
     // Setup Thai address
@@ -92,6 +96,7 @@ const AddBranch = () => {
     setIsDisabledTitle(!isDisabledTitle)
     setIsDisabledButton(!isDisabledButton)
     setIsDisabled(!isDisabled)
+    setIsDisabledSubmit(!isDisabledSubmit)
   }
 
   const handleChange = (event) => {
@@ -131,15 +136,30 @@ const AddBranch = () => {
   } 
 
   const handleSubmit = async () => {
+    setIsDisabledSubmit(true)
     const branchTypeCount = await branchService.findBranchTypeCount(branchType.value) 
     const newBranchNumber = branchTypeCount.amount + 1
-    const newName = `${branchType.label} ${branch.mainAddress.subdistrict} ${newBranchNumber}`
+    const newName = `${branchType.label} ${newBranchNumber}`
     const newBranch = {
-      ...branch,
-      name: newName
+      name: newName,
+      address: branch.address,
+      subdistrict: branch.mainAddress.subdistrict,
+      district: branch.mainAddress.district,
+      province: branch.mainAddress.province,
+      zipcode: branch.mainAddress.zipcode,
+      tel: branch.tel,
+      dateStarted: branch.dateStarted,
+      branchTypeId: branchType.value
     }
-    setBranch(newBranch)
+    
     console.log(newBranch)
+    try {
+      const addBranch = await branchService.add(newBranch)
+      console.log(addBranch)
+      history.push("/admin")
+    } catch (exception) {
+      console.log(exception)
+    }
   }
 
 return (
@@ -200,7 +220,7 @@ return (
     <Button 
       type={'button'} 
       text={'ยืนยันการบันทึก'} 
-      isHide = {!isDisabledButton} 
+      isHide = {isDisabledSubmit} 
       onClick={handleSubmit}
     />
 
