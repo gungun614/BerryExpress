@@ -6,11 +6,13 @@ import Input from "../widgets/Input"
 import Select from "../widgets/Select"
 import SelectAddress from "../components/SelectAddress"
 import HeaderBar from "../components/HeaderBar";
+import positionService from "../services/position";
 
 
 const AddStaff = () => {
 
   const [thaiAddress, setThaiAddress] = useState([])
+  const [positions, setPositions] = useState([])
 
   const [staff, setStaff] = useState({
     firstName: "",
@@ -24,7 +26,7 @@ const AddStaff = () => {
       zipcode: "",
       subdistrict: "",
       district: "",
-      province: ""
+      province: "" 
     },
     branch: "",
     position: "",
@@ -50,9 +52,30 @@ const AddStaff = () => {
   const [formState, setFormState] = useState(formStates[0])
   const isDisabledForm = formState === formStates[0]? false: true
 
+  // Get all thai address from JSON file
   useEffect(() => {
     const jsonAddress = require('../json/thailand_address.json')
     setThaiAddress(jsonAddress)
+  }, [])
+
+  // Get all positions from server
+  useEffect(() => {
+    let isSubscribed = true 
+    positionService
+      .getAll()
+      .then(arr => {
+        if (isSubscribed) {
+          const newPositions = []
+          for (const item of arr) {
+            const newPosition = { value: item.id, label: item.name }
+            newPositions.push(newPosition)
+          }
+          setPositions(newPositions)
+        }
+      })
+
+    // Need to be cleaned up, otherwise it will cause memory leak!
+    return () => { isSubscribed = false }
   }, [])
 
   const getAllBranches = () => {
@@ -63,14 +86,6 @@ const AddStaff = () => {
     ]
   }
   
-  const getAllPositions = () => {
-    return [
-      { value: "admin", label: "Admin"},
-      { value: "staff1", label: "Staff 1"},
-      { value: "staff2", label: "Staff 2"}
-    ]
-  }
-
   const handleSubmit = () => {
     if (formState !== formStates[2]) { 
       setFormState(formStates[formStates.indexOf(formState) + 1]) 
@@ -206,7 +221,7 @@ const AddStaff = () => {
           disabled={isDisabledForm} 
           value={staff.position} 
           name="position" 
-          options={getAllPositions()} 
+          options={positions} 
           onChange={handleChange} 
         />
         <Label text="เงินเดือน" />
