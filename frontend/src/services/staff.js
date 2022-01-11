@@ -1,7 +1,7 @@
 import axios from 'axios'
 const { SERVER_URL } = require('../utils/config')
 
-const baseUrl = `${SERVER_URL}/api/positions`
+const baseUrl = `${SERVER_URL}/api/staffs`
 
 const findById = async (positionId) => {
   const response = await axios.get(`${baseUrl}/${positionId}`)
@@ -11,10 +11,15 @@ const findAll = async () => {
   const response = await axios.get(baseUrl)
   return response.data
 }
-
-const positionService = {
-  findById,
-  findAll
+const findLastId = async () => {
+  const response = await axios.get(`${baseUrl}/maxId`)
+  return response.data
 }
 
-export default positionService 
+const staffService = {
+  findById,
+  findAll,
+  findLastId
+}
+
+export default staffService

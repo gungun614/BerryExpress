@@ -5,6 +5,7 @@ const staffs = require('./staffs')
 const itemStates = require('./itemStates')
 const branches = require('./branches')
 const login = require('./login')
+const branchTypes = require('./branchTypes')
 
 module.exports = {
   positions,
@@ -13,5 +14,6 @@ module.exports = {
   staffs,
   itemStates,
   branches,
-  login
+  login,
+  branchTypes
 }
