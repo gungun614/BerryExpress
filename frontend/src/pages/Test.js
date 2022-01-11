@@ -30,10 +30,22 @@ const SearchBar = props => {
   )
 }
 
+// *** HOW TO IMPLEMENT ***
 const Test = () => {
 
   const [addressOpts, setAddressOpts] = useState([])
   const [address, setAddress] = useState(null)
+
+  // Data Structure of address
+  // {
+  //   value: {
+  //     zipcode: 00000,
+  //     subdistrict: "ตำบล",
+  //     district: "อำเภอ",
+  //     province: "จังหวัด"
+  //   },
+  //   label: "ตำบล อำเภอ จังหวัด 00000"
+  // }
 
   useEffect(() => {
     const jsonAddress = require('../json/thailand_address.json')
