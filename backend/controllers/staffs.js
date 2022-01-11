@@ -15,6 +15,16 @@ const staffFinder = async (req, res, next) => {
 //   console.log(staff)
 // })
 
+// get max id
+router.get('/maxId', async (req, res) => {
+  const maxId = await Staff.max('id')
+  if (maxId) {
+    res.json({ 'maxId': maxId })
+  } else {
+    res.json({ 'maxId': 0 })
+  }
+})
+
 // select _ from staff where id = ...
 router.get('/:id', staffFinder, async (req, res) => {
   if (req.staff) {

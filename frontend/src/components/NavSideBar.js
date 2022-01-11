@@ -15,13 +15,12 @@ const NavSideBar = () => {
       { path: "getStaff", label: "เรียกดูพนักงาน" },
       { path: "addBranch", label: "เพิ่มสาขา"},
       { path: "getBranch", label: "เรียกดูสาขา"},
-      { path: "addPosition", label: "เพิ่มตำแหน่งงาน"},
-      { path: "getPosition", label: "เรียกดูตำแหน่งงาน"},
-      { path: "addTrackingState", label: "เพิ่มสถานะพัสดุ"},
-      { path: "getTrackingState", label: "เรียกดูสถานะพัสดุ"},
     ],
     staff: [
       { path: "addParcel", label: "เพิ่มพัสดุ" },
+      { path: "updateParcelStatus", label: "อัปเดตสถานะพัสดุ" },
+    ],
+    postman: [
       { path: "updateParcelStatus", label: "อัปเดตสถานะพัสดุ" },
     ]
   }

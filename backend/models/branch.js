@@ -35,6 +35,10 @@ Branch.init({
   dateStarted: {
     type: DataTypes.DATEONLY,
     allowNull: false
+  },
+  branchTypeId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   sequelize,

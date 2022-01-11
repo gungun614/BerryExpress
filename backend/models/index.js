@@ -4,6 +4,7 @@ const Position = require('./position')
 const Staff = require('./staff')
 const Item = require('./item')
 const TrackingHistory = require('./trackingHistory')
+const BranchType = require('./branchType')
 
 module.exports = {
   Position,
@@ -11,5 +12,6 @@ module.exports = {
   TrackingHistory,
   Item,
   ItemState,
-  Branch
+  Branch,
+  BranchType
 }
