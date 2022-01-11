@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+
+// Components & Widgets
 import Label from "../widgets/Label"
 import Input from "../widgets/Input"
 import Button from "../widgets/Button"
@@ -6,6 +8,9 @@ import NavSideBar from "../components/NavSideBar"
 import HeaderBar from "../components/HeaderBar"
 import SelectAddress from "../components/SelectAddress"
 import Select from "../widgets/Select"
+
+// Services
+import branchTypeService from "../services/branchType"
 import branchService from "../services/branch"
 
 const AddBranch = () => {
@@ -53,31 +58,27 @@ const AddBranch = () => {
   const [isDisabled, setIsDisabled] = useState(false)
   const [isDisabledButton, setIsDisabledButton] = useState(false)
 
-  const [lastId, setLastId] = useState(0)
-
   useEffect(() => {
     // Setup Thai address
     const jsonAddress = require('../json/thailand_address.json')
     setThaiAddress(jsonAddress)
 
-    // Setup branch types
-    const jsonBranchTypes = require('../json/branch_types.json')
-    const newBranchTypes = []
-    for (const item of jsonBranchTypes) {
-      const newBranchType = { value: item.id, label: item.name }
-      newBranchTypes.push(newBranchType)
-    }
-    setBranchTypes(newBranchTypes)
-    setBranchType(newBranchTypes[0])
   }, [])
 
+  // Fetch all branch types
   useEffect(() => {
     let isSubscribed = true
-    branchService
-      .getLastId()
-      .then(id => {
+    branchTypeService
+      .findAll()
+      .then(items => {
         if (isSubscribed) {
-          setLastId(id.maxId)
+          const newBranchTypes = []
+          for (const item of items) {
+            const newBranchType = { value: item.id, label: item.name }
+            newBranchTypes.push(newBranchType)
+          }
+          setBranchTypes(newBranchTypes)
+          setBranchType(newBranchTypes[0])
         }
       })
     
@@ -112,12 +113,7 @@ const AddBranch = () => {
   }
 
   const handleBranchTypeChange = (event) => {
-    const newBranchType = {
-      value: event.target.value,
-      label: branchTypes[event.target.value - 1].label
-    }
-    setBranchType(newBranchType)
-    
+    setBranchType(branchTypes[event.target.value - 1])
   }
 
   const handleKeyPress = (event) => {
@@ -134,8 +130,10 @@ const AddBranch = () => {
     }
   } 
 
-  const handleSubmit = () => {
-    let newName = `${branchType.label} ${branch.mainAddress.subdistrict}`
+  const handleSubmit = async () => {
+    const branchTypeCount = await branchService.findBranchTypeCount(branchType.value) 
+    const newBranchNumber = branchTypeCount.amount + 1
+    const newName = `${branchType.label} ${branch.mainAddress.subdistrict} ${newBranchNumber}`
     const newBranch = {
       ...branch,
       name: newName
@@ -153,7 +151,7 @@ return (
     <br/>
     <Label text="ประเภทสาขา" />
     <Select
-      value={branchType}
+      value={branchType.value}
       name="branchType"
       options={branchTypes}
       onChange={handleBranchTypeChange}
