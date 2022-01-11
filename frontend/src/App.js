@@ -19,6 +19,8 @@ import UpdateParcelStatus from './pages/UpdateParcelStatus'
 
 import Postman from './pages/Postman';
 
+import Test from './pages/Test'
+
 const App = () => {
 
   return (
@@ -60,6 +62,9 @@ const App = () => {
         </Route>
         <Route path="/postman/updateParcelStatus">
           <UpdateParcelStatus />
+        </Route>
+        <Route path="/test">
+          <Test />
         </Route>
       </Switch>
     </Router>

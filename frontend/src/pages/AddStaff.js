@@ -7,12 +7,14 @@ import Select from "../widgets/Select"
 import SelectAddress from "../components/SelectAddress"
 import HeaderBar from "../components/HeaderBar";
 import positionService from "../services/position";
+import branchService from "../services/branch";
 
 
 const AddStaff = () => {
 
   const [thaiAddress, setThaiAddress] = useState([])
   const [positions, setPositions] = useState([])
+  const [branches, setBranches] = useState([])
 
   const [staff, setStaff] = useState({
     firstName: "",
@@ -58,9 +60,10 @@ const AddStaff = () => {
     setThaiAddress(jsonAddress)
   }, [])
 
-  // Get all positions from server
+  // Fetch positions & branches from server
   useEffect(() => {
     let isSubscribed = true 
+    // Fetch positions
     positionService
       .findAll()
       .then(arr => {
@@ -71,6 +74,20 @@ const AddStaff = () => {
             newPositions.push(newPosition)
           }
           setPositions(newPositions)
+        }
+      })
+    
+    // Fetch branches
+    branchService
+      .findAll()
+      .then(items => {
+        if (isSubscribed) {
+          const newBranches = []
+          for (const item of items) {
+            const newBranch = { value: item.id, label: item.name }
+            newBranches.push(newBranch)
+          }
+          setBranches(newBranches)
         }
       })
 
@@ -213,7 +230,7 @@ const AddStaff = () => {
           disabled={isDisabledForm} 
           value={staff.branch} 
           name="branch" 
-          options={getAllBranches()} 
+          options={branches} 
           onChange={handleChange} 
         />
         <Label text="ตำแหน่งงาน" />
