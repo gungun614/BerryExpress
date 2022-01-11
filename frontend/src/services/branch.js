@@ -13,9 +13,15 @@ const findBranchTypeCount = async (branchTypeId) => {
   return response.data
 }
 
+const add = async (branch) => {
+  const response = await axios.post(baseUrl, branch)
+  return response.data
+}
+
 const branchService = {
   findLastId,
-  findBranchTypeCount
+  findBranchTypeCount,
+  add
 }
 
 export default branchService
