@@ -136,10 +136,21 @@ const AddBranch = () => {
   } 
 
   const handleSubmit = async () => {
+    // Hide submit button
     setIsDisabledSubmit(true)
-    const branchTypeCount = await branchService.findBranchTypeCount(branchType.value) 
+
+    // Get count from branches that has the same branch type
+    // and the same subdistrict
+    const branchTypeCount = await branchService
+      .findBranchTypeWithSubdistrictCount(branchType.value, branch.mainAddress.subdistrict) 
+
+    // Generate new name for branch
+    // Ex. ศูนย์คัดแยก คลองเตย 3
     const newBranchNumber = branchTypeCount.amount + 1
-    const newName = `${branchType.label} ${newBranchNumber}`
+    const newName = `${branchType.label} ${branch.mainAddress.subdistrict} ${newBranchNumber}`
+
+    // Create branch object that has the same structure
+    // as Branch Model Schema 
     const newBranch = {
       name: newName,
       address: branch.address,
@@ -153,9 +164,14 @@ const AddBranch = () => {
     }
     
     console.log(newBranch)
+
     try {
+
+      // Add new branch to the database
       const addBranch = await branchService.add(newBranch)
       console.log(addBranch)
+
+      // Redirect to /admin after adding new branch is completed
       history.push("/admin")
     } catch (exception) {
       console.log(exception)
