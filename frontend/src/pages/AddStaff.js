@@ -14,6 +14,8 @@ import helper from "../utils/helper";
 
 const AddStaff = () => {
 
+  const [positions, setPositions] = useState([])
+
   const [addressOptions, setAddressOptions] = useState([])
   const [positionOptions, setPositionOptions] = useState([{ value: null, label: "Please Select"}])
   const [branchOptions, setBranchOptions] = useState([])
@@ -52,7 +54,6 @@ const AddStaff = () => {
     },
   }
 
-
   // Get all thai address from JSON file
   useEffect(() => {
     const jsonAddress = require('../json/thailand_address.json')
@@ -79,6 +80,14 @@ const AddStaff = () => {
             newBranchOptions.push(newBranchOption)
           }
           setBranchOptions(newBranchOptions)
+        }
+      })
+
+    positionService
+      .findAll()
+      .then(items => {
+        if (isSubscribed) {
+          setPositions(items)
         }
       })
     
@@ -128,7 +137,6 @@ const AddStaff = () => {
       branch: selectedBranch.id
     })
 
-    const positions = await positionService.findAll()
     const positionIds = helper.positionIdGenerator(selectedBranch.branchTypeId)
     const newPositionOptions = [{ value: null, label: "Please Select"}]
     newPositionOptions

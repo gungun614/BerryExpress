@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 
 // Components & Widgets
 import Label from "../widgets/Label"
@@ -6,26 +7,16 @@ import Input from "../widgets/Input"
 import Button from "../widgets/Button"
 import NavSideBar from "../components/NavSideBar"
 import HeaderBar from "../components/HeaderBar"
-import SelectAddress from "../components/SelectAddress"
 import Select from "../widgets/Select"
+import SearchBarSelect from "../components/SearchBarSelect"
 
 // Services
 import branchTypeService from "../services/branchType"
 import branchService from "../services/branch"
 
-import { useHistory } from "react-router-dom"
 
 const AddBranch = () => {
 
-  // const [ branchName, setBranchName ] = useState('')
-  // const [ addressBranch, setAddressBranch ] = useState('')
-  // const [ telBranch, setTelBranch ] = useState('')
-  // const [ startDate, setStartDate ] = useState('')
-  // const handleChangeBranchName = (event) => setBranchName(event.target.value)
-  // const handleChangeAddressBranch = (event) => setAddressBranch(event.target.value)
-
-  // const handleChangeTelBranch = (event) => setTelBranch(event.target.value)
-  // const handleChangeStartDate= (event) => setStartDate(event.target.value)
   const [branch, setBranch] = useState({
     name: "",
     address: "",
@@ -55,7 +46,7 @@ const AddBranch = () => {
     value: '',
     label: ''
   })
-  const [thaiAddress, setThaiAddress] = useState([])
+  const [addressOptions, setAddressOptions] = useState([])
   const [isDisabledTitle, setIsDisabledTitle] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
   const [isDisabledButton, setIsDisabledButton] = useState(false)
@@ -66,7 +57,13 @@ const AddBranch = () => {
   useEffect(() => {
     // Setup Thai address
     const jsonAddress = require('../json/thailand_address.json')
-    setThaiAddress(jsonAddress)
+    const options = jsonAddress.map(address => {
+      return {
+        value: address,
+        label: `${address.subdistrict}, ${address.district}, ${address.province}, ${address.zipcode}`
+      }
+    })
+    setAddressOptions(options)
 
   }, [])
 
@@ -100,22 +97,18 @@ const AddBranch = () => {
     setIsDisabledSubmit(!isDisabledSubmit)
   }
 
+  const handleAddressChange = (change) => {
+    setBranch({
+      ...branch,
+      mainAddress: change.value
+    })
+  }
+
   const handleChange = (event) => {
-    const [parent, child] = event.target.name.split(".")
-    if (child) {
-      setBranch({
+    setBranch({
         ...branch,
-        [parent]: {
-          ...branch[parent],
-          [child]: event.target.value
-        }
+        [event.target.name]: event.target.value
       })
-    } else {
-      setBranch({
-        ...branch,
-        [parent]: event.target.value
-      })
-    }
   }
 
   const handleBranchTypeChange = (event) => {
@@ -204,13 +197,12 @@ return (
       disabled={isDisabled} 
     />
     <br/>
-    <SelectAddress 
-      value={branch.mainAddress} 
-      name="mainAddress" 
-      options={thaiAddress} 
-      onChange={handleChange}
-      onKeyPress={handleKeyPress}
-      disabled={isDisabled} 
+    <SearchBarSelect
+      disabled={isDisabled}
+      options={addressOptions}
+      handleChange={handleAddressChange}
+      minLength={5}
+      placeholder={`ค้นหาที่อยู่`}
     />
     <br/>
     <Label text="เบอร์โทร" />
