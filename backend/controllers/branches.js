@@ -8,6 +8,10 @@ const branchFinder = async (req, res, next) => {
 }
 
 // GET
+router.get('/', async (req, res) => {
+  const branches = await Branch.findAll()
+  res.json(branches)
+})
 
 router.get('/maxId', async (req, res) => {
   const maxId = await Branch.max('id')
@@ -18,10 +22,26 @@ router.get('/maxId', async (req, res) => {
   }
 })
 
+// GET COUNT(branch_type_id)
 router.get('/count/:id', async (req, res) => {
   const amount = await Branch.count({
     where: {
       branchTypeId: req.params.id
+    }
+  })
+  if (amount) {
+    res.json({ 'amount': amount })
+  } else {
+    res.json({ 'amount': 0})
+  }
+})
+
+// GET COUNT(branch_type_id, subdistrict)
+router.get('/count/:id/:subdistrict', async (req, res) => {
+  const amount = await Branch.count({
+    where: {
+      branchTypeId: req.params.id,
+      subdistrict: req.params.subdistrict
     }
   })
   if (amount) {
