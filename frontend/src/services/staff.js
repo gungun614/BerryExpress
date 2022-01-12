@@ -16,10 +16,22 @@ const findLastId = async () => {
   return response.data
 }
 
+const findBranchWithPositionCount = async (branchId, positionId) => {
+  const response = await axios.get(`${baseUrl}/count/${branchId}/${positionId}`)
+  return response.data
+}
+
+const add = async (staff) => {
+  const response = await axios.post(baseUrl, staff)
+  return response.data
+}
+
 const staffService = {
   findById,
   findAll,
-  findLastId
+  findLastId,
+  findBranchWithPositionCount,
+  add
 }
 
 export default staffService

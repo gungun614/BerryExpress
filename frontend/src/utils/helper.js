@@ -10,9 +10,15 @@ const positionIdGenerator = (branchTypeId) => {
   else if (branchTypeId === 4) { return [1] }
 }
 
+const pad = (num, size) => {
+  num = num.toString()
+  while (num.length < size) { num = "0" + num }
+  return num
+}
 
 const helper = {
-  positionIdGenerator
+  positionIdGenerator,
+  pad
 }
 
 export default helper
