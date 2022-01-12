@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Staff } = require('../models')
+const { Staff, Branch } = require('../models')
 const helper = require('../utils/helper')
 
 const staffFinder = async (req, res, next) => {
@@ -9,11 +9,11 @@ const staffFinder = async (req, res, next) => {
 
 // GET
 // select * from staff
-// router.get('/', async (req, res) => {
-//   const staff = await Staff.findAll()
-//   res.json(staff)
-//   console.log(staff)
-// })
+router.get('/', async (req, res) => {
+  const staff = await Staff.findAll()
+  res.json(staff)
+  console.log(staff)
+})
 
 // get max id
 router.get('/maxId', async (req, res) => {
@@ -22,6 +22,21 @@ router.get('/maxId', async (req, res) => {
     res.json({ 'maxId': maxId })
   } else {
     res.json({ 'maxId': 0 })
+  }
+})
+
+// GET COUNT(branch_id, position_id)
+router.get('/count/:branchId/:positionId', async (req, res) => {
+  const amount = await Staff.count({
+    where: {
+      branchId: req.params.branchId,
+      positionId: req.params.positionId
+    }
+  })
+  if (amount) {
+    res.json({ 'amount': amount })
+  } else {
+    res.json({ 'amount': 0 })
   }
 })
 

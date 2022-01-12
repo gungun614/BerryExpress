@@ -11,8 +11,12 @@ import positionService from "../services/position";
 import branchService from "../services/branch";
 
 import helper from "../utils/helper";
+import staffService from "../services/staff"
+import { useHistory } from "react-router-dom"
 
 const AddStaff = () => {
+
+  const [positions, setPositions] = useState([])
 
   const [addressOptions, setAddressOptions] = useState([])
   const [positionOptions, setPositionOptions] = useState([{ value: null, label: "Please Select"}])
@@ -21,6 +25,8 @@ const AddStaff = () => {
   const formStates = ["Started", "Added", "Committed"]
   const [formState, setFormState] = useState(formStates[0])
   const isDisabledForm = formState === formStates[0]? false: true
+
+  const history = useHistory()
 
   const [staff, setStaff] = useState({
     firstName: "",
@@ -52,7 +58,6 @@ const AddStaff = () => {
     },
   }
 
-
   // Get all thai address from JSON file
   useEffect(() => {
     const jsonAddress = require('../json/thailand_address.json')
@@ -81,6 +86,14 @@ const AddStaff = () => {
           setBranchOptions(newBranchOptions)
         }
       })
+
+    positionService
+      .findAll()
+      .then(items => {
+        if (isSubscribed) {
+          setPositions(items)
+        }
+      })
     
     // Need to be cleaned up, otherwise it will cause memory leak!
     return () => { isSubscribed = false }
@@ -88,16 +101,7 @@ const AddStaff = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleSubmit = () => {
-    if (formState !== formStates[2]) { 
-      setFormState(formStates[formStates.indexOf(formState) + 1]) 
-    }
-    if (formState === formStates[1]) { 
-      console.log("Completed!")
-      console.log(staff) 
-      // TODO: enable modal box
-    }
-  }
+  
 
   const handleEdit = () => {
     if (formState !== formStates[0]) { 
@@ -128,7 +132,6 @@ const AddStaff = () => {
       branch: selectedBranch.id
     })
 
-    const positions = await positionService.findAll()
     const positionIds = helper.positionIdGenerator(selectedBranch.branchTypeId)
     const newPositionOptions = [{ value: null, label: "Please Select"}]
     newPositionOptions
@@ -149,6 +152,49 @@ const AddStaff = () => {
     const constraint = inputConstraints[event.target.name]
     if (!constraint.regex.test(event.key) || value.length >= constraint.length) {
       event.preventDefault()
+    }
+  }
+
+  const handleSubmit = async () => {
+    if (formState !== formStates[2]) { 
+      setFormState(formStates[formStates.indexOf(formState) + 1]) 
+    }
+    if (formState === formStates[1]) { 
+      console.log("Completed!")
+      console.log(staff) 
+      const today = new Date().toISOString().slice(0, 10)
+      const count = await staffService
+        .findBranchWithPositionCount(staff.branch, staff.position)
+      const branchId = helper.pad(staff.branch, 3)
+      const staffId = helper.pad(count.amount + 1, 4)
+      const username = `${staff.position}${branchId}${staffId}`
+      const newStaff = {
+        firstname: staff.firstName,
+        lastname: staff.lastName,
+        citizenId: staff.citizenId,
+        dateBirth: staff.birthDate,
+        address: staff.address,
+        subdistrict: staff.mainAddress.subdistrict,
+        district: staff.mainAddress.district,
+        province: staff.mainAddress.province,
+        zipcode: staff.mainAddress.zipcode,
+        tel: staff.tel,
+        email: staff.email,
+        salary: staff.salary,
+        dateStarted: today,
+        branchId: staff.branch,
+        positionId: staff.position,
+        username: username,
+        password: username
+      }
+      console.log(newStaff)
+      try {
+        const addStaff = await staffService.add(newStaff)
+        console.log(addStaff)
+        history.push("/admin")
+      } catch (exception) {
+        console.log(exception)
+      }
     }
   }
 
