@@ -1,19 +1,26 @@
-import NavSideBar from "../components/NavSideBar";
 import React, { useEffect, useState } from "react"
 import Label from "../widgets/Label"
 import Button from "../widgets/Button"
 import Input from "../widgets/Input"
 import Select from "../widgets/Select"
-import SelectAddress from "../components/SelectAddress"
+import SearchBarSelect from "../components/SearchBarSelect";
 import HeaderBar from "../components/HeaderBar";
+import NavSideBar from "../components/NavSideBar";
+
 import positionService from "../services/position";
 import branchService from "../services/branch";
 
+import helper from "../utils/helper";
+
 const AddStaff = () => {
 
-  const [thaiAddress, setThaiAddress] = useState([])
-  const [positions, setPositions] = useState([])
-  const [branches, setBranches] = useState([])
+  const [addressOptions, setAddressOptions] = useState([])
+  const [positionOptions, setPositionOptions] = useState([{ value: null, label: "Please Select"}])
+  const [branchOptions, setBranchOptions] = useState([])
+
+  const formStates = ["Started", "Added", "Committed"]
+  const [formState, setFormState] = useState(formStates[0])
+  const isDisabledForm = formState === formStates[0]? false: true
 
   const [staff, setStaff] = useState({
     firstName: "",
@@ -29,8 +36,8 @@ const AddStaff = () => {
       district: "",
       province: "" 
     },
-    branch: "",
-    position: "",
+    branch: 0,
+    position: 0,
     salary: ""
   })
 
@@ -43,65 +50,44 @@ const AddStaff = () => {
       regex: /[0-9]/,
       length: 13
     },
-    zipcode: {
-      regex: /[0-9]/,
-      length: 5
-    }
   }
 
-  const formStates = ["Started", "Added", "Committed"]
-  const [formState, setFormState] = useState(formStates[0])
-  const isDisabledForm = formState === formStates[0]? false: true
 
   // Get all thai address from JSON file
   useEffect(() => {
     const jsonAddress = require('../json/thailand_address.json')
-    setThaiAddress(jsonAddress)
+    const options = jsonAddress.map(address => {
+      return {
+        value: address,
+        label: `${address.subdistrict}, ${address.district}, ${address.province}, ${address.zipcode}`
+      }
+    })
+    setAddressOptions(options)
   }, [])
 
-  // Fetch positions & branches from server
+  // Fetch branches from server
   useEffect(() => {
     let isSubscribed = true 
-    // Fetch positions
-    positionService
-      .findAll()
-      .then(arr => {
-        if (isSubscribed) {
-          const newPositions = []
-          for (const item of arr) {
-            const newPosition = { value: item.id, label: item.name }
-            newPositions.push(newPosition)
-          }
-          setPositions(newPositions)
-        }
-      })
-    
-    // Fetch branches
+    const newBranchOptions = []
+
     branchService
       .findAll()
       .then(items => {
         if (isSubscribed) {
-          const newBranches = []
           for (const item of items) {
-            const newBranch = { value: item.id, label: item.name }
-            newBranches.push(newBranch)
+            const newBranchOption = { value: item, label: item.name }
+            newBranchOptions.push(newBranchOption)
           }
-          setBranches(newBranches)
+          setBranchOptions(newBranchOptions)
         }
       })
-
+    
     // Need to be cleaned up, otherwise it will cause memory leak!
     return () => { isSubscribed = false }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const getAllBranches = () => {
-    return [
-      { value: "branch 1", label: "สาขา 1"},
-      { value: "branch 2", label: "สาขา 2"},
-      { value: "branch 3", label: "สาขา 3"}
-    ]
-  }
-  
   const handleSubmit = () => {
     if (formState !== formStates[2]) { 
       setFormState(formStates[formStates.indexOf(formState) + 1]) 
@@ -112,6 +98,7 @@ const AddStaff = () => {
       // TODO: enable modal box
     }
   }
+
   const handleEdit = () => {
     if (formState !== formStates[0]) { 
       setFormState(formStates[formStates.indexOf(formState) - 1])
@@ -119,32 +106,47 @@ const AddStaff = () => {
   }
 
   const handleChange = (event) => {
-    const [parent, child] = event.target.name.split(".")
-    if (child) {
-      setStaff({
-        ...staff,
-        [parent]: {
-          ...staff[parent],
-          [child]: event.target.value
+    setStaff({
+      ...staff,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const handleAddressChange = (change) => {
+    setStaff({
+      ...staff,
+      mainAddress: change.value
+    })
+  }
+
+  const handleBranchChange = async (change) => {
+
+    const selectedBranch = change.value
+
+    setStaff({
+      ...staff,
+      branch: selectedBranch.id
+    })
+
+    const positions = await positionService.findAll()
+    const positionIds = helper.positionIdGenerator(selectedBranch.branchTypeId)
+    const newPositionOptions = [{ value: null, label: "Please Select"}]
+    newPositionOptions
+      .push(...positionIds.map(id => {
+        const position = positions.find(item => item.id === id)
+        return {
+          value: position.id,
+          label: position.name
         }
       })
-    } else {
-      setStaff({
-        ...staff,
-        [parent]: event.target.value
-      })
-    }
+    )
+    console.log(newPositionOptions)
+    setPositionOptions(newPositionOptions)
   }
 
   const handleKeyPress = (event) => {
-    const [, child] = event.target.name.split(".")
     const value = event.target.value
-    let constraint = ""
-    if (child) {
-      constraint = inputConstraints[child]
-    } else {
-      constraint = inputConstraints[event.target.name]
-    }
+    const constraint = inputConstraints[event.target.name]
     if (!constraint.regex.test(event.key) || value.length >= constraint.length) {
       event.preventDefault()
     }
@@ -215,29 +217,28 @@ const AddStaff = () => {
           name="address" 
           onChange={handleChange} 
         />
-        <SelectAddress 
-          disabled={isDisabledForm} 
-          value={staff.mainAddress} 
-          name="mainAddress" 
-          options={thaiAddress} 
-          onChange={handleChange}
-          onKeyPress={handleKeyPress}
+        <SearchBarSelect 
+          disabled={isDisabledForm}
+          options={addressOptions}
+          handleChange={handleAddressChange}
+          minLength={5}
+          placeholder={`ค้นหาที่อยู่`}
         />
         <br/>
         <Label text="สาขา" />
-        <Select 
-          disabled={isDisabledForm} 
-          value={staff.branch} 
-          name="branch" 
-          options={branches} 
-          onChange={handleChange} 
+        <SearchBarSelect 
+          disabled={isDisabledForm }
+          options={branchOptions}
+          handleChange={handleBranchChange}
+          minLength={5}
+          placeholder={`ค้นหาสาขา`}
         />
         <Label text="ตำแหน่งงาน" />
         <Select 
-          disabled={isDisabledForm} 
+          disabled={isDisabledForm || !staff.branch } 
           value={staff.position} 
           name="position" 
-          options={positions} 
+          options={positionOptions} 
           onChange={handleChange} 
         />
         <Label text="เงินเดือน" />

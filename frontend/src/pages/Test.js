@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
-import Select, { components } from 'react-select'
+import Select, { } from 'react-select'
 
 // const Input = props => <components.Input {...props} maxLength={5} />
 
+// Search Bar that only start searching when you type with 5 or more charactors
 const SearchBar = props => {
   const { handleChange, options, selectedOption, placeholder } = props;
 
@@ -18,7 +19,7 @@ const SearchBar = props => {
   }, []);
 
   return(
-    <Select 
+    <Select
       value={selectedOption} 
       options={ showOptions ? options : [] } 
       onChange={ handleChange }
@@ -44,7 +45,7 @@ const Test = () => {
   //     district: "อำเภอ",
   //     province: "จังหวัด"
   //   },
-  //   label: "ตำบล อำเภอ จังหวัด 00000"
+  //   label: "ตำบล, อำเภอ, จังหวัด, 00000"
   // }
 
   useEffect(() => {
@@ -68,6 +69,7 @@ const Test = () => {
     <div>
       {'This is test'}
       <SearchBar
+        
         selectedOption={address}
         options={addressOpts}
         handleChange={handleChange}
