@@ -36,7 +36,8 @@ const Login = () => {
       console.log(loginUser)
       console.log(userPosition)
       if (loginUser && userPosition.name === "Admin") history.push("/admin")
-      if (loginUser && userPosition.name !== "Admin") history.push("/staff")
+      else if (loginUser && userPosition.name === "Staff") history.push("/staff")
+      else if (loginUser && userPosition.name === "Postman") history.push("/postman")
     } catch (exception) {
       console.log(exception)
       setUserInput({
