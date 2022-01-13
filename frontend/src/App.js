@@ -6,7 +6,7 @@ import {
 import './App.css';
 
 import Home from "./pages/Home"
-import LoginPage from './pages/LoginPage';
+import Login from './pages/Login';
 import Admin from './pages/Admin';
 import AddBranch from './pages/AddBranch';
 import AddStaff from './pages/AddStaff';
@@ -31,7 +31,7 @@ const App = () => {
           <Home />
         </Route>
         <Route path='/login'>
-          <LoginPage />
+          <Login />
         </Route>
         <Route exact path="/admin">
           <Admin />
