@@ -26,12 +26,18 @@ const add = async (staff) => {
   return response.data
 }
 
+const change = async (staff) => {
+  const response = await axios.put(`${baseUrl}/${staff.id}`, staff)
+  return response.data
+}
+
 const staffService = {
   findById,
   findAll,
   findLastId,
   findBranchWithPositionCount,
-  add
+  add,
+  change
 }
 
 export default staffService
