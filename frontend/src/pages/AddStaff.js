@@ -123,7 +123,7 @@ const AddStaff = () => {
     })
   }
 
-  const handleBranchChange = async (change) => {
+  const handleBranchChange = (change) => {
 
     const selectedBranch = change.value
 

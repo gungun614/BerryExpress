@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const { Branch } = require('../models')
 const helper = require('../utils/helper')
+const { Op } = require("sequelize");
 
 const branchFinder = async (req, res, next) => {
   req.branch = await Branch.findByPk(req.params.id)
@@ -54,6 +55,24 @@ router.get('/count/:id/:subdistrict', async (req, res) => {
 router.get('/:id', branchFinder, async (req, res) => {
   if (req.branch) {
     res.json(req.branch)
+  } else {
+    res.status(404).end()
+  }
+})
+
+
+// GET NAME(name)
+router.get('/name/:name' , async (req,res) => {
+  const staffsData = await Branch.findAll({
+    where: {
+      name : {
+        [Op.like]: '%' + req.params.name + '%'
+      }
+    }
+  })
+  console.log(staffsData)
+  if (staffsData) {
+    res.json(staffsData)
   } else {
     res.status(404).end()
   }
