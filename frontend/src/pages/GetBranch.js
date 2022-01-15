@@ -1,34 +1,30 @@
 import React, { useState } from "react"
 
+
+// Components & Widgets
 import Select from "../widgets/Select";
 import Input from "../widgets/Input";
 import Button from "../widgets/Button";
 import GetTableBranch from "../components/GetTableBranch"
 import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
+
+// Services
+import branchService from "../services/branch"
+
+
 const GetBranch = () => {
 
-
-  const testData = [
-    {id : 1,name :'pptest',tel :'0811',status :'working'},
-    {id : 2,name :'pptest2',tel :'0811',status :'working'},
-    {id : 3,name :'pptest3',tel :'0811',status :'working'},
-    {id : 4,name :'pptest4',tel :'0811',status :'working'},
-  ]
-
-
-
-
-  const selectSearch = [
+  const dropDownList = [
     {value : 0,label:"ทั้งหมด"},
     {value : 1,label:"id "},
     {value : 2,label:"ชื่อ"}
   ]
-  const [searchBy,setSearchBy] = useState(selectSearch[0].value)
+
+  const [searchBy,setSearchBy] = useState('0')
   const [searchBox,setSearchBox] = useState('')
-  
-  
-  
+  const [tableData,setTableData] = useState([])
+
   const onChangeSelect = (event) =>{
     setSearchBy(event.target.value)
   }
@@ -36,10 +32,21 @@ const GetBranch = () => {
   const handleChangeSearchBox = (event) =>{
     setSearchBox(event.target.value) 
   }
-  console.log(searchBox)
-  const handleClickSearch = () =>{
-    console.log(`searchBox=${searchBox}`)
-    console.log(`searchBy=${searchBy}`)
+  
+  const handleClickSearch = async () =>{
+    let branchsInfo = ''
+    switch(searchBy){
+      case '0' :  branchsInfo = await branchService.findAll()
+                  break
+      case '1' :  branchsInfo = await branchService.findById(searchBox)
+                  break
+      case '2' :  branchsInfo = await branchService.findByName(searchBox)
+                  break
+      default :   branchsInfo = await branchService.findAll()
+                  break
+    }
+    console.log(branchsInfo)
+    setTableData(Array.isArray(branchsInfo) ? branchsInfo : [branchsInfo] )
   }
 
 
@@ -49,17 +56,17 @@ const GetBranch = () => {
       <NavSideBar />
     <Select 
         value={searchBy}
-        name={"selectSearch"}
-        options={selectSearch}
+        name={"dropDownList"}
+        options={dropDownList}
         onChange={onChangeSelect}
       />
     <Input
         value={searchBox} 
         onChange={handleChangeSearchBox}
+        disabled={searchBy === '0' ? true : false}
       />
     <Button text="search" onClick = {handleClickSearch}/>
-        <GetTableBranch data = {testData}/>
-
+        <GetTableBranch data = {tableData}/>
     </div>
   )
 }

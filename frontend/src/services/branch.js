@@ -28,12 +28,24 @@ const add = async (branch) => {
   return response.data
 }
 
+const findByName = async (name) => {
+  const response = await axios.get(`${baseUrl}/name/${name}`)
+  return response.data
+}
+
+const findById = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`)
+  return response.data
+}
+
 const branchService = {
   findLastId,
   findBranchTypeCount,
   add,
   findAll,
-  findBranchTypeWithSubdistrictCount
+  findBranchTypeWithSubdistrictCount,
+  findByName,
+  findById
 }
 
 export default branchService
