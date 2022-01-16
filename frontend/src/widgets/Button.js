@@ -2,7 +2,7 @@ import React from "react"
 
 const Button = (props) => {
 
-    const { text, onClick, type, isHide } = props
+    const { text, onClick, type, isHide, disabled } = props
     
     const handleClick = (event) => {
         event.preventDefault()
@@ -14,7 +14,7 @@ const Button = (props) => {
         display: isHide  ? 'none': 'block'
     }
 
-    return <button type={type} style={style} onClick={handleClick}>{text}</button>
+    return <button type={type} style={style} onClick={handleClick} disabled={disabled}>{text}</button>
 }
 
 export default Button

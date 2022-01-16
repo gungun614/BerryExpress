@@ -2,7 +2,7 @@ import React from "react"
 
 const Label = (props) => {
 
-    const { text, color, fontSize, fontWeight, className, isHide } = props
+    const { text, color, fontSize, fontWeight, className, isHide, require } = props
 
     const style = {
         color: color,
@@ -11,7 +11,7 @@ const Label = (props) => {
         display: isHide  ? 'none': 'block'
     }
     
-    return <label className={className} style={style}>{text}</label>
+    return <label className={className} style={style}>{text} {require ? <span style={{ color: "red" }}> * </span> : ' '}</label>
 }
 
 export default Label
