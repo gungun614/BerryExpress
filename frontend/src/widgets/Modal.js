@@ -4,7 +4,7 @@ import Button from '../widgets/Button'
 
 const Modal = (props) => {
 
-    const { header, body } = props
+    const { header, body, data, isHide } = props
     const { buttonConfirm, buttonSave, buttonCancel, buttonOK, buttonDone, buttonClose } = props
 
     const confirm = (button) => button ? <Button text="ยืนยัน" onClick={buttonConfirm} /> : ''
@@ -14,8 +14,12 @@ const Modal = (props) => {
     const done = (button) => button ? <Button text="เสร็จสิ้น" onClick={buttonDone} /> : ''
     const close = (button) => button ? <Button text="ปิด" onClick={buttonClose} /> : ''
 
+    const style = {
+        display: isHide ? 'none' : 'block'
+    }
+
     return (
-        <div>
+        <div style={style}>
             <div>
                 <b><Label text={header} /></b>
             </div>
@@ -23,14 +27,14 @@ const Modal = (props) => {
                 {body}
             </div>
             <div>
-                <div>
+                <span style={{ display: 'inline-block' }}>
                     {confirm(buttonConfirm)}
                     {save(buttonSave)}
                     {cancel(buttonCancel)}
                     {ok(buttonOK)}
                     {done(buttonDone)}
                     {close(buttonClose)}
-                </div>
+                </span>
             </div>
         </div>
     )
