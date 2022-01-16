@@ -2,7 +2,7 @@ import React from "react"
 
 const Label = (props) => {
 
-    const { text, color, fontSize, fontWeight, className } = props
+    const { text, color, fontSize, fontWeight, className, require } = props
 
     const style = {
         color: color,
@@ -10,7 +10,7 @@ const Label = (props) => {
         fontWeight: fontWeight
     }
     
-    return <label className={className} style={style}>{text}</label>
+    return <label className={className} style={style}>{text} {require ? <span style={{ color: "red" }}> * </span> : ' '}</label>
 }
 
 export default Label
