@@ -7,6 +7,8 @@ import SearchBarSelect from "../components/SearchBarSelect";
 import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
 
+import "./styles/AddStaff.css"
+
 import positionService from "../services/position";
 import branchService from "../services/branch";
 

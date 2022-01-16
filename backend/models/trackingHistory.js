@@ -4,8 +4,8 @@ const { sequelize } = require('../utils/db')
 
 class TrackingHistory extends Model {}
 TrackingHistory.init({
-  itemId: {
-    type: DataTypes.INTEGER,
+  trackingNo: {
+    type: DataTypes.STRING,
     allowNull: false
   },
   itemStateId: {
