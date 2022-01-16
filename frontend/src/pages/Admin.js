@@ -1,9 +1,13 @@
 import React from "react";
+import HeaderBar from "../components/HeaderBar";
+import NavSideBar from "../components/NavSideBar";
 
 const Admin = () => {
+
   return (
     <div>
-      {"Hey Admin"}
+      <HeaderBar />
+      <NavSideBar />
     </div>
   )
 }

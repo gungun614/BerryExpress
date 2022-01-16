@@ -16,6 +16,7 @@ app.use('/api/trackingHistories', controller.trackingHistories)
 app.use('/api/staffs', controller.staffs)
 app.use('/api/itemStates', controller.itemStates)
 app.use('/api/branches', controller.branches)
+app.use('/api/branchTypes', controller.branchTypes)
 app.use('/api/login', controller.login)
 
 

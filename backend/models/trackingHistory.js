@@ -8,7 +8,7 @@ TrackingHistory.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  stateId: {
+  itemStateId: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
@@ -19,6 +19,10 @@ TrackingHistory.init({
   dateReceived: {
     type: DataTypes.DATE,
     allowNull: false
+  },
+  remark: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   sequelize,

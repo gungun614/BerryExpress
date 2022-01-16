@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
 // }
 router.put('/:id', positionFinder, async (req, res) => {
   if (req.position) {
-    req.position.name = req.body.name
+    req.position = await helper.genUpdate(req.position, req.body)
     await req.position.save()
     res.json(req.position)
     console.log(req.position)
@@ -65,3 +65,5 @@ router.delete('/:id', positionFinder, async (req, res) => {
 })
 
 module.exports = router
+
+

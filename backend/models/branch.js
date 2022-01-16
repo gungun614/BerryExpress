@@ -12,12 +12,32 @@ Branch.init({
     type: DataTypes.STRING,
     allowNull: false
   },
+  subdistrict: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  district: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  province: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  zipcode: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   tel: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  dateStart: {
+  dateStarted: {
     type: DataTypes.DATEONLY,
+    allowNull: false
+  },
+  branchTypeId: {
+    type: DataTypes.INTEGER,
     allowNull: false
   }
 }, {

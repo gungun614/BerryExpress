@@ -11,7 +11,7 @@ const Button = (props) => {
 
     const style = {
         cursor: 'pointer',
-        display: isHide ? 'hide' : 'block'
+        display: isHide  ? 'none': 'block'
     }
 
     return <button type={type} style={style} onClick={handleClick} disabled={disabled}>{text}</button>

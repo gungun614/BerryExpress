@@ -7,9 +7,14 @@ const findById = async (positionId) => {
   const response = await axios.get(`${baseUrl}/${positionId}`)
   return response.data
 }
+const findAll = async () => {
+  const response = await axios.get(baseUrl)
+  return response.data
+}
 
 const positionService = {
-  findById
+  findById,
+  findAll
 }
 
 export default positionService 

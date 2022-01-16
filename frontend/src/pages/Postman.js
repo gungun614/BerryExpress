@@ -2,7 +2,8 @@ import React from "react";
 import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
 
-const Staff = () => {
+const Postman = () => {
+
   return (
     <div>
       <HeaderBar />
@@ -11,4 +12,4 @@ const Staff = () => {
   )
 }
 
-export default Staff
+export default Postman 

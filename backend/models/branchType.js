@@ -2,8 +2,8 @@ const { Model, DataTypes } = require('sequelize')
 
 const { sequelize } = require('../utils/db')
 
-class Position extends Model {}
-Position.init({
+class BranchType extends Model {}
+BranchType.init({
   name: {
     type: DataTypes.STRING,
     allowNull: false
@@ -12,11 +12,9 @@ Position.init({
   sequelize,
   underscored: true,
   timestamps: false,
-  modelName: 'position'
+  modelName: 'branchType'
 })
 
-Position.sync()
+BranchType.sync()
 
-module.exports = Position
-
-
+module.exports = BranchType

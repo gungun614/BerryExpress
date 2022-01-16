@@ -4,14 +4,48 @@ const { sequelize } = require('../utils/db')
 class Item extends Model {}
 
 Item.init({
-    tracking_no:        { type: DataTypes.STRING, allowNull: false },
-    sender_name:        { type: DataTypes.STRING, allowNull: false },
-    sender_tel:         { type: DataTypes.STRING, allowNull: false },
-    sender_idcard:      { type: DataTypes.STRING, allowNull: false },
-    sender_address:     { type: DataTypes.STRING, allowNull: false },
-    receiver_name:      { type: DataTypes.STRING, allowNull: false },
-    receiver_tel:       { type: DataTypes.STRING, allowNull: false },
-    receiver_address:   { type: DataTypes.STRING, allowNull: false }
+    senderFirstname: { type: DataTypes.STRING, allowNull: false },
+    senderLastname: { type: DataTypes.STRING, allowNull: false },
+    senderTel: { type: DataTypes.STRING, allowNull: false },
+    senderCitizenId: { type: DataTypes.STRING, allowNull: false },
+    trackingNo: { type: DataTypes.STRING, allowNull: false },
+    // senderAddress: { type: DataTypes.STRING, allowNull: false },
+    // senderSubdistrict: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false
+    // },
+    // senderDistrict: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false
+    // },
+    // senderProvince: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false
+    // },
+    // senderZipcode: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false
+    // },
+    receiverFirstname:      { type: DataTypes.STRING, allowNull: false },
+    receiverLastname:      { type: DataTypes.STRING, allowNull: false },
+    receiverTel:       { type: DataTypes.STRING, allowNull: false },
+    receiverAddress:   { type: DataTypes.STRING, allowNull: false },
+    receiverSubdistrict: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    receiverDistrict: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    receiverProvince: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    receiverZipcode: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 },
 {
     sequelize,
