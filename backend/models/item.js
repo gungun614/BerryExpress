@@ -8,6 +8,7 @@ Item.init({
     senderLastname: { type: DataTypes.STRING, allowNull: false },
     senderTel: { type: DataTypes.STRING, allowNull: false },
     senderCitizenId: { type: DataTypes.STRING, allowNull: false },
+    trackingNo: { type: DataTypes.STRING, allowNull: false },
     // senderAddress: { type: DataTypes.STRING, allowNull: false },
     // senderSubdistrict: {
     //     type: DataTypes.STRING,
