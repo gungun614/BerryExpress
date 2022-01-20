@@ -1,6 +1,9 @@
 const getCost = (weight) => {
-    const g = Number(weight) * 1000
-    if (g <= 20) return 32
+    if (weight == '') return 0
+    const g = Number(weight)
+    if (isNaN(g)) return '-'
+    else if (g == 0) return 0
+    else if (g <= 20) return 32
     else if (g <= 100) return 37
     else if (g <= 250) return 42
     else if (g <= 500) return 52
