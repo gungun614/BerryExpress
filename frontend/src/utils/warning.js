@@ -8,7 +8,7 @@ const getMessageWarning = (name) => {
         case 'villageNo': return 'ป้อนเฉพาะตัวเลขเท่านั้น'
         case 'alley': return 'ไม่อนุญาตให้ใช้เครื่องหมายอื่นนอกจาก /'
         case 'zipcode': return 'ป้อนเฉพาะตัวเลขเท่านั้น'
-        case 'weight': return 'ป้อนเฉพาะตัวเลขและ . เท่านั้น'
+        case 'weight': return 'ป้อนเฉพาะตัวเลขเท่านั้น'
         case 'road': return 'ไม่อนุญาตให้ใช้อักษรพิเศษ'
         // case '': return ''
         // case '': return ''
