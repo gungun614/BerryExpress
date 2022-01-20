@@ -31,10 +31,8 @@ const Login = () => {
         password: userInput.password
       })
       const userPosition = await positionService.findById(loginUser.positionId)
+      sessionStorage.setItem('session', loginUser.id)
       
-
-      console.log(loginUser)
-      console.log(userPosition)
       if (loginUser && userPosition.name === "Admin") history.push("/admin")
       else if (loginUser && userPosition.name === "Staff") history.push("/staff")
       else if (loginUser && userPosition.name === "Postman") history.push("/postman")

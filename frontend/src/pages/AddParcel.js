@@ -3,13 +3,17 @@ import Input from '../widgets/Input'
 import Label from '../widgets/Label'
 import Button from '../widgets/Button'
 import Icon from '../widgets/Icon'
+import parcelService from "../services/parcel"
 const { re } = require('../utils/regex')
-const { validation } = require('../utils/validation')
-const { warning, getMessageWarning } = require('../utils/warning')
+const { getMessageWarning } = require('../utils/warning')
 const jsonAddress = require('../json/thailand_address.json')
+const { getCost } = require('../utils/cost')
+
+
+// if (sessionStorage.getItem('username')[sessionStorage.getItem('username').length] != '1') window.location.replace("https://youtube.com")
 
 const AddParcel = () => {
-
+  console.log(sessionStorage.getItem('username'))
   const [ parcels, setParcels ] = useState([])
 
   //-------------------------------------------------------------
@@ -38,21 +42,43 @@ const AddParcel = () => {
 
   const onClickAddParcel = () => {
     const isCorrect = Object.values(messageReceiver).every((value) => value == '')
-    const isData = Object.values(receiver).some((value) => value == '' || value == '0')
+    // const isData = Object.values(receiver).some((value) => value == '' || value == '0')
+    // Object.values(receiver).some((value, name) => console.log(name))
 
-    if (isData) {
+    let isNotData = false
+    for (const name in receiver) {
+      if (name == 'villageNo') continue
+      if (receiver[name] == '' || receiver[name] == '0') {
+        isNotData = true
+        break
+      }
+    }
+
+    console.log('in click add parcel')
+    if (isNotData) {
+      console.log('if 1')
       let error = {}
       for (const name in receiver) {
         if (name == 'villageNo') continue
         if (receiver[name] == '' || receiver[name] == undefined) {
           error[name] = 'กรุณาป้อนข้อมูล'
+          console.log('error name => ', name)
         }
       }
+      console.log('error => ', error)
       setMessageReceiver({ ...messageReceiver, ...error })
     } else if (receiver.tel.length != 10) {
+      console.log('if 2')
+
       setMessageReceiver({ ...messageReceiver, tel: 'เบอร์โทรศัพท์ต้องมี 10 หลักเท่านั้น' })
     } else if (isCorrect) {
-      setParcels([ ...parcels, receiver ])
+      console.log('if 3')
+      console.log('village => ', receiver.villageNo)
+      if (receiver.villageNo == '') {
+        setParcels([ ...parcels, { ...receiver, villageNo: '-' } ])
+      } else {
+        setParcels([ ...parcels, receiver ])
+      }
       setReceiver({
         firstname: '',
         lastname: '',
@@ -69,10 +95,8 @@ const AddParcel = () => {
         cost: '0'
       })
       unDisabledButtonSave()
-      // districts.pop()
-      // subdistricts.pop()
-      // isDisabled.selectDistrict = true
-      // isDisabled.selectSubdistrict = true
+    } else {
+
     }
   }
 
@@ -90,7 +114,14 @@ const AddParcel = () => {
   }
 
   const handleEditParcel = (index) => {
-    setReceiver(parcels[index])
+    let temp = parcels[index]
+    console.log('before temp => ', temp)
+    temp.district = ''
+    temp.subdistrict = ''
+    console.log('after temp => ', temp)
+
+    setReceiver(temp)
+    // setReceiver({ ...receiver, district: '', subdistrict: '' })
     parcels.splice(index, 1)
     setParcels([ ...parcels ])
     if (parcels.length == 0) disabledButtonSave()
@@ -160,7 +191,7 @@ const AddParcel = () => {
 
   const [ buttonSave, setButtonSave ] = useState(true)
 
-  const onClickSave = () => {
+  const onClickSave = async () => {
     const isDataSender = Object.values(sender).every((value) => value != '')
     const isDataReceiver = Object.values(receiver).every((value) => value == '' || value == '0' )
     const isDataParcels = parcels.length > 0 ? true : false
@@ -176,20 +207,24 @@ const AddParcel = () => {
         setMessageSender({ ...messageSender, tel: 'เบอร์โทรศัพท์ต้องมี 10 หลักเท่านั้น' })
       } else {
         console.log('save save save')
+        const data = {
+          sender: sender,
+          parcels: parcels,
+          staffId: sessionStorage.getItem('session')
+        }
+        // const data = { data: 'test request !!!' }
+        // console.log(typeof parcelService)
+        // const result = parcelService.saveParcels(data).then(result => result)
+        // console.log('result api = ', result)
+        const result = await parcelService.saveParcels(data)
+        console.log(result)
+        // window.open("https://youtube.com", "_blank")
       }
 
     } else if (!isDataSender) {
-      // console.log('please enter sender')
       showModal('warningSender')
     } else if (!isDataReceiver) {
-      // console.log('backlog receiver')
       showModal('backlog')
-    } else if (!isCorrectSender) {
-      // console.log('please invalid sender')
-    } else if (!isCorrectReceiver) {
-      // console.log('please invalid receiver')
-    } else if (!isDataParcels) {
-      // console.log('program error')
     }
   }
 
@@ -270,7 +305,7 @@ const AddParcel = () => {
     const name = event.target.name
     const value = event.target.value
     const isValid = re[name].test(value)
-    const cost = name == 'weight' ? Number(value) * 2 : receiver.cost
+    const cost = name == 'weight' ? getCost(event.target.value) : receiver.cost
     if (isValid) {
       setMessageReceiver({ ...messageReceiver, [name]: '' })
     } else {
@@ -322,16 +357,16 @@ const AddParcel = () => {
   }
   
   let temp = ''
-  const districts = provinces.filter((item) => {
+  let districts = provinces.filter((item) => {
     if (temp != item.district) {
       temp = item.district
       return item.district
     }
   })
-  districts.unshift('เลิอกเขต/อำเภอ')
+  districts.unshift('')
 
   temp = ''
-  const subdistricts = provinces.filter((item) => {
+  let subdistricts = provinces.filter((item) => {
     if (receiver.district == item.district) {
       if (temp != item.subdistrict) {
         temp = item.subdistrict
@@ -339,7 +374,7 @@ const AddParcel = () => {
       }
     }
   })
-  subdistricts.unshift('เลือกแขวง/ตำบล')
+  subdistricts.unshift('')
 
 
   sizeSelect.district = districts.length
@@ -360,7 +395,7 @@ const AddParcel = () => {
           <Label text="ข้อมูลผู้ส่ง" fontWeight="bold" />
           <br/>
           <Label text="เลขบัตรประชาชน" require={true} />
-          <Label text={messageSender.nationId} color="red" /><br/>
+          <Label text={messageSender.nationId} color="red" />
           <Input type="text" value={sender.nationId} name="nationId" onChange={handleChangeSender} length="13" />
           <br/>
           <Label text="ชื่อ" require={true}/>
@@ -481,7 +516,7 @@ const AddParcel = () => {
           { subdistricts.map((item, index) => <option key={index} valeu={item.subdistrict}>{item.subdistrict}</option> ) }
           </select>
           <br/>
-          <Label text="น้ำหนัก (กิโลกรัม)" require={true} />
+          <Label text="น้ำหนัก (กรัม)" require={true} />
           <Label text={messageReceiver.weight} color="red" /><br/>
           <Input type="text" value={receiver.weight} name="weight" onChange={handleChangeReceiver}  />
           <br/>
