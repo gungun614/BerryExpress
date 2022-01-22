@@ -5,6 +5,16 @@ const genUpdate = async (result, data) => {
     return result
 }
 
+const getDateTime = (type, datetime = new Date()) => {
+    const result = datetime.toLocaleString("th-TH", { timeZone: "Asia/Jakarta" })
+    switch (type) {
+        case 'date': return result.split(' ')[0]
+        case 'time': return result.split(' ')[1]
+        case 'datetime': return result
+    }
+}
+
 module.exports = {
-    genUpdate
+    genUpdate,
+    getDateTime
 }
