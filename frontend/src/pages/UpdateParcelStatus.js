@@ -10,9 +10,9 @@ import trackingHistoryService from "../services/trackingHistory"
 
 const TrackingCards = (props) => {
   const {data} = props
-  if (data[0].id) {
+  if (data.length > 0) {
     return data.map((track) => {
-      return <StateItem state={track.itemStateId} branch={track.branchName} date={track.date} time={track.time}/>
+      return <StateItem key={track.id} state={track.itemStateId} branch={track.branchName} date={track.date} time={track.time}/>
     })
   } else {
     return null
@@ -20,14 +20,7 @@ const TrackingCards = (props) => {
 }
 
 const UpdateParcelStatus = () => {
-  const [trackingDatas,setTrackingDatas] = useState([{
-    id: '',
-    trackingNo: '',
-    itemStateId: '',
-    staffId: '',
-    dateReceived: '',
-    remark: ''
-  }])
+  const [trackingDatas,setTrackingDatas] = useState([])
   const [userInput, setUserInput] = useState({
     search: ''
   })
