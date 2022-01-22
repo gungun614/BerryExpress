@@ -4,8 +4,6 @@ import Label from '../widgets/Label'
 import Button from '../widgets/Button'
 import Icon from '../widgets/Icon'
 import parcelService from "../services/parcel"
-import HeaderBar from "../components/HeaderBar";
-import NavSideBar from "../components/NavSideBar";
 const { re } = require('../utils/regex')
 const { getMessageWarning } = require('../utils/warning')
 const jsonAddress = require('../json/thailand_address.json')
@@ -391,8 +389,6 @@ const AddParcel = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'columns' }}>
 
-<HeaderBar />
-      <NavSideBar />
       <div style={{ width: '50%' }}>
         
         <div className="sender-info">
