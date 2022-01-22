@@ -7,7 +7,7 @@ import SearchBarSelect from "../components/SearchBarSelect";
 import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
 
-import "./styles/AddStaff.css"
+import "./css/AddStaff.css"
 
 import positionService from "../services/position";
 import branchService from "../services/branch";
@@ -201,117 +201,145 @@ const AddStaff = () => {
   }
 
   return (
-    <div>
-      <HeaderBar />
-      <NavSideBar />
-      <form>
-        <Label text="ชื่อ" />
-        <Input 
-          disabled={isDisabledForm} 
-          type="text" 
-          value={staff.firstName} 
-          name="firstName" 
-          onChange={handleChange} 
-        />
-        <Label text="นามสกุล" />
-        <Input 
-          disabled={isDisabledForm} 
-          type="text" 
-          value={staff.lastName} 
-          name="lastName" 
-          onChange={handleChange} 
-        />
-        <br/>
-        <Label text="เลขบัตรประชาชน" />
-        <Input 
-          disabled={isDisabledForm} 
-          type="text" 
-          value={staff.citizenId} 
-          name="citizenId" 
-          onChange={handleChange} 
-          onKeyPress={handleKeyPress} 
-        />
-        <br/>
-        <Label text="วันเกิด" />
-        <Input 
-          disabled={isDisabledForm} 
-          type="date" 
-          value={staff.birthDate} 
-          name="birthDate" 
-          onChange={handleChange} 
-        />
-        <Label text="เบอร์โทร" />
-        <Input 
-          disabled={isDisabledForm} 
-          type="text" value={staff.tel} 
-          name="tel" 
-          onChange={handleChange} 
-          onKeyPress={handleKeyPress} 
-        />
-        <Label text="E-mail" />
-        <Input 
-          disabled={isDisabledForm} 
-          type="email" 
-          value={staff.email} 
-          name="email" 
-          onChange={handleChange} 
-        />
-        <br/>
-        <Label text="ที่อยู่" />
-        <Input 
-          disabled={isDisabledForm} 
-          type="text" 
-          value={staff.address} 
-          name="address" 
-          onChange={handleChange} 
-        />
-        <SearchBarSelect 
-          disabled={isDisabledForm}
-          options={addressOptions}
-          handleChange={handleAddressChange}
-          minLength={5}
-          placeholder={`ค้นหาที่อยู่`}
-        />
-        <br/>
-        <Label text="สาขา" />
-        <SearchBarSelect 
-          disabled={isDisabledForm }
-          options={branchOptions}
-          handleChange={handleBranchChange}
-          minLength={5}
-          placeholder={`ค้นหาสาขา`}
-        />
-        <Label text="ตำแหน่งงาน" />
-        <Select 
-          disabled={isDisabledForm || !staff.branch } 
-          value={staff.position} 
-          name="position" 
-          options={positionOptions} 
-          onChange={handleChange} 
-        />
-        <Label text="เงินเดือน" />
-        <Input 
-          disabled={isDisabledForm} 
-          type="number" 
-          value={staff.salary} 
-          name="salary" 
-          onChange={handleChange} 
-        />
-        <br/>
-        { 
-          formState !== formStates[2]
-          ? <Button type={"submit"} text={"บันทึก"} onClick={handleSubmit} />
-          : null 
-        }
-        { 
-          formState === formStates[1]
-          ? <Button type={"button"} text={"แก้ไข"} onClick={handleEdit} />
-          : null 
-        }
-
-      </form>
+    <div className="page-container">
+      <HeaderBar className="header-section" />
+      <NavSideBar className="nav-section" />
+      <div className="main-section">
+        <div className="form-section">
+          <form>
+            <div className="input-section">
+              <h2>เพิ่มพนักงาน</h2>
+              <div className="firstname-section">
+              <Label text="ชื่อ" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="text" 
+                value={staff.firstName} 
+                name="firstName" 
+                onChange={handleChange} 
+              />
+            </div>
+            <div className="lastname-section">
+              <Label text="นามสกุล" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="text" 
+                value={staff.lastName} 
+                name="lastName" 
+                onChange={handleChange} 
+              />
+            </div>
+            
+            <div className="id-section">
+              <Label text="เลขบัตรประชาชน" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="text" 
+                value={staff.citizenId} 
+                name="citizenId" 
+                onChange={handleChange} 
+                onKeyPress={handleKeyPress} 
+              />
+            </div>
+            <div className="birthday-section">
+              <Label text="วันเกิด" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="date" 
+                value={staff.birthDate} 
+                name="birthDate" 
+                onChange={handleChange} 
+              />
+            </div>
+            <div className="tel-section">
+              <Label text="เบอร์โทร" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="text" value={staff.tel} 
+                name="tel" 
+                onChange={handleChange} 
+                onKeyPress={handleKeyPress} 
+              />
+            </div>
+            
+            <div className="email-section">
+              <Label text="อีเมล" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="email" 
+                value={staff.email} 
+                name="email" 
+                onChange={handleChange} 
+              />
+            </div>
+            <div className="address-section">
+              <Label text="ที่อยู่" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="text" 
+                value={staff.address} 
+                name="address" 
+                onChange={handleChange} 
+              />
+            </div>
+            <div className="mainAddress-section">
+              <Label text="ที่อยู่ (ตำบล/อำเภอ/จังหวัด/รหัสไปรษณีย์)" />
+              <SearchBarSelect 
+                disabled={isDisabledForm}
+                options={addressOptions}
+                handleChange={handleAddressChange}
+                minLength={5}
+                placeholder={`ค้นหาที่อยู่`}
+              />
+            </div>
+            
+            <div className="branch-section"><Label text="สาขา" />
+              <SearchBarSelect 
+                disabled={isDisabledForm }
+                options={branchOptions}
+                handleChange={handleBranchChange}
+                minLength={5}
+                placeholder={`ค้นหาสาขา`}
+              />
+            </div>
+            <div className="position-section">
+              <Label text="ตำแหน่งงาน" />
+              <Select 
+                disabled={isDisabledForm || !staff.branch } 
+                value={staff.position} 
+                name="position" 
+                options={positionOptions} 
+                onChange={handleChange} 
+              />
+            </div>
+            <div className="salary-section">
+              <Label text="เงินเดือน" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="number" 
+                value={staff.salary} 
+                name="salary" 
+                onChange={handleChange} 
+              />
+            </div>
+          </div>
+          <div className="button-section">{ 
+              formState !== formStates[2]
+              ? <Button type={"submit"} text={"บันทึก"} onClick={handleSubmit} />
+              : null 
+            }
+            { 
+              formState === formStates[1]
+              ? <Button type={"button"} text={"แก้ไข"} onClick={handleEdit} />
+              : null 
+            }
+          </div>
+        </form>
+      </div>
+        
     </div>
-  )
-}
+      
+  </div>
+)}
 
 export default AddStaff
