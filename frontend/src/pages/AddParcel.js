@@ -13,7 +13,7 @@ const { getCost } = require('../utils/cost')
 // if (sessionStorage.getItem('username')[sessionStorage.getItem('username').length] != '1') window.location.replace("https://youtube.com")
 
 const AddParcel = () => {
-  console.log(sessionStorage.getItem('username'))
+  console.log(sessionStorage.getItem('session'))
   const [ parcels, setParcels ] = useState([])
 
   //-------------------------------------------------------------

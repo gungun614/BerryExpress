@@ -1,0 +1,28 @@
+.item-icon {
+    grid-area: icon;
+    text-align: center;
+    margin: auto;
+}
+
+.item-text {
+    grid-area: text;
+    padding: 15px;
+}
+
+.item-data {
+    display: inline-block;
+}
+
+.grid-container {
+  display: grid;
+  grid-template:
+    'icon text text text text text';
+}
+
+.results-container {
+    grid-row: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
