@@ -5,9 +5,29 @@ import Button from "../widgets/Button";
 import StateItem from "../components/StateItem"
 import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
+//Services
+import trackingHistoryService from "../services/trackingHistory"
+
+const TrackingCards = (props) => {
+  const {data} = props
+  if (data[0].id) {
+    return data.map((track) => {
+      return <StateItem state={track.itemStateId} branch={track.branchName} date={track.date} time={track.time}/>
+    })
+  } else {
+    return null
+  }
+}
 
 const UpdateParcelStatus = () => {
-  // mit
+  const [trackingDatas,setTrackingDatas] = useState([{
+    id: '',
+    trackingNo: '',
+    itemStateId: '',
+    staffId: '',
+    dateReceived: '',
+    remark: ''
+  }])
   const [userInput, setUserInput] = useState({
     search: ''
   })
@@ -19,6 +39,15 @@ const UpdateParcelStatus = () => {
     })
   }
 
+  const handleSearch = async () =>{
+    const data = await trackingHistoryService.findByTrackingNumber(userInput.search)
+    console.log(data)
+    Array.isArray(data) ? setTrackingDatas(data) : setTrackingDatas([data])
+  }
+
+  const handleUpdate = async () =>{
+
+  }
 
   return (
     <div>
@@ -27,9 +56,9 @@ const UpdateParcelStatus = () => {
         <Label text ="Berry Express" />
         <br/>
         <Input type ="text" value={userInput.search} name="search" onChange={handleChange}/>
-        <Button text ="Search"/>
+        <Button text ="Search" onClick={handleSearch}/>
         <br/>
-        <StateItem state={3} branch="กรุงเทพ" date="9 มกราคม 2565" time="01:00"/>
+        <TrackingCards data = {trackingDatas}/>
         
     </div>
   )
