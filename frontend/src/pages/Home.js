@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "../widgets/Button";
 import Input from "../widgets/Input";
-import "./styles/Home.css"
+import "./css/Home.css"
 import logo from "../image/cherryLogo.svg"
 
 const Home = () => {

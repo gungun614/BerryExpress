@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom'
 import './css/NavSideBar.css'
 
-const NavSideBar = () => {
+const NavSideBar = ({className}) => {
 
   const path = useRouteMatch().path.substring(1)
   const [mainPath, subPath] = path.split('/')
@@ -26,19 +26,24 @@ const NavSideBar = () => {
   }
 
   return (
-    <div>
-      { tabs[mainPath].map(({path, label}, index) => 
-        <li key={index}>
-          <Link 
-            style={
-              subPath === path
-              ? {color:'red'}
-              : {color:'black'}} 
-              to={`/${mainPath}/${path}`}>
-            {label}
-          </Link>
-        </li>
-      )}
+    <div className={className}>
+      <ul className="navlist-container"> { 
+        tabs[mainPath].map(({path, label}, index) => 
+          <li key={index}>
+            <Link 
+              style={
+                subPath === path
+                ? {color:'red'}
+                : {color:'black'}
+              } 
+              to={`/${mainPath}/${path}`}
+            >
+              {label}
+            </Link>
+          </li>
+        )}
+      </ul>
+      
     </div>
  )
 }
