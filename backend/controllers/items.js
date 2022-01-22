@@ -25,19 +25,41 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
 
-        const generateTrackingNo = async () => {
+        const getDateCode = async () => {
             let [ month, date, year ] = new Date().toLocaleDateString().split('/')
             if (date.length == 1) date = '0' + date
             if (month.length == 1) month = '0' + month
             year = year.substring(2, year.length)
+            return `${date}${month}${year}`
+        }
 
-            const maxTrackingNo = await Item.max('trackingNo').then(result => result)
-            let nextTrackingNo = maxTrackingNo.substring(8, maxTrackingNo.length)
-            nextTrackingNo = Number(nextTrackingNo) + 1
-            nextTrackingNo = nextTrackingNo.toString()
-            while (nextTrackingNo.length < 6) nextTrackingNo = '0' + nextTrackingNo
+        // const generateTrackingNo = async () => {
+            // let [ month, date, year ] = new Date().toLocaleDateString().split('/')
+            // if (date.length == 1) date = '0' + date
+            // if (month.length == 1) month = '0' + month
+            // year = year.substring(2, year.length)
 
-            return `BE${date}${month}${year}${nextTrackingNo}`
+            // const maxTrackingNo = await Item.max('trackingNo').then(result => result)
+            // let nextTrackingNo = maxTrackingNo.substring(8, maxTrackingNo.length)
+            // nextTrackingNo = Number(nextTrackingNo) + 1
+            // nextTrackingNo = nextTrackingNo.toString()
+            // while (nextTrackingNo.length < 6) nextTrackingNo = '0' + nextTrackingNo
+
+            // return `BE${date}${month}${year}${nextTrackingNo}`
+        // }
+
+        const getTrackingNo = async (maxTrackingNo) => {
+            const dateCode = await getDateCode()
+            const dateMaxTrackingNo = maxTrackingNo.substring(2, 8)
+            if (dateCode == dateMaxTrackingNo) {
+                const no = maxTrackingNo.substring(8, maxTrackingNo.length)
+                let nextNo = Number(no) + 1
+                nextNo = nextNo.toString()
+                while (nextNo.length < 6) nextNo = '0' + nextNo
+                return `BE${dateCode}${nextNo}`
+            } else {
+                return `BE${dateCode}000001`
+            }
         }
 
         const parcels = req.body.parcels
@@ -45,39 +67,30 @@ router.post('/', async (req, res) => {
         const staff = await Staff.findByPk(req.body.staffId).then(result => result.dataValues)
 
         const datetime = new Date().toLocaleString()
-        let [ month, date, year ] = new Date().toLocaleDateString().split('/')
-        if (date.length == 1) date = '0' + date
-        if (month.length == 1) month = '0' + month
-        year = year.substring(2, year.length)
 
-        const maxTrackingId = await TrackingHistory.max('id')
-        const maxTracking = await TrackingHistory.findByPk(maxTrackingId).then(result => result.dataValues)
+        // const dateCode = await getDateCode()
+        // const maxIdItem = await Item.max('id').then(result => result)
+        // const maxTrackingNo = await Item.findByPk(maxIdItem).then(result => result.dataValues.trackingNo)
 
-        let isFirst = ''
-        if (datetime > maxTracking.dateReceived) {
-            isFirst = `BE${date}${month}${year}000001`
-        } else {
-            isFirst = false
-        }
         
+        // console.log(dateMaxTrackingNo)
+
         for (const parcel of parcels) {
-
-            let trackingNo = ''
-            if (isFirst != false) {
-                trackingNo = isFirst
-                isFirst = false
-            } else {
-                trackingNo = await generateTrackingNo()
-            }
-        
+            const maxIdItem = await Item.max('id').then(result => result)
+            const maxTrackingNo = await Item.findByPk(maxIdItem).then(result => result.dataValues.trackingNo)
+            const trackingNo = await getTrackingNo(maxTrackingNo)
+            // console.log('-'.repeat(40))
+            // console.log(trackingNo)
+            // console.log('-'.repeat(40))
             const tracking = {
                 trackingNo: trackingNo,
                 itemStateId: 1,
                 staffId: staff.id,
+                branchId: staff.branchId,
                 dateReceived: datetime,
                 remark: null
             }
-
+        
             const { homeNo, villageNo, alley, road } = parcel
             const address = `บ้านเลขที่ ${homeNo} หมู่ที่ ${villageNo} ซอย ${alley} ถนน ${road}`
             const item = {
@@ -99,6 +112,72 @@ router.post('/', async (req, res) => {
             await Item.create(item)
             await TrackingHistory.create(tracking)
         }
+
+
+
+        
+
+        // let [ month, date, year ] = new Date().toLocaleDateString().split('/')
+        // if (date.length == 1) date = '0' + date
+        // if (month.length == 1) month = '0' + month
+        // year = year.substring(2, year.length)
+
+        // let isFirst = ''
+        // const maxTrackingId = await TrackingHistory.max('id')
+        // if (maxTrackingId == null) {
+        //     isFirst = `BE${date}${month}${year}000001`
+        // } else {
+        //     const maxTracking = await TrackingHistory.findByPk(maxTrackingId).then(result => result.dataValues)        
+        //     if (maxTracking == null) {
+        //         isFirst = `BE${date}${month}${year}000001`
+        //     } else if (datetime > maxTracking.dateReceived ) {
+        //         isFirst = `BE${date}${month}${year}000001`
+        //     } else {
+        //         isFirst = false
+        //     }
+        // }
+        
+        
+        // for (const parcel of parcels) {
+
+        //     let trackingNo = ''
+        //     if (isFirst != false) {
+        //         trackingNo = isFirst
+        //         isFirst = false
+        //     } else {
+        //         trackingNo = await generateTrackingNo()
+        //     }
+        
+        //     const tracking = {
+        //         trackingNo: trackingNo,
+        //         itemStateId: 1,
+        //         staffId: staff.id,
+        //         branchId: staff.branchId,
+        //         dateReceived: datetime,
+        //         remark: null
+        //     }
+
+        //     const { homeNo, villageNo, alley, road } = parcel
+        //     const address = `บ้านเลขที่ ${homeNo} หมู่ที่ ${villageNo} ซอย ${alley} ถนน ${road}`
+        //     const item = {
+        //         senderFirstname: sender.firstname,
+        //         senderLastname: sender.lastname,
+        //         senderTel: sender.tel,
+        //         senderCitizenId: sender.nationId,
+        //         trackingNo: trackingNo,
+        //         receiverFirstname: parcel.firstname,
+        //         receiverLastname: parcel.lastname,
+        //         receiverTel: parcel.tel,
+        //         receiverAddress: address,
+        //         receiverSubdistrict: parcel.subdistrict,
+        //         receiverDistrict: parcel.district,
+        //         receiverProvince: parcel.province,
+        //         receiverZipcode: parcel.zipcode 
+        //     }
+
+        //     await Item.create(item)
+        //     await TrackingHistory.create(tracking)
+        // }
 
         res.status(200).json({ status: 'ok' })
 
