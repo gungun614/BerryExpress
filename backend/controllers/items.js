@@ -51,7 +51,9 @@ router.post('/', async (req, res) => {
         const sender = req.body.sender
         const staff = await Staff.findByPk(req.body.staffId).then(result => result.dataValues)
 
-        const datetime = new Date().toLocaleString()
+        const date = new Date().toLocaleDateString()
+        const time = new Date().toTimeString()
+        const datetime = date + ' ' + time.split(' ')[0]
 
         for (const parcel of parcels) {
             const maxIdItem = await Item.max('id').then(result => result)
