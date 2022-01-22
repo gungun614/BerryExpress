@@ -1,17 +1,19 @@
-import Label from "../widgets/Label"
 import logo from "../image/cherryLogo.svg"
+import "./css/HeaderBar.css"
 
-const HeaderBar = () => {
+const HeaderBar = ({className}) => {
 
-    return(
-        <div>
-            <div style={{ backgroundColor : "#E0E0E0" , width:"100%" , height :"60px" , display: "flex" ,  alignItems: "center"}}>
-                <img src={logo} alt="Logo" width="40px"/>
-                <Label text ="Berry Express" size="20px" />
-                <hr/>
-            </div>
+  return(
+    <div className={className}>
+      <div className="brand-section">
+        <img src={logo} alt="Logo" style={{ width:"3.4rem" }} />
+        <div className="brand-text">
+          <h1>Berry</h1>
+          <h5>Express</h5>
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 
 export default HeaderBar
