@@ -78,6 +78,20 @@ router.get('/name/:name' , async (req,res) => {
   }
 })
 
+// Edit Branch Data
+router.put('/edit', async (req, res) => {
+  console.log(req.body)
+  try {
+    const branch = await Branch.update( req.body ,{
+      where: {id : req.body.id}
+    })
+    res.json(branch)
+  } catch (error) {
+    return res.status(400).json({ error })
+  }
+})
+
+
 
 // POST
 router.post('/', async (req, res) => {

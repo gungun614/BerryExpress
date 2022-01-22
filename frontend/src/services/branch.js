@@ -38,6 +38,12 @@ const findById = async (id) => {
   return response.data
 }
 
+const editById = async (editBranchData) => {
+  const response = await axios.put(`${baseUrl}/edit`,editBranchData)
+  return response.data
+}
+
+
 const branchService = {
   findLastId,
   findBranchTypeCount,
@@ -45,7 +51,8 @@ const branchService = {
   findAll,
   findBranchTypeWithSubdistrictCount,
   findByName,
-  findById
+  findById,
+  editById
 }
 
 export default branchService
