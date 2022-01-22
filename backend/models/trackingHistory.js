@@ -16,6 +16,10 @@ TrackingHistory.init({
     type: DataTypes.INTEGER,
     allowNull: false
   },
+  branchId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
   dateReceived: {
     type: DataTypes.DATE,
     allowNull: false

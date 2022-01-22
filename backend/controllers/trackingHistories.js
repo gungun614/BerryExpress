@@ -1,6 +1,8 @@
 const router = require('express').Router()
-
-const { TrackingHistory } = require('../models')
+const { Op } = require("sequelize");
+const { TestWatcher } = require('jest')
+const { getDateTime } = require('../utils/helper')
+const { TrackingHistory , Branch } = require('../models')
 
 const trackingHistoryFinder = async (req, res, next) => {
   req.trackingHistory = await TrackingHistory.findByPk(req.params.id)
@@ -18,14 +20,30 @@ router.get('/', async (req, res) => {
 // select * from _ where tracking_no = ...
 // TO DO:
 
-// select _ from position where id = ...
-router.get('/:id', trackingHistoryFinder, async (req, res) => {
-  if (req.trackingHistory) {
-    res.json(req.trackingHistory)
+// Find TrackingNumber
+router.get('/find/:trackingNumber', async (req, res) => {
+  const branchDatas = await Branch.findAll({ attributes : ['name'] })
+  let trackings = await TrackingHistory.findAll({
+    where : {
+      trackingNo : {
+        [Op.like] : req.params.trackingNumber
+      }
+    }
+  })
+
+  trackings.forEach((tracking) => {
+    tracking.dataValues.branchName = branchDatas[tracking.branchId-1].name
+    tracking.dataValues.date = getDateTime('date' , tracking.dataValues.dateReceived )
+    tracking.dataValues.time = getDateTime('time' , tracking.dataValues.dateReceived )
+  })
+
+  if (trackings) {
+    res.json(trackings)
   } else {
     res.status(404).end()
   }
 })
+
 
 // POST
 router.post('/', async (req, res) => {
