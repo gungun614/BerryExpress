@@ -135,7 +135,7 @@ const AddStaff = () => {
     })
 
     const positionIds = helper.positionIdGenerator(selectedBranch.branchTypeId)
-    const newPositionOptions = [{ value: null, label: "Please Select"}]
+    const newPositionOptions = []
     newPositionOptions
       .push(...positionIds.map(id => {
         const position = positions.find(item => item.id === id)
@@ -201,15 +201,15 @@ const AddStaff = () => {
   }
 
   return (
-    <div className="page-container">
-      <HeaderBar className="header-section" />
-      <NavSideBar className="nav-section" />
-      <div className="main-section">
+    <div className="page-container addstaff">
+      <HeaderBar className="header-section addstaff" />
+      <NavSideBar className="nav-section addstaff" />
+      <div className="main-section addstaff">
         <h2>เพิ่มพนักงาน</h2>
-        <div className="form-section">
+        <div className="form-section addstaff">
           <form>
-            <div className="input-section">
-              <div className="firstname-section">
+            <div className="input-section addstaff">
+              <div className="firstname-section addstaff">
               <Label text="ชื่อ" />
               <Input 
                 disabled={isDisabledForm} 
@@ -219,7 +219,7 @@ const AddStaff = () => {
                 onChange={handleChange} 
               />
             </div>
-            <div className="lastname-section">
+            <div className="lastname-section addstaff">
               <Label text="นามสกุล" />
               <Input 
                 disabled={isDisabledForm} 
@@ -230,7 +230,7 @@ const AddStaff = () => {
               />
             </div>
             
-            <div className="id-section">
+            <div className="id-section addstaff">
               <Label text="เลขบัตรประชาชน" />
               <Input 
                 disabled={isDisabledForm} 
@@ -241,7 +241,7 @@ const AddStaff = () => {
                 onKeyPress={handleKeyPress} 
               />
             </div>
-            <div className="birthday-section">
+            <div className="birthday-section addstaff">
               <Label text="วันเกิด" />
               <Input 
                 disabled={isDisabledForm} 
@@ -251,7 +251,7 @@ const AddStaff = () => {
                 onChange={handleChange} 
               />
             </div>
-            <div className="tel-section">
+            <div className="tel-section addstaff">
               <Label text="เบอร์โทร" />
               <Input 
                 disabled={isDisabledForm} 
@@ -262,7 +262,7 @@ const AddStaff = () => {
               />
             </div>
             
-            <div className="email-section">
+            <div className="email-section addstaff">
               <Label text="อีเมล" />
               <Input 
                 disabled={isDisabledForm} 
@@ -272,7 +272,7 @@ const AddStaff = () => {
                 onChange={handleChange} 
               />
             </div>
-            <div className="address-section">
+            <div className="address-section addstaff">
               <Label text="ที่อยู่" />
               <Input 
                 disabled={isDisabledForm} 
@@ -282,7 +282,7 @@ const AddStaff = () => {
                 onChange={handleChange} 
               />
             </div>
-            <div className="mainAddress-section">
+            <div className="mainAddress-section addstaff">
               <Label text="ที่อยู่ (ตำบล/อำเภอ/จังหวัด/รหัสไปรษณีย์)" />
               <SearchBarSelect 
                 disabled={isDisabledForm}
@@ -293,7 +293,7 @@ const AddStaff = () => {
               />
             </div>
             
-            <div className="branch-section"><Label text="สาขา" />
+            <div className="branch-section addstaff"><Label text="สาขา" />
               <SearchBarSelect 
                 disabled={isDisabledForm }
                 options={branchOptions}
@@ -302,7 +302,7 @@ const AddStaff = () => {
                 placeholder={`ค้นหาสาขา`}
               />
             </div>
-            <div className="position-section">
+            <div className="position-section addstaff">
               <Label text="ตำแหน่งงาน" />
               <Select 
                 disabled={isDisabledForm || !staff.branch } 
@@ -312,7 +312,7 @@ const AddStaff = () => {
                 onChange={handleChange} 
               />
             </div>
-            <div className="salary-section">
+            <div className="salary-section addstaff">
               <Label text="เงินเดือน" />
               <Input 
                 disabled={isDisabledForm} 
@@ -323,7 +323,7 @@ const AddStaff = () => {
               />
             </div>
           </div>
-          <div className="button-section">{ 
+          <div className="button-section addstaff">{ 
               formState !== formStates[2]
               ? <Button type={"submit"} text={"บันทึก"} onClick={handleSubmit} />
               : null 
