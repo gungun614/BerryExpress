@@ -205,10 +205,10 @@ const AddStaff = () => {
       <HeaderBar className="header-section" />
       <NavSideBar className="nav-section" />
       <div className="main-section">
+        <h2>เพิ่มพนักงาน</h2>
         <div className="form-section">
           <form>
             <div className="input-section">
-              <h2>เพิ่มพนักงาน</h2>
               <div className="firstname-section">
               <Label text="ชื่อ" />
               <Input 
