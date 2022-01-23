@@ -82,6 +82,7 @@ const Home = () => {
                     branch={state.branchName}
                     date={state.date}
                     time={state.time}
+                    remark={state.remark}
                   />
                 </div>
               )

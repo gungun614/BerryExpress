@@ -19,7 +19,7 @@ const StateItem = (props) => {
             }
             case 3: return { 
                 icon: 'bi bi-exclamation-circle', 
-                stateName: 'หมายเหตุ' + remark,
+                stateName: 'หมายเหตุ : ' + remark,
             }
             case 4: return { 
                 icon: 'bi bi-send', 
