@@ -1,13 +1,85 @@
-import React from "react";
+import React, { useState } from "react";
+import Label from "../widgets/Label";
+import Input from "../widgets/Input";
+import Button from "../widgets/Button";
+import StateItem from "../components/StateItem"
 import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
+//Services
+import trackingHistoryService from "../services/trackingHistory"
+import staffService from "../services/staff"
+import branchService from "../services/branch"
+
+
+const TrackingCards = (props) => {
+  // console.log(sessionStorage.getItem('session'))
+  const {data} = props
+  if (data.length > 0) {
+    return data.map((track) => {
+      return <StateItem key={track.id} state={track.itemStateId} branch={track.branchName} date={track.date} time={track.time}/>
+    })
+  } else {
+    return null
+  }
+}
 
 const Postman = () => {
+
+  const [trackingDatas,setTrackingDatas] = useState([])
+  const [trackingNumber,setTrackingNumber] = useState('')
+  const [userInput, setUserInput] = useState({
+    search: '',
+    remark : ''
+  })
+
+  const handleChange = (event) => {
+    setUserInput({
+      ...userInput,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const handleSearch = async (event) =>{
+    const data = await trackingHistoryService.findByTrackingNumber(userInput.search)
+    data.length > 0 ? setTrackingNumber(data[0].trackingNo) : setTrackingNumber('')
+    Array.isArray(data) ? setTrackingDatas(data) : setTrackingDatas([data])
+  }
+
+  const handleUpdate = async (event) =>{
+    let postManState = 0
+    console.log(event)
+    switch (event.target.value) {
+      case '1' : postManState = 1 // กำลังนำส่ง
+        break;
+      case '2' : postManState = 2 // จัดส่งสำเร็จ
+        break;
+      case '3' : postManState = 3 // หมายเหตุ
+        break;
+      default : 
+        break;
+    }
+    
+    const response = await trackingHistoryService.addTracking( trackingNumber , postManState , userInput.remark )
+    const data = await trackingHistoryService.findByTrackingNumber(trackingNumber)
+    Array.isArray(data) ? setTrackingDatas(data) : setTrackingDatas([data])
+  }
 
   return (
     <div>
       <HeaderBar />
       <NavSideBar />
+        <Label text ="Berry Express" />
+        <br/>
+        <Input type ="text" value={userInput.search} name="search" onChange={handleChange}/>
+        <Button text ="Search" onClick={handleSearch}/>
+        <br/>
+        <TrackingCards data = {trackingDatas}/>
+        <div style = {{display : trackingDatas.length > 0 ? "block" : "none"}} >
+          <button name="กำลังนำส่ง" value={1} onClick={handleUpdate} >{"กำลังนำส่ง"}</button>
+          <button name="จัดส่งสำเร็จ" value={2} onClick={handleUpdate} >{"จัดส่งสำเร็จ"}</button>
+          <button name="หมายเหตุ" value={3} onClick={handleUpdate} >{"หมายเหตุ"}</button>
+          <Input type ="text" value={userInput.remark} name="remark" onChange={handleChange}/>
+        </div>
     </div>
   )
 }
