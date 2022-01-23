@@ -3,7 +3,6 @@ import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
 
 const Postman = () => {
-
   return (
     <div>
       <HeaderBar />
