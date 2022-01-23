@@ -30,19 +30,15 @@ const NavSideBar = ({className}) => {
     <div className={className}>
       <ul className="navlist-container"> { 
         tabs[mainPath].map(({path, label, iconName}, index) => 
-          <li key={index}>
-            {/* <span className="material-icons-outlined">
-      person_add
-    </span> */}
-    <MaterialIcon iconName={iconName} />
-            <Link 
-              style={
-                subPath === path
-                ? {color:'red'}
-                : {color:'black'}
-              } 
-              to={`/${mainPath}/${path}`}
-            >
+          <li key={index}
+            className={ 
+              subPath === path
+              ? "active"
+              : "inactive"
+            }
+          >
+            <MaterialIcon iconName={iconName} />
+            <Link to={`/${mainPath}/${path}`}>
               {label}
             </Link>
           </li>
