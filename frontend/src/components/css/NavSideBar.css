@@ -2,10 +2,12 @@ ul.navlist-container {
     display: flex;
     flex-direction: column;
     font-size: 1.2rem;
+    gap: 2rem;
 }
 
 .navlist-container li {
     height: 2rem;
     display: grid;
-    place-items: center;
+    padding-left: 4rem;
+    /* place-items: center; */
 }
