@@ -57,8 +57,18 @@ router.post('/', async (req, res) => {
 
         for (const parcel of parcels) {
             const maxIdItem = await Item.max('id').then(result => result)
-            const maxTrackingNo = await Item.findByPk(maxIdItem).then(result => result.dataValues.trackingNo)
-            const trackingNo = await getTrackingNo(maxTrackingNo)
+            const trackingHistory = await Item.findByPk(maxIdItem).then(result => result ? result.dataValues : null)
+            console.log('-'.repeat(30))
+            console.log(trackingHistory)
+            console.log('-'.repeat(30))
+
+            let trackingNo
+            if (trackingHistory == null) {
+                const dateCode = await getDateCode()
+                trackingNo = `BE${dateCode}000001`
+            } else {
+                trackingNo = await getTrackingNo(trackingHistory.trackingNo)
+            }
             
             const tracking = {
                 trackingNo: trackingNo,

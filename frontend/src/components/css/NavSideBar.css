@@ -1,0 +1,35 @@
+ul.navlist-container {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1rem;
+    font-weight: bold;
+    gap: 2rem;
+}
+
+.navlist-container li {
+    height: 2rem;
+    display: flex;
+    gap: 1rem;
+    padding-left: 2rem;
+    align-items: center;
+}
+
+.inactive {
+    color: hsl(240, 23%, 75%);
+}
+.inactive a {
+    color: hsl(240, 23%, 75%);
+}
+li.active {
+    border-right: 0.2rem solid hsl(355, 100%, 65%);
+}
+.active {
+    color: hsl(355, 100%, 65%);
+}
+.active a {
+    color: black;
+}
+.material-icons-outlined.md-36 {
+    font-size: 36px;
+}
