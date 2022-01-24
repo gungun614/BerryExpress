@@ -284,6 +284,7 @@ const GetStaff = () => {
               />
             </div>
             <div className="mainAddress-section getstaff">
+              <Label text="ที่อยู่ (ตำบล/อำเภอ/จังหวัด/รหัสไปรษณีย์)" />
               <SearchBarSelect 
                 disabled={isDisabledForm}
                 options={addressOptions}
