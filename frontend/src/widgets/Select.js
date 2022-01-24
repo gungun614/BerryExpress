@@ -4,7 +4,7 @@ const Select = (props) => {
 
     const { disabled, name, value, options, onChange, size, isDefault } = props
 
-    options.splice(0, 0, {value: "", label: "-"})
+    // options.splice(0, 0, {value: "", label: "-"})
     
     return (
       <select disabled={disabled}  value={value} name={name} onChange={onChange}>
