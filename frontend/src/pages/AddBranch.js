@@ -140,8 +140,7 @@ const AddBranch = () => {
 
     // Generate new name for branch
     // Ex. ศูนย์คัดแยก คลองเตย 3
-    const newBranchNumber = branchTypeCount.amount + 1
-    const newName = `${branchType.label} ${branch.mainAddress.subdistrict} ${newBranchNumber}`
+    const newName = `${branchType.label} ${branch.name}`
 
     // Create branch object that has the same structure
     // as Branch Model Schema 
@@ -160,7 +159,6 @@ const AddBranch = () => {
     console.log(newBranch)
 
     try {
-
       // Add new branch to the database
       const addBranch = await branchService.add(newBranch)
       console.log(addBranch)
@@ -186,6 +184,13 @@ return (
       options={branchTypes}
       onChange={handleBranchTypeChange}
       disabled={isDisabled}
+    />
+    <Input 
+      type="text" 
+      value={branch.name} 
+      name="name"
+      onChange={handleChange} 
+      disabled={isDisabled} 
     />
     <br/>
     <Label text="ที่อยู่สาขา" />
