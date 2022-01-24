@@ -6,9 +6,10 @@ import "./css/Admin.css"
 const Admin = () => {
 
   return (
-    <div>
-      <HeaderBar />
-      <NavSideBar />
+    <div className="page-container admin">
+      <HeaderBar className="header-section admin"/>
+      <NavSideBar className="nav-section admin"/>
+      <div className="main-section admin"></div>
     </div>
   )
 }
