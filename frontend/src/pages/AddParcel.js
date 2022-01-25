@@ -7,7 +7,7 @@ import Icon from '../widgets/Icon'
 import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
 // import parcelService from "../services/parcel"
-import './styles/AddParcel.css'
+// import './css/AddParcel.css'
 const { re } = require('../utils/regex')
 const { getMessageWarning } = require('../utils/warning')
 const jsonAddress = require('../json/thailand_address.json')
@@ -17,7 +17,7 @@ const { genReceipt } = require('../utils/receipt')
 // if (sessionStorage.getItem('username')[sessionStorage.getItem('username').length] != '1') window.location.replace("https://youtube.com")
 
 const AddParcel = () => {
-  console.log(sessionStorage.getItem('username'))
+  console.log(sessionStorage.getItem('session'))
   const [ parcels, setParcels ] = useState([])
 
   //-------------------------------------------------------------
@@ -421,24 +421,18 @@ const AddParcel = () => {
 
           <div style={{ width: '50%' }}>
             
-            <div className="sender-info">
+            <div className="">
               <Label text="ข้อมูลผู้ส่ง" fontWeight="bold" />
               <br/>
-              <div className="block-item">
-                <div>
                   <Label text="ชื่อ" require={true} style={{ display: 'inline' }}/>
                   <Label text={messageSender.firstname} color="red" style={{ display: 'inline' }} /><br/>
                   <Input type="text" value={sender.firstname} name="firstname" style={{ display: 'inline' }} onChange={handleChangeSender} />
-                </div>
-                <div>
+                
                   <Label text="นามสกุล" require={true} />
                   <Label text={messageSender.lastname} color="red" /><br/>
                   <Input type="text" value={sender.lastname} name="lastname" onChange={handleChangeSender} />
-                </div>
                 
-                {/* <br/> */}
                 
-              </div>
               
               <Label text="เลขบัตรประชาชน" require={true} />
               <Label text={messageSender.nationId} color="red" />
@@ -490,7 +484,7 @@ const AddParcel = () => {
               <hr/>
             </div>
 
-            <div className="receiver-info">
+            <div className="">
               <Label text="ข้อมูลผู้รับ" fontWeight="bold" />
               <br/>
               <Label text="ชื่อ" require={true} />
@@ -569,7 +563,7 @@ const AddParcel = () => {
           
           <div style={{ width: '50%' }}>
 
-            <div className="parcels-info">
+            <div className="">
             {
               parcels.map((parcel, index) => {
                 return (

@@ -30,13 +30,11 @@ router.get('/find/:trackingNumber', async (req, res) => {
       }
     }
   })
-
   trackings.forEach((tracking) => {
     tracking.dataValues.branchName = branchDatas[tracking.branchId-1].name
     tracking.dataValues.date = getDateTime('date' , tracking.dataValues.dateReceived )
     tracking.dataValues.time = getDateTime('time' , tracking.dataValues.dateReceived )
   })
-
   if (trackings) {
     res.json(trackings)
   } else {
@@ -44,6 +42,20 @@ router.get('/find/:trackingNumber', async (req, res) => {
   }
 })
 
+
+// Add TrackingNumber
+router.post('/addTracking', async (req, res) => {
+  try {
+    req.body.dateReceived = new Date();
+    console.log(req.body)
+    const response = await TrackingHistory.create(req.body)
+    res.json(response)
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ error })
+  }
+})
 
 // POST
 router.post('/', async (req, res) => {

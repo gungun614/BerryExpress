@@ -1,0 +1,11 @@
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

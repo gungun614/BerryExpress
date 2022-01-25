@@ -11,6 +11,7 @@ import positionService from "../services/position";
 import Select from "../widgets/Select";
 import helper from "../utils/helper";
 import { useHistory } from "react-router-dom";
+import "./css/GetStaff.css"
 
 const GetStaff = () => {
   // Form States
@@ -188,132 +189,161 @@ const GetStaff = () => {
 
   
   return (
-    <div>
-      <HeaderBar />
-      <NavSideBar />
-      <h3>{"เรียกดูพนักงาน"}</h3>
-      <SearchBarSelect
-        options={staffOptions}
-        handleChange={handleStaffOptionChange}
-        minLength={3}
-        placeholder={"ค้นหาพนักงาน"}
-      />
-      <br />
-      {
-        staff.positionId === 0
-        ? null
-        : <form>
-          <Label text="ชื่อ" />
-          <Input 
-            disabled={isDisabledForm} 
-            type="text" 
-            value={staff.firstname} 
-            name="firstname" 
-            onChange={handleChange} 
-          />
-          <Label text="นามสกุล" />
-          <Input 
-            disabled={isDisabledForm} 
-            type="text" 
-            value={staff.lastname} 
-            name="lastname" 
-            onChange={handleChange} 
-          />
-          <br/>
-          <Label text="เลขบัตรประชาชน" />
-          <Input 
-            disabled={isDisabledForm} 
-            type="text" 
-            value={staff.citizenId} 
-            name="citizenId" 
-            onChange={handleChange} 
-            onKeyPress={handleKeyPress} 
-          />
-          <br/>
-          <Label text="วันเกิด" />
-          <Input 
-            disabled={isDisabledForm} 
-            type="date" 
-            value={staff.dateBirth} 
-            name="dateBirth" 
-            onChange={handleChange} 
-          />
-          <Label text="เบอร์โทร" />
-          <Input 
-            disabled={isDisabledForm} 
-            type="text" value={staff.tel} 
-            name="tel" 
-            onChange={handleChange} 
-            onKeyPress={handleKeyPress} 
-          />
-          <Label text="E-mail" />
-          <Input 
-            disabled={isDisabledForm} 
-            type="email" 
-            value={staff.email} 
-            name="email" 
-            onChange={handleChange} 
-          />
-          <br/>
-          <Label text="ที่อยู่" />
-          <Input 
-            disabled={isDisabledForm} 
-            type="text" 
-            value={staff.address} 
-            name="address" 
-            onChange={handleChange} 
-          />
-          <br/>
-          <SearchBarSelect 
-            disabled={isDisabledForm}
-            options={addressOptions}
-            handleChange={handleAddressChange}
-            minLength={5}
-            placeholder={`${staff.subdistrict}, ${staff.district}, ${staff.province}, ${staff.zipcode}`}
-          />
-          <br/>
-          <Label text="สาขา" />
-          <SearchBarSelect 
-            disabled={isDisabledForm }
-            options={branchOptions}
-            handleChange={handleBranchChange}
-            minLength={5}
-            placeholder={branchOptions
-              ? `${branchOptions.find(option => option.value.id === staff.branchId).label}`
-              // ? `heyyy`
-              : `ค้นหาที่อยู่`
-            }
-          />
-          <Label text="ตำแหน่งงาน" />
-          <Select 
-            disabled={isDisabledForm || !staff.branchId } 
-            value={staff.positionId} 
-            name="positionId" 
-            options={positionOptions} 
-            onChange={handleChange} 
-          />
-          <Label text="เงินเดือน" />
-          <Input 
-            disabled={isDisabledForm} 
-            type="number" 
-            value={staff.salary} 
-            name="salary" 
-            onChange={handleChange} 
-          />
-          <br/>
-          {
+    <div className="page-container getstaff">
+      <HeaderBar className="header-section getstaff" />
+      <NavSideBar className="nav-section getstaff"/>
+
+      <div className="main-section getstaff">
+        <div className="form-header getstaff">
+          <h2>{"เรียกดูพนักงาน"}</h2>
+
+          <div className="search-select-staff getstaff">
+            <SearchBarSelect
+              options={staffOptions}
+              handleChange={handleStaffOptionChange}
+              minLength={3}
+              placeholder={"ค้นหาพนักงาน"}
+            />
+          </div>
+        </div>
+        
+        {
+          staff.positionId === 0
+          ? null
+          : <div className="form-section getstaff"><form>
+            <div className="input-section getstaff">
+              <div className="firstname-section getstaff">
+                <Label text="ชื่อ" />
+                <Input 
+                  disabled={isDisabledForm} 
+                  type="text" 
+                  value={staff.firstname} 
+                  name="firstname" 
+                  onChange={handleChange} 
+                />
+              </div>
+              <div className="lastname-section getstaff">
+                <Label text="นามสกุล" />
+                <Input 
+                  disabled={isDisabledForm} 
+                  type="text" 
+                  value={staff.lastname} 
+                  name="lastname" 
+                  onChange={handleChange} 
+                />
+              </div>
+              <div className="id-section getstaff">
+                <Label text="เลขบัตรประชาชน" />
+                <Input 
+                  disabled={isDisabledForm} 
+                  type="text" 
+                  value={staff.citizenId} 
+                  name="citizenId" 
+                  onChange={handleChange} 
+                  onKeyPress={handleKeyPress} 
+                />
+              </div>
+            <div className="birthday-section getstaff">
+              <Label text="วันเกิด" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="date" 
+                value={staff.dateBirth} 
+                name="dateBirth" 
+                onChange={handleChange} 
+              />
+            </div>
+            <div className="tel-section getstaff">
+              <Label text="เบอร์โทร" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="text" value={staff.tel} 
+                name="tel" 
+                onChange={handleChange} 
+                onKeyPress={handleKeyPress} 
+              />
+            </div>
+            <div className="email-section getstaff">
+              <Label text="E-mail" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="email" 
+                value={staff.email} 
+                name="email" 
+                onChange={handleChange} 
+              />
+            </div>
+            <div className="address-section getstaff">
+              <Label text="ที่อยู่" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="text" 
+                value={staff.address} 
+                name="address" 
+                onChange={handleChange} 
+              />
+            </div>
+            <div className="mainAddress-section getstaff">
+              <Label text="ที่อยู่ (ตำบล/อำเภอ/จังหวัด/รหัสไปรษณีย์)" />
+              <SearchBarSelect 
+                disabled={isDisabledForm}
+                options={addressOptions}
+                handleChange={handleAddressChange}
+                minLength={5}
+                placeholder={`${staff.subdistrict}, ${staff.district}, ${staff.province}, ${staff.zipcode}`}
+              />
+            </div>
+            <div className="branch-section getstaff">
+              <Label text="สาขา" />
+              <SearchBarSelect 
+                disabled={isDisabledForm }
+                options={branchOptions}
+                handleChange={handleBranchChange}
+                minLength={5}
+                placeholder={branchOptions
+                  ? `${branchOptions.find(option => option.value.id === staff.branchId).label}`
+                  // ? `heyyy`
+                  : `ค้นหาที่อยู่`
+                }
+              />
+            </div>
+            <div className="position-section getstaff">
+              <Label text="ตำแหน่งงาน" />
+              <Select 
+                disabled={isDisabledForm || !staff.branchId } 
+                value={staff.positionId} 
+                name="positionId" 
+                options={positionOptions} 
+                onChange={handleChange} 
+              />
+            </div>
+            <div className="salary-section getstaff">
+              <Label text="เงินเดือน" />
+              <Input 
+                disabled={isDisabledForm} 
+                type="number" 
+                value={staff.salary} 
+                name="salary" 
+                onChange={handleChange} 
+              />
+            </div>
+          </div>
+          <div className="button-section getstaff">{
             formState === formStates[1]
             ? <Button type={"button"} text={"แก้ไข"} onClick={handleEdit} />
             : null
+            }
+            {
+              formState === formStates[2]
+              ? <Button type={"submit"} text={"บันทึก"} onClick={handleSubmit} />
+              : null
+            }
+          </div>
+        </form>
+      </div>
           }
-          {
-            formState === formStates[2]
-            ? <Button type={"submit"} text={"บันทึก"} onClick={handleSubmit} />
-            : null
-          }
-          </form>
-      }
     </div>
+  </div>
   )
 }
 

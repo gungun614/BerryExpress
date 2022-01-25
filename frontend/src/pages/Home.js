@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Button from "../widgets/Button";
 import Input from "../widgets/Input";
+import "./css/Home.css"
 import Label from "../widgets/Label";
-import "./styles/Home.css"
 import logo from "../image/cherryLogo.svg"
 import StateItem from '../components/StateItem'
 import trackingHistoryService from '../services/trackingHistory'
@@ -82,6 +82,7 @@ const Home = () => {
                     branch={state.branchName}
                     date={state.date}
                     time={state.time}
+                    remark={state.remark}
                   />
                 </div>
               )

@@ -14,6 +14,9 @@ import SearchBarSelect from "../components/SearchBarSelect"
 import branchTypeService from "../services/branchType"
 import branchService from "../services/branch"
 
+// Styles
+import "./css/AddBranch.css"
+
 
 const AddBranch = () => {
 
@@ -140,8 +143,7 @@ const AddBranch = () => {
 
     // Generate new name for branch
     // Ex. ศูนย์คัดแยก คลองเตย 3
-    const newBranchNumber = branchTypeCount.amount + 1
-    const newName = `${branchType.label} ${branch.mainAddress.subdistrict} ${newBranchNumber}`
+    const newName = `${branchType.label} ${branch.name}`
 
     // Create branch object that has the same structure
     // as Branch Model Schema 
@@ -160,7 +162,6 @@ const AddBranch = () => {
     console.log(newBranch)
 
     try {
-
       // Add new branch to the database
       const addBranch = await branchService.add(newBranch)
       console.log(addBranch)
@@ -173,65 +174,99 @@ const AddBranch = () => {
   }
 
 return (
-  <div>
-    <HeaderBar />
-    <NavSideBar />
-    <Label text="เพิ่มข้อมูลสาขา" isHide = {isDisabledTitle} />
-    <Label text="ยืนยันการบันทึกข้อมูล" isHide = {!isDisabledTitle} />
-    <br/>
-    <Label text="ประเภทสาขา" />
-    <Select
-      value={branchType.value}
-      name="branchType"
-      options={branchTypes}
-      onChange={handleBranchTypeChange}
-      disabled={isDisabled}
-    />
-    <br/>
-    <Label text="ที่อยู่สาขา" />
-    <Input 
-      type="text" 
-      value={branch.address} 
-      name="address"
-      onChange={handleChange} 
-      disabled={isDisabled} 
-    />
-    <br/>
-    <SearchBarSelect
-      disabled={isDisabled}
-      options={addressOptions}
-      handleChange={handleAddressChange}
-      minLength={5}
-      placeholder={`ค้นหาที่อยู่`}
-    />
-    <br/>
-    <Label text="เบอร์โทร" />
-    <Input 
-      type="text" 
-      value={branch.tel} 
-      name="tel"
-      onChange={handleChange} 
-      onKeyPress={handleKeyPress}
-      disabled={isDisabled} 
-    />
-    <br/>
-    <Label text="วันที่ก่อตั้ง" />
-    <Input 
-      type="date" 
-      value={branch.dateStarted} 
-      name="dateStarted"
-      onChange={handleChange} 
-      disabled={isDisabled} 
-    />
-    <br/>
-    <Button type={'button'} text={'บันทึก'} isHide = {isDisabledButton} onClick = {handleClickToggle}  />
-    <Button type={'button'} text={'แก้ไข'} isHide = {!isDisabledButton} onClick = {handleClickToggle} />
-    <Button 
-      type={'button'} 
-      text={'ยืนยันการบันทึก'} 
-      isHide = {isDisabledSubmit} 
-      onClick={handleSubmit}
-    />
+  <div className="page-container addbranch">
+    <HeaderBar className="header-section addbranch"/>
+    <NavSideBar className="nav-section addbranch"/>
+    <div className="main-section addbranch">
+      <div className="form-header addbranch">
+        { !isDisabledTitle
+          ? <h2>เพิ่มข้อมูลสาขา</h2>
+          : <h2>ยืนยันการบันทึกข้อมูล</h2>
+        }
+        {/* <h2 text="เพิ่มข้อมูลสาขา" isHide = {isDisabledTitle} />
+        <h2 text="ยืนยันการบันทึกข้อมูล" isHide = {!isDisabledTitle} /> */}
+      </div>
+      <div className="form-section addbranch">
+        <form>
+          <div className="input-section addbranch">
+            <div className="branchtype-section addbranch">
+              <Label text="ประเภทสาขา" />
+              <Select
+                value={branchType.value}
+                name="branchType"
+                options={branchTypes}
+                onChange={handleBranchTypeChange}
+                disabled={isDisabled}
+              />
+            </div >
+            <div className="branchname-section addbranch">
+              <Label text="ชื่อสาขา" />
+              <Input 
+                type="text" 
+                value={branch.name} 
+                name="name"
+                onChange={handleChange} 
+                disabled={isDisabled} 
+              />
+            </div>
+            <div className="address-section addbranch">
+              <Label text="ที่อยู่สาขา" />
+              <Input 
+                type="text" 
+                value={branch.address} 
+                name="address"
+                onChange={handleChange} 
+                disabled={isDisabled} 
+              />
+            </div>
+            <div className="mainaddress-section addbranch">
+              <Label text="ที่อยู่ (ตำบล/อำเภอ/จังหวัด/รหัสไปรษณีย์)" />
+              <SearchBarSelect
+                disabled={isDisabled}
+                options={addressOptions}
+                handleChange={handleAddressChange}
+                minLength={5}
+                placeholder={`ค้นหาที่อยู่`}
+              />
+            </div>
+            <div className="tel-section addbranch">
+              <Label text="เบอร์โทร" />
+              <Input 
+                type="text" 
+                value={branch.tel} 
+                name="tel"
+                onChange={handleChange} 
+                onKeyPress={handleKeyPress}
+                disabled={isDisabled} 
+              />
+            </div>
+            <div className="date-section addbranch">
+              <Label text="วันที่ก่อตั้ง" />
+              <Input 
+                type="date" 
+                value={branch.dateStarted} 
+                name="dateStarted"
+                onChange={handleChange} 
+                disabled={isDisabled} 
+              />
+            </div>
+          </div>
+          <div className="button-section addbranch">
+            <Button type={'button'} text={'บันทึก'} isHide = {isDisabledButton} onClick = {handleClickToggle}  />
+            <Button type={'button'} text={'แก้ไข'} isHide = {!isDisabledButton} onClick = {handleClickToggle} />
+            <div className="wide-button addbranch">
+              <Button 
+                type={'button'} 
+                text={'ยืนยันการบันทึก'} 
+                isHide = {isDisabledSubmit} 
+                onClick={handleSubmit}
+              />
+            </div>
+            
+          </div>
+        </form>
+      </div>
+    </div>
 
   </div>
   )
