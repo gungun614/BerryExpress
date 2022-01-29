@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Item, Staff, TrackingHistory } = require('../models')
+const { Item, Staff, Branch, TrackingHistory } = require('../models')
 const helper = require('../utils/helper')
 
 router.get('/', async (req, res) => {
@@ -50,17 +50,22 @@ router.post('/', async (req, res) => {
         const parcels = req.body.parcels
         const sender = req.body.sender
         const staff = await Staff.findByPk(req.body.staffId).then(result => result.dataValues)
+        const branch = await Branch.findByPk(staff.branchId).then(result => result.dataValues)
 
         const date = new Date().toLocaleDateString()
         const time = new Date().toTimeString()
         const datetime = date + ' ' + time.split(' ')[0]
 
+        const result = {
+            receipts: [],
+            branch: branch,
+            staff: staff,
+            datetime: datetime
+        }
+
         for (const parcel of parcels) {
             const maxIdItem = await Item.max('id').then(result => result)
             const trackingHistory = await Item.findByPk(maxIdItem).then(result => result ? result.dataValues : null)
-            console.log('-'.repeat(30))
-            console.log(trackingHistory)
-            console.log('-'.repeat(30))
 
             let trackingNo
             if (trackingHistory == null) {
@@ -99,13 +104,21 @@ router.post('/', async (req, res) => {
 
             await Item.create(item)
             await TrackingHistory.create(tracking)
+
+            result.receipts.push({
+                trackingNo: trackingNo,
+                cost: parcel.cost,
+                receiver: {
+                    firstname: parcel.firstname,
+                    lastname: parcel.lastname
+                }
+            })
         }
 
-        res.status(200).json({ status: 'ok' })
+        res.json({ status: 200, data: result })
 
     } catch (err) {
-        console.log('error => ', err)
-        res.status(400).end()
+        res.json({ status: 400, error: err })
     }
 })
 

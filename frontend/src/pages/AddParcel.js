@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useHistory } from "react-router-dom"
+
 import Input from '../widgets/Input'
 import Label from '../widgets/Label'
 import Button from '../widgets/Button'
@@ -6,18 +8,19 @@ import Icon from '../widgets/Icon'
 
 import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
-// import parcelService from "../services/parcel"
-import './styles/AddParcel.css'
+
+import parcelService from "../services/parcel"
+
+import './css/AddParcel.css'
+
 const { re } = require('../utils/regex')
 const { getMessageWarning } = require('../utils/warning')
 const jsonAddress = require('../json/thailand_address.json')
 const { getCost } = require('../utils/cost')
 const { genReceipt } = require('../utils/receipt')
 
-// if (sessionStorage.getItem('username')[sessionStorage.getItem('username').length] != '1') window.location.replace("https://youtube.com")
-
 const AddParcel = () => {
-  console.log(sessionStorage.getItem('session'))
+  const history = useHistory()
   const [ parcels, setParcels ] = useState([])
 
   //-------------------------------------------------------------
@@ -27,15 +30,17 @@ const AddParcel = () => {
     removeParcel: true,
     confirmSave: true,
     warningSender: true,
-    backlog: true
+    backlog: true,
+    background: true
   })
 
   const hideModal = (name) => {
-    setModal({ ...modal, [name]: true })
+    setModal({ ...modal, [name]: true, background: true })
+    
   }
 
   const showModal = (name) => {
-    setModal({ ...modal, [name]: false })
+    setModal({ ...modal, [name]: false, background: false })
   }
 
   //-------------------------------------------------------------
@@ -46,8 +51,6 @@ const AddParcel = () => {
 
   const onClickAddParcel = () => {
     const isCorrect = Object.values(messageReceiver).every((value) => value == '')
-    // const isData = Object.values(receiver).some((value) => value == '' || value == '0')
-    // Object.values(receiver).some((value, name) => console.log(name))
 
     let isNotData = false
     for (const name in receiver) {
@@ -106,7 +109,6 @@ const AddParcel = () => {
 
   //-------------------------------------------------------------
 
-
   const onClickEditParcel = (index) => {
     const isCorrect = Object.values(receiver).every((value) => value == '' || value == '0')
     if (isCorrect) {
@@ -125,7 +127,6 @@ const AddParcel = () => {
     console.log('after temp => ', temp)
 
     setReceiver(temp)
-    // setReceiver({ ...receiver, district: '', subdistrict: '' })
     parcels.splice(index, 1)
     setParcels([ ...parcels ])
     if (parcels.length == 0) disabledButtonSave()
@@ -216,25 +217,18 @@ const AddParcel = () => {
           parcels: parcels,
           staffId: sessionStorage.getItem('session')
         }
-        // const data = { data: 'test request !!!' }
-        // console.log(typeof parcelService)
-        // const result = parcelService.saveParcels(data).then(result => result)
-        // console.log('result api = ', result)
-        // const result = await parcelService.saveParcels(data)
-        // console.log(result)
-        // window.open("https://youtube.com", "_blank")
-        console.log('test')
-        const receipt = await genReceipt('kang.')
-        // console.log(receipt)
-        // window.open('/receipt')
-        // window.open('/receipt/:data')
-        // const myWindow = 
-        window.open('/receipt').document.write(receipt.toString())
-        // myWindow.open('/receipt')
-        // window.location.href = "http://localhost:3000/receipt";
-        // window.open('http://localhost:3000/receipt')
-        // myWindow.document.write(<input type="text" />);
-        // myWindow.document.write(receipt.toString());
+
+        const result = await parcelService.saveParcels(data)
+
+        if (result.status == 200) {
+          const receipt = await genReceipt(result.data)
+          window.open('/receipt').document.write(receipt)
+          console.log(`status ${result.status}: ok`)
+          history.push("/staff")
+
+        } else {
+          console.log(`status ${result.status}: ${result.error}`)
+        }
 
       }
 
@@ -359,7 +353,6 @@ const AddParcel = () => {
     let elementSelectSubdistrict = document.querySelector('#select-subdistrict')
     elementSelectSubdistrict.removeAttribute('size')
     setMessageReceiver({ ...messageReceiver, subdistrict: '' })
-
   }
 
   //-------------------------------------------------------------
@@ -398,215 +391,235 @@ const AddParcel = () => {
   isDisabled.selectDistrict = districts.length <= 1 ? true : false
 
   sizeSelect.subdistrict = subdistricts.length
-  // if (subdistricts.length == 1) receiver.subdistrict = subdistricts[0].subdistrict
   isDisabled.selectSubdistrict = subdistricts.length <= 1 ? true : false
 
   //-------------------------------------------------------------
 
   return (
+    <div className="page-container addParcel">
 
-    <div className="grid-container">
-
-      <div className="item-header">
+      <div className="header-section addParcel">
         <HeaderBar />
       </div>
 
-      <div className="item-sidebar">
+      <div className="nav-section addParcel">
         <NavSideBar />
       </div>
 
-      <div className="item-main">
-
-        <div style={{ display: 'flex', flexDirection: 'columns' }}>
-
-          <div style={{ width: '50%' }}>
+      <div className="main-section addParcel">
             
-            <div className="sender-info">
-              <Label text="ข้อมูลผู้ส่ง" fontWeight="bold" />
-              <br/>
-              <div className="block-item">
-                <div>
-                  <Label text="ชื่อ" require={true} style={{ display: 'inline' }}/>
-                  <Label text={messageSender.firstname} color="red" style={{ display: 'inline' }} /><br/>
-                  <Input type="text" value={sender.firstname} name="firstname" style={{ display: 'inline' }} onChange={handleChangeSender} />
-                </div>
-                <div>
-                  <Label text="นามสกุล" require={true} />
-                  <Label text={messageSender.lastname} color="red" /><br/>
-                  <Input type="text" value={sender.lastname} name="lastname" onChange={handleChangeSender} />
-                </div>
-                
-                {/* <br/> */}
-                
-              </div>
-              
-              <Label text="เลขบัตรประชาชน" require={true} />
-              <Label text={messageSender.nationId} color="red" />
-              <Input type="text" value={sender.nationId} name="nationId" onChange={handleChangeSender} length="13" />
-              <br/>
-              <Label text="เบอร์โทรศัพท์" require={true} />
-              <Label text={messageSender.tel} color="red" /><br/>
-              <Input type="text" value={sender.tel} name="tel" onChange={handleChangeSender} length="10" />
-            </div>
+        <div className="sender-block">
+          <Label className="label-sender" text="ข้อมูลผู้ส่ง" fontWeight="bold" />
 
-            <hr/>
+          <Label className="firstname-label-sender" text="ชื่อ" require={true} />
+          <Input className="firstname-input-sender" type="text" value={sender.firstname} name="firstname" onChange={handleChangeSender} />          
+          <Label className="firstname-invalid-sender" text={messageSender.firstname} fontSize="13px" color="red" />
 
-            <div className="modal-edit-parcel" style={{ display: modal.editParcel ? 'none' : 'block' }}>
-              <div>
-                มีข้อมูลค้างอยู่ในข้อมูลผู้รับ ต้องการแทนที่หรือไม่<br/>
-                กด ยืนยัน เพื่อแทนที่ หรือ กด ยกเลิก เพื่อย้อนกลับ
-              </div>
-              <Button text="ยืนยัน" onClick={onClickConfirmReplaceEdfitParcel} />
-              <Button text="ยกเลิก" onClick={onClickCancelReplaceEditParcel} />
-              <hr/>
-            </div>
+          <Label className="lastname-label-sender" text="นามสกุล" require={true} />
+          <Input className="lastname-input-sender" type="text" value={sender.lastname} name="lastname" onChange={handleChangeSender} />
+          <Label className="lastname-invalid-sender" text={messageSender.lastname} fontSize="13px" color="red" />
 
-            <div className="modal-remove-parcel" style={{ display: modal.removeParcel ? 'none' : 'block' }}>
-              <div>
-                ยืนยันการลบรายการ
-              </div>
-              <Button text="ยืนยัน" onClick={onClickConfirmRemoveParcel} />
-              <Button text="ยกเลิก" onClick={onClickCancelRemoveParcel} />
-              <hr/>
-            </div>
+          <Label className="nation-id-label-sender" text="เลขบัตรประชาชน" require={true} />
+          <Input className="nation-id-input-sender" type="text" value={sender.nationId} name="nationId" onChange={handleChangeSender} length="13" />
+          <Label className="nation-id-invalid-sender" text={messageSender.nationId} fontSize="13px" color="red" />
 
-            <div className="modal-warning-sender" style={{ display: modal.warningSender ? 'none' : 'block' }}>
-              <div>
-                กรุณาป้อนข้อมูลผู้ส่งให้ครบทุกช่อง
-              </div>
-              <Button text="ตกลง" onClick={onClickOKWarningSender} />
-              <hr/>
-            </div>
+          <Label className="tel-label-sender" text="เบอร์โทรศัพท์" require={true} />
+          <Input className="tel-input-sender" type="text" value={sender.tel} name="tel" onChange={handleChangeSender} length="10" />
+          <Label className="tel-invalid-sender" text={messageSender.tel} fontSize="13px" color="red" />
+        </div>
 
-            <div className="modal-warning-backlog" style={{ display: modal.backlog ? 'none' : 'block' }}>
-              <div>
-                ไม่สามารถบันทึกข้อมูลได้<br/>
-                เนื่องจากมีข้อมูลค้างอยู่ในช่องผู้รับ<br/>
-                กดปุ่มละทิ้ง เพื่อยกเลิกข้อมูลที่ค้าง<br/>
-                หรือ กดปุ่มย้อนกลับ เพื่อทำรายการเพิ่มเติม
-              </div>
-              <Button text="ละทิ้ง" onClick={onClickIgnoreReceiver} />
-              <Button text="ย้อนกลับ" onClick={onClickBackWard} />
-              <hr/>
-            </div>
+        <div className="receiver-block">
+          <Label className="label-receiver" text="ข้อมูลผู้รับ" fontWeight="bold" />
+          
+          <Label className="firstname-label-receiver" text="ชื่อ" require={true} />
+          <Label className="firstname-invalid-receiver" text={messageReceiver.firstname} color="red" />
+          <Input className="firstname-input-receiver" type="text" value={receiver.firstname} name="firstname" onChange={handleChangeReceiver} />
+          
+          <Label className="lastname-label-receiver" text="นามสกุล" require={true} />
+          <Label className="lastname-invalid-receiver" text={messageReceiver.lastname} color="red" />
+          <Input className="lastname-input-receiver" type="text" value={receiver.lastname} name="lastname" onChange={handleChangeReceiver} />
+          
+          <Label className="tel-label-receiver" text="เบอร์โทร" require={true} />
+          <Label className="tel-invalid-receiver" text={messageReceiver.tel} color="red" />
+          <Input className="tel-input-receiver" type="text" value={receiver.tel} name="tel" onChange={handleChangeReceiver} length="10" />
+          
+          <Label className="home-no-label-receiver" text="บ้านเลขที่" require={true} />
+          <Label className="home-no-invalid-receiver" text={messageReceiver.homeNo} color="red" />
+          <Input className="home-no-input-receiver" type="text" value={receiver.homeNo} name="homeNo" onChange={handleChangeReceiver} />
+          
+          <Label className="village-no-label-receiver" text="หมู่" />
+          <Label className="village-no-invalid-receiver" text={messageReceiver.villageNo} color="red" />
+          <Input className="village-no-input-receiver" type="text" value={receiver.villageNo} name="villageNo" onChange={handleChangeReceiver} />
+          
+          <Label className="alley-label-receiver" text="ซอย" require={true} />
+          <Label className="alley-invalid-receiver" text={messageReceiver.alley} color="red" />
+          <Input className="alley-input-receiver" type="text" value={receiver.alley} name="alley" onChange={handleChangeReceiver} />
+          
+          <Label className="road-label-receiver" text="ถนน" require={true} />
+          <Label className="road-invalid-receiver" text={messageReceiver.road} color="red" />
+          <Input className="road-input-receiver" type="text" value={receiver.road} name="road" onChange={handleChangeReceiver} />
+          
+          <Label className="zipcode-label-receiver" text="รหัสไปรษณีย์" require={true} />
+          <Label className="zipcode-invalid-receiver" text={messageReceiver.zipcode} color="red" />
+          <Input className="zipcode-input-receiver" type="text" value={receiver.zipcode} name="zipcode" onChange={handleChangeReceiver} length="5" />
+          
+          <Label className="province-label-receiver" text="จังหวัด" require={true} />
+          <Label className="province-invalid-receiver" text={messageReceiver.province} color="red" />
+          <Input className="province-input-receiver" type="text" value={province} name="province" onChange={handleChangeReceiver} disabled={true}  />
 
-            <div className="receiver-info">
-              <Label text="ข้อมูลผู้รับ" fontWeight="bold" />
-              <br/>
-              <Label text="ชื่อ" require={true} />
-              <Label text={messageReceiver.firstname} color="red" /><br/>
-              <Input type="text" value={receiver.firstname} name="firstname" onChange={handleChangeReceiver} />
-              <br/>
-              <Label text="นามสกุล" require={true} />
-              <Label text={messageReceiver.lastname} color="red" /><br/>
-              <Input type="text" value={receiver.lastname} name="lastname" onChange={handleChangeReceiver} />
-              <br/>
-              <Label text="เบอร์โทร" require={true} />
-              <Label text={messageReceiver.tel} color="red" /><br/>
-              <Input type="text" value={receiver.tel} name="tel" onChange={handleChangeReceiver} length="10" />
-              <br/>
-              <Label text="บ้านเลขที่" require={true} />
-              <Label text={messageReceiver.homeNo} color="red" /><br/>
-              <Input type="text" value={receiver.homeNo} name="homeNo" onChange={handleChangeReceiver} />
-              <br/>
-              <Label text="หมู่" />
-              <Label text={messageReceiver.villageNo} color="red" /><br/>
-              <Input type="text" value={receiver.villageNo} name="villageNo" onChange={handleChangeReceiver} />
-              <br/>
-              <Label text="ซอย" require={true} />
-              <Label text={messageReceiver.alley} color="red" /><br/>
-              <Input type="text" value={receiver.alley} name="alley" onChange={handleChangeReceiver} />
-              <br/>
-              <Label text="ถนน" require={true} />
-              <Label text={messageReceiver.road} color="red" /><br/>
-              <Input type="text" value={receiver.road} name="road" onChange={handleChangeReceiver} />
-              <br/>
-              <Label text="รหัสไปรษณีย์" require={true} />
-              <Label text={messageReceiver.zipcode} color="red" /><br/>
-              <Input type="text" value={receiver.zipcode} name="zipcode" onChange={handleChangeReceiver} length="5" />
-              <br/>
-              <Label text="จังหวัด" require={true} />
-              <Label text={messageReceiver.province} color="red" /><br/>
-              <Input type="text" value={province} name="province" onChange={handleChangeReceiver} disabled={true}  />
-              <br/>
-              <Label text="เขต/อำเภอ" require={true} />
-              <Label text={messageReceiver.district} color="red" /><br/>
-              <select 
-                id="select-district" 
-                value={receiver.district}
-                size={sizeSelect.district} 
-                style={{ width: '200px' }} 
-                disabled={isDisabled.selectDistrict}
-                onChange={onChangeSelectDistrict}
-              >
-              { districts.map((item, index) => <option key={index} valeu={item.district}>{item.district}</option>) }
-              </select>
-              <br/>
-              <Label text="แขวง/ตำบล" require={true} />
-              <Label text={messageReceiver.subdistrict} color="red" /><br/>
-              <select
-                id="select-subdistrict"
-                size={sizeSelect.subdistrict} 
-                style={{ width: '200px' }}
-                disabled={isDisabled.selectSubdistrict}
-                onChange={onChangeSelectSubdistrict}
-              >
-              { subdistricts.map((item, index) => <option key={index} valeu={item.subdistrict}>{item.subdistrict}</option> ) }
-              </select>
-              <br/>
-              <Label text="น้ำหนัก (กรัม)" require={true} />
-              <Label text={messageReceiver.weight} color="red" /><br/>
-              <Input type="text" value={receiver.weight} name="weight" onChange={handleChangeReceiver}  />
-              <br/>
-              <Label text="ค่าจัดส่ง" />
-              <Label text={receiver.cost} />
-              <Label text="บาท" />
-              <br/>
-              <Button text="เพิ่มพัสดุ" onClick={onClickAddParcel} />
-            </div>
-
+          <Label className="district-label-receiver" text="เขต/อำเภอ" require={true} />
+          <Label className="district-invalid-receiver" text={messageReceiver.district} color="red" />
+          <div className="district-input-receiver">
+            <select   
+              id="select-district" 
+              value={receiver.district}
+              size={sizeSelect.district}
+              disabled={isDisabled.selectDistrict}
+              onChange={onChangeSelectDistrict}
+            >
+            { districts.map((item, index) => <option key={index} valeu={item.district}>{item.district}</option>) }
+            </select>
           </div>
           
-          <div style={{ width: '50%' }}>
+          <Label className="subdistrict-label-receiver" text="แขวง/ตำบล" require={true} />
+          <Label className="subdistrict-invalid-receiver" text={messageReceiver.subdistrict} color="red" />
+          <div className="subdistrict-input-receiver">
+            <select 
+              id="select-subdistrict"
+              size={sizeSelect.subdistrict}
+              disabled={isDisabled.selectSubdistrict}
+              onChange={onChangeSelectSubdistrict}
+            >
+            { subdistricts.map((item, index) => <option key={index} valeu={item.subdistrict}>{item.subdistrict}</option> ) }
+            </select>
+          </div>
 
-            <div className="parcels-info">
+          <Label className="weight-label-receiver" text="น้ำหนัก (กรัม)" require={true} />
+          <Label className="weight-invalid-receiver" text={messageReceiver.weight} color="red" />
+          <Input className="weight-input-receiver" type="text" value={receiver.weight} name="weight" onChange={handleChangeReceiver}  />
+
+          <Label className="cost-label-receiver" text="ค่าจัดส่ง" />
+          <Label className="cost-value-receiver" text={receiver.cost} />
+          <Label className="cost-unit-receiver" text="บาท" />
+
+          <Button className="button-add-parcel-receiver" text="เพิ่มพัสดุ" onClick={onClickAddParcel} />
+        </div>
+
+        <div className="parcels-block">
+          <div className="list-parcels">
             {
               parcels.map((parcel, index) => {
                 return (
-                  <div key={index}>
-                    <Label text="ชื่อ" /> <Label text={parcel.firstname} />
-                    <Label text="นามสกุล" /> <Label text={parcel.lastname} />
-                    <Label text="เบอร์โทร" /> <Label text={parcel.tel} />
-                    <br/>
-                    <Label text="บ้านเลขที่" /> <Label text={parcel.homeNo} />
-                    <Label text="หมู่" /> <Label text={parcel.villageNo} />
-                    <Label text="ซอย" /> <Label text={parcel.alley} />
-                    <br/>
-                    <Label text="แขวง/ตำบล" /> <Label text={parcel.subdistrict} />
-                    <Label text="เขต/อำเภอ" /> <Label text={parcel.district} />
-                    <Label text="จังหวัด" /> <Label text={parcel.province} />
-                    <br/>
-                    <Label text="รหัสไปรษณีย์" /><Label text={parcel.zipcode} />
-                    <Label text="น้ำหนัก" /> <Label text={parcel.weight} /><Label text="กิโลกรัม" />
-                    <Label text="ค่าจัดส่ง" /> <Label text={parcel.cost} /><Label text="บาท" />
-                    <br/>
-                    <Icon className="bi-pencil-fill" title="แก้ไขรายการนี้" onClick={() => onClickEditParcel(index)} />
-                    <br/>
-                    <Icon className="bi-trash-fill" title="ลบรายการนี้" onClick={() => onClickRemoveParcel(index)} />
-                    <hr/>
+                  <div key={index} className={'item-parcel list-' + ( index % 2 == 0 ? 'even' : 'odd' )}>
+
+                    <div className="detail-parcel">
+
+                      <div className="parcel-line1 block-inline">
+                        <Label className="label-parcel" text="ชื่อ" />
+                        <Label className="data-parcel" text={parcel.firstname} />
+
+                        <Label className="label-parcel" text="นามสกุล" />
+                        <Label className="data-parcel" text={parcel.lastname} />
+
+                        <Label className="label-parcel" text="เบอร์โทร" />
+                        <Label className="data-parcel" text={parcel.tel} />
+                      </div>
+
+                      <div className="parcel-line2 block-inline">
+                        <Label className="label-parcel" text="บ้านเลขที่" />
+                        <Label className="data-parcel" text={parcel.homeNo} />
+
+                        <Label className="label-parcel" text="หมู่" />
+                        <Label className="data-parcel" text={parcel.villageNo} />
+
+                        <Label className="label-parcel" text="ซอย" />
+                        <Label className="data-parcel" text={parcel.alley} />
+                      </div>
+
+                      <div className="parcel-line3 block-inline">
+                        <Label className="label-parcel" text="แขวง/ตำบล" />
+                        <Label className="data-parcel" text={parcel.subdistrict} />
+
+                        <Label className="label-parcel" text="เขต/อำเภอ" />
+                        <Label className="data-parcel" text={parcel.district} />
+                      </div>
+
+                      <div className="parcel-line4 block-inline">
+                        <Label className="label-parcel" text="จังหวัด" />
+                        <Label className="data-parcel" text={parcel.province} />
+                        
+                        <Label className="label-parcel" text="รหัสไปรษณีย์" />
+                        <Label className="data-parcel" text={parcel.zipcode} />
+                      </div>
+
+                      <div className="parcel-line5 block-inline">
+                        <Label className="label-parcel" text="น้ำหนัก" />
+                        <Label className="data-parcel" text={parcel.weight} />
+                        <Label className="label-parcel" text="กรัม" />
+
+                        <Label className="label-parcel" text="ค่าจัดส่ง" />
+                        <Label className="data-parcel" text={parcel.cost} />
+                        <Label className="label-parcel" text="บาท" />
+                      </div>
+                    
+                    </div> 
+                    
+                    <div className="icon-parcel item-parcel">
+                      <Icon className="bi-pencil-fill icon-edit-parcel" title="แก้ไข" onClick={() => onClickEditParcel(index)} />
+                      <Icon className="bi-trash-fill icon-remove-parcel" title="ลบ" onClick={() => onClickRemoveParcel(index)} />
+                    </div>
+
                   </div>  
                 )
               })
             }
-            </div>
-            <Button className="btn-save" text="บันทึก" onClick={onClickSave} disabled={buttonSave} />
-            
           </div>
-
+          <Button className="button-save-parcels" text="บันทึก" onClick={onClickSave} disabled={buttonSave} />
         </div>
 
-      </div>
+        <div className="modal-background" style={{ display: modal.background ? 'none' : 'block' }}></div>
+          
+        <div className="modal" style={{ display: modal.editParcel ? 'none' : 'block' }}>
+          <div className='modal-content'>
+            มีข้อมูลค้างในช่องผู้รับ
+            <br/>
+            หากต้องการแทนที่กรุณากด ยืนยัน
+          </div>
+          <div className="modal-button">
+            <Button className="btn" text="ยืนยัน" onClick={onClickConfirmReplaceEdfitParcel} />
+            <Button className="btn" text="ยกเลิก" onClick={onClickCancelReplaceEditParcel} />
+          </div>
+        </div>
 
+        <div className="modal" style={{ display: modal.removeParcel ? 'none' : 'block' }}>
+          <div className="modal-content">
+            ต้องการลบรายการนี้หรือไม่
+          </div>
+          <div className="modal-button">
+            <Button className="btn" text="ยืนยัน" onClick={onClickConfirmRemoveParcel} />
+            <Button className="btn" text="ยกเลิก" onClick={onClickCancelRemoveParcel} />
+          </div>
+        </div>
+
+        <div className="modal" style={{ display: modal.warningSender ? 'none' : 'block' }}>
+          <div className="modal-content">
+            กรุณาป้อนข้อมูลผู้ส่งให้ครบทุกช่อง
+          </div>
+          <div className="modal-button">
+            <Button className="btn" text="ตกลง" onClick={onClickOKWarningSender} />
+          </div>
+        </div>
+
+        <div className="modal" style={{ display: modal.backlog ? 'none' : 'block' }}>
+          <div className="modal-content">
+            มีข้อมูลที่ค้างในช่องผู้รับ
+          </div>
+          <div className="modal-button">
+            <Button className="btn" text="ละทิ้ง" onClick={onClickIgnoreReceiver} />
+            <Button className="btn" text="ทำรายการต่อ" onClick={onClickBackWard} />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
