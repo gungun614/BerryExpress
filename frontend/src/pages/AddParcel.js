@@ -20,9 +20,7 @@ const { getCost } = require('../utils/cost')
 const { genReceipt } = require('../utils/receipt')
 
 const AddParcel = () => {
-  
   const history = useHistory()
-
   const [ parcels, setParcels ] = useState([])
 
   //-------------------------------------------------------------

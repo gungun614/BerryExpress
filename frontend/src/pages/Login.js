@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import Button from "../widgets/Button";
 import Input from "../widgets/Input";
 import Label from "../widgets/Label";
 import loginService from "../services/login"
 import positionService from "../services/position";
 import { useHistory 
 } from "react-router-dom";
+import logo from "../image/cherryLogo.svg"
+import "./css/Login.css"
 
 const Login = () => {
 
@@ -47,19 +48,25 @@ const Login = () => {
   }
 
   return (
-      <form onSubmit={handleLogin}>
-        <Label text="Berry Express" />
-        <br />
-        <Label text="username" />
-        <br />
-        <Input type="text" value={userInput.username} name="username" onChange={handleChange} />
-        <br />
-        <Label text="password" />
-        <br />
-        <Input type="password" value={userInput.password} name="password" onChange={handleChange} />
-        <br />
-        <button type="submit">Login</button>
-      </form>
+    <div className="login-container login">
+      <div className="login-center login">
+        <div className="brand-section login">
+          <img src={logo} alt="Logo" />
+          <h1>Berry Express</h1>
+        </div>
+        <form onSubmit={handleLogin}>
+          <div className="username-section login">
+            <Label text="Username" />
+            <Input type="text" value={userInput.username} name="username" onChange={handleChange} />
+          </div>
+          <div className="password-section login">        
+            <Label text="Password" />
+            <Input type="password" value={userInput.password} name="password" onChange={handleChange} />
+          </div>
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </div>
   )
 }
 

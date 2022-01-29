@@ -57,6 +57,7 @@ const GetBranch = () => {
     {value : 1,label:"id "},
     {value : 2,label:"ชื่อ"}
   ]
+  const [warnNote, setWarnNote] = useState('')
 
   const [branchTypes, setBranchTypes] = useState([])
   const [branchType, setBranchType] = useState({
@@ -177,17 +178,32 @@ const GetBranch = () => {
   } 
 
   const handleClickSearch = async () =>{
+    const searchData = Number(searchBox)
     let branchsInfo = ''
-    switch(searchBy){
-      case '0' :  branchsInfo = await branchService.findAll()
-                  break
-      case '1' :  branchsInfo = await branchService.findById(searchBox)
-                  break
-      case '2' :  branchsInfo = await branchService.findByName(searchBox)
-                  break
-      default :   branchsInfo = await branchService.findAll()
-                  break
+
+    if ( searchBox == '' ) {
+      // console.log('Findall')
+      branchsInfo = await branchService.findAll()
+    } else if (Number.isInteger(searchData)) {
+      // console.log('Number')
+      branchsInfo = await branchService.findById(searchData)
+    } else if (!Number.isInteger(searchData)) {
+      // console.log('Non-Number')
+      branchsInfo = await branchService.findByName(searchBox)
+      
     }
+
+    // switch(searchBy){
+    //   case '0' :  branchsInfo = await branchService.findAll()
+    //               break
+    //   case '1' :  branchsInfo = await branchService.findById(searchBox)
+    //               break
+    //   case '2' :  branchsInfo = await branchService.findByName(searchBox)
+    //               break
+    //   default :   branchsInfo = await branchService.findAll()
+    //               break
+    // }
+
     console.log(branchsInfo)
     if (Array.isArray(branchsInfo)){
       branchsInfo.sort((a, b) => {return a.id - b.id});
@@ -195,6 +211,7 @@ const GetBranch = () => {
     } else {
       setTableData([branchsInfo])
     }
+    
   }
 
   const handleEditClick = ( branchData ) => {
@@ -219,18 +236,19 @@ const GetBranch = () => {
     <div>
       <HeaderBar />
       <NavSideBar />
-      <Select 
+      {/* <Select 
         value={searchBy}
         name={"dropDownList"}
         options={dropDownList}
         onChange={onChangeSelect}
-      />
+      /> */}
       <Input
         value={searchBox} 
-        disabled={searchBy === '0' ? true : false}
+        // disabled={searchBy === '0' ? true : false}
         onChange={handleChangeSearchBox}
       />
       <Button text="search" onClick = {handleClickSearch}/>
+      <Label text={warnNote} />
       <GetTableBranch data = {tableData}/>
 
       <div style = {{display : isDisabled ? "none" : "block"}}>
