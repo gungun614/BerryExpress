@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box;
+}
+
+.item-sidebar {
+    grid-area: sidebar;
+}
+
+.item-header {
+    grid-area: header;
+}
+
+.item-main {
+    grid-area: main;
+    background-color: #ccc;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas: 
+        'header main main main main main main main'
+        'sidebar main main main main main main main' ;
+}
+
+.sender-info {
+    margin: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.receiver-info {
+    margin: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.parcels-info {
+    margin: 15px;
+    padding: 15px;
+    height: 93%;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.btn-save {
+    margin: auto;
+}
+
+
+
+.block-item {
+    display: inline-block;
+    color: blue;
+}
+

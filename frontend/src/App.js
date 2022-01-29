@@ -17,6 +17,8 @@ import Staff from './pages/Staff';
 import AddParcel from './pages/AddParcel';
 import UpdateParcelStatus from './pages/UpdateParcelStatus'
 
+import Receipt from './pages/Receipt';
+
 import Postman from './pages/Postman';
 
 import Test from './pages/Test'
@@ -66,6 +68,9 @@ const App = () => {
         </Route>
         <Route path="/test">
           <Test />
+        </Route>
+        <Route path="/receipt">
+          <Receipt />
         </Route>
       </Switch>
     </Router>
