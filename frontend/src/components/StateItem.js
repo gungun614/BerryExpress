@@ -27,11 +27,11 @@ const StateItem = (props) => {
             }
             case 5: return { 
                 icon: 'bi bi-truck', 
-                stateName: 'พัสดุถึงศูนย์คัดแยก ' + branch ,
+                stateName: 'พัสดุถึง' + branch ,
             }
             case 6: return { 
                 icon: 'bi bi-truck',
-                stateName: 'พัสดุถึงศูนย์กระจาย' + branch,
+                stateName: 'พัสดุถึง' + branch,
             }
             default: return {
                 icon: 'bi bi-bug',

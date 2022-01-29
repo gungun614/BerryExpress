@@ -2,11 +2,7 @@ import React, { useState } from "react";
 
 const Receipt = () => {
     
-    return (
-        <div>
-            
-        </div>
-    )
+    return <div></div>
 }
 
 

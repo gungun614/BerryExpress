@@ -1,93 +1,68 @@
 const genReceipt = (data) => {
-    // const element = 
-    //     <div>
-    //         hello 
-    //     </div>
+
+    const { branch, staff, receipts, datetime } = data
+
+    let sumCost = 0
     let list = ''
-    for (let i = 0; i < 5; ++i) {
-        // list += `
-        //     <div style="display: block;">
-        //         <p style="text-align: left;"></p>
-        //         <p style="text-align: right">40</p> 
-        //     </div>
-        //     <br/>
-        // `
+    console.log(receipts)
+    for (const receipt of receipts) {
+        console.log(receipt.cost)
+        console.log(typeof receipt.cost)
 
-        list += `
+        sumCost += Number(receipt.cost)
+        list+= `
         <div style="display: flex; flex-direction: columns">
-
             <div style="width: 50%; text-align: left;">
-                BE22012200000${i}
+                ${receipt.trackingNo}
                 <br/>
-                name customer
+                ${receipt.receiver.firstname} ${receipt.receiver.lastname}
             </div>
-
             <div style="width: 50%; text-align: right;">
-                40
-                <br/>
+                ${receipt.cost.toFixed(2)} <br/>
             </div>
-
         </div>
-        <br/>
-        `
+        <br/>`
     }
 
-
     return `
-    <div style="width: 100%; padding-top: 1%; padding-bottom: 2%; background-color: #444;">
-    
-        <div style="padding-top: 1%;">
-
-            <div style="width: 40%; ; margin: auto; padding: 1%; background-color: white;">
-
-                <h1 style="text-align: center;"> Berry Express </h1>
-                
-                <hr/>
-                
-                <div style="text-align: center;">
-                    ...ที่อยู่สาขา
+    <body style="margin: 0; background-color: #444;">
+        <div style="width: 100%; padding-top: 1%; padding-bottom: 2%; ">
+            <div style="padding-top: 1%;">
+                <div style="width: 40%; margin: auto; padding: 1%; background-color: white;">
+                    <h1 style="text-align: center;"> Berry Express </h1>
+                    <hr/>
+                    <div style="text-align: center;">
+                        ${branch.name} <br/>
+                        ${branch.address} ${branch.subdistrict} ${branch.district} ${branch.province} ${branch.zipcode}
+                    </div>
+                    <br/>
+                    <div style="display: flex; flex-direction: columns">
+                        <div style="width: 50%; text-align: left;">
+                            ${staff.firstname} ${staff.lastname}
+                        </div>
+                        <div style="width: 50%; text-align: right;">
+                            ${datetime}
+                        </div>
+                    </div>
+                    <hr/>
+                    <br/>
+                    ${list}
+                    <hr/>
+                    <div style="display: flex; flex-direction: columns">
+                        <div style="width: 50%; text-align: left;">
+                            รวมยอดชำระ
+                            <br/>
+                        </div>
+                        <div style="width: 50%; text-align: right;">
+                            ${sumCost.toFixed(2)} บาท
+                            <br/>
+                        </div>
+                    </div>
+                    <hr/>
                 </div>
-
-                <br/>
-
-                <div style="display: flex; flex-direction: columns">
-
-                    <div style="width: 50%; text-align: left;">
-                        staff name
-                    </div>
-
-                    <div style="width: 50%; text-align: right;">
-                        date time
-                    </div>
-
-                </div>
-
-                <hr/>
-                <br/>
-
-                ${list}
-
-                <div style="display: flex; flex-direction: columns">
-
-                    <div style="width: 50%; text-align: left;">
-                        รวมยอดชำระ
-                        <br/>
-                    </div>
-
-                    <div style="width: 50%; text-align: right;">
-                        200 บาท
-                        <br/>
-                    </div>
-
-                </div>
-
-                <hr/>
-
             </div>
-
         </div>
-        
-    </div>
+    </body>
     `
 }
 
