@@ -1,0 +1,140 @@
+.page-container.update-parcel-status {
+    width: 100vw;
+    height: 100vh;
+    background-color: #fefefe;
+    display: grid;
+    grid-template-rows: repeat(8, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.header-section.update-parcel-status {
+    display: grid;
+    place-items: center;
+    padding-right: 0.9rem;
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+}
+
+.nav-section.update-parcel-status {
+    grid-row: 2 / 9;
+    grid-column: 1 / 2;
+}
+
+.main-section.update-parcel-status {
+    grid-row: 1 / 9;
+    grid-column: 2 / 9;
+    display: grid;
+    grid-template-rows: repeat(12, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+    background-color: hsl(240, 23%, 95%);
+}
+
+.label-update-parcel-status.update-parcel-status {
+    grid-row: 2 / 3;
+    grid-column: 2 / 5;
+}
+
+.block-search-update.update-parcel-status {
+    grid-row: 3 / 7;
+    grid-column: 2 / 7;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    background-color: white;
+    border-radius: 0.5rem;
+}
+
+/* --------------------------------------------------------------- */
+
+
+
+/* --------------------------------------------------------------- */
+
+.block-search.update-parcel-status {
+    grid-row: 1 / 2;
+    grid-column: 1 / 6;
+    place-items: center;
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+}
+
+input.update-parcel-status {
+    width: 100%;
+    margin: 5px;
+}
+
+button.update-parcel-status {
+    height: 30px;
+    margin: 10px;
+    padding: 0px 10px;
+    text-align: center;
+}
+
+.input-search.update-parcel-status {
+    grid-row: 1 / 2;
+    grid-column: 2 / 4;
+}
+
+.button-search.update-parcel-status {
+    grid-row: 1 / 2;
+    grid-column: 4 / 5;
+}
+
+/* --------------------------------------------------------------- */
+
+.block-message-progress.update-parcel-status {
+    grid-row: 2 / 3;
+    grid-column: 2 / 5;
+    place-items: center;
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.message-progress.update-parcel-status {
+    grid-row: 1 / 1;
+    grid-column: 1 / 4;
+    place-items: center;
+}
+
+/* --------------------------------------------------------------- */
+
+.block-update.update-parcel-status {
+    grid-row: 3 / 4;
+    grid-column: 2 / 5;
+    place-items: center;
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.button-update.update-parcel-status {
+    grid-row: 1 / 1;
+    grid-column: 1 / 4;
+    place-items: center;
+}
+
+/* --------------------------------------------------------------- */
+
+.block-list-parcel-status.update-parcel-status {
+    grid-row: 1 / 13;
+    grid-column: 8 / 13;
+    display: grid;
+    grid-template-rows: repeat(12, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.list-parcel-status.update-parcel-status {
+    grid-row: 1 / 13;
+    grid-column: 1 / 6;
+    margin: 10px;
+    overflow-y: scroll;
+}
+
+.item-parcel-status.update-parcel-status {
+    background-color: white;
+    border-radius: 0.5rem;
+    margin: 10px;
+    padding: 10px;
+}

@@ -6,11 +6,13 @@ import Button from "../widgets/Button";
 import StateItem from "../components/StateItem"
 import HeaderBar from "../components/HeaderBar";
 import NavSideBar from "../components/NavSideBar";
+// css
+import './css/UpdateParcelStatus.css'
 //Services
 import trackingHistoryService from "../services/trackingHistory"
 
 const TrackingCards = (props) => {
-  // console.log(sessionStorage.getItem('session'))
+  
   const {data} = props
   if (data.length > 0) {
     return data.map((track) => {
@@ -38,19 +40,26 @@ const UpdateParcelStatus = () => {
   })
 
   const handleChange = (event) => {
+    if (event.target.value.length == 15) return
     setUserInput({
       ...userInput,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value.toUpperCase()
     })
   }
 
+  const [disabledButtonUpdate, setDisabledButtonUpdate] = useState(false)
+  const [messageProgress, setMessageProgress] = useState('')
+
   const handleSearch = async () =>{
+    setMessageProgress('')
     const data = await trackingHistoryService.findByTrackingNumber(userInput.search)
     data.length > 0 ? setTrackingNumber(data[0].trackingNo) : setTrackingNumber('')
     Array.isArray(data) ? setTrackingDatas(data) : setTrackingDatas([data])
+    setDisabledButtonUpdate(false)
   }
 
   const handleUpdate = async (event) =>{
+    setMessageProgress(<div style={{ color: 'gray'}}>กำลังอัพเดตสถานะพัสดุ</div>)
     let postManState = 0
     switch (event.target.value) {
       case '0' : break;
@@ -66,29 +75,74 @@ const UpdateParcelStatus = () => {
     await trackingHistoryService.addTracking( trackingNumber , postManState , userInput.remark )
     const data = await trackingHistoryService.findByTrackingNumber(trackingNumber)
     Array.isArray(data) ? setTrackingDatas(data) : setTrackingDatas([data])
+    setDisabledButtonUpdate(true)
+    setMessageProgress(<div style={{ color: 'green'}}>อัพเดตสถานะพัสดุเรียบร้อยแล้ว</div>)
+
   }
 
   return (
-    <div>
-      <HeaderBar />
-      <NavSideBar />
-        <Label text ="Berry Express" />
-        <br/>
-        <Input type ="text" value={userInput.search} name="search" onChange={handleChange}/>
-        <Button text ="Search" onClick={handleSearch}/>
-        <br/>
-        <TrackingCards data = {trackingDatas}/>
-        <div style = {{display : trackingDatas.length > 0 ? "block" : "none"}}>
-          <div style = {{display : mainPath === "staff" ? "block" : "none"}}>
-            <button name="กำลังนำส่ง" value={0} onClick={handleUpdate} >{"Update"}</button>
+    <div className="page-container update-parcel-status">
+      
+      <HeaderBar className="header-section update-parcel-status" />
+      <NavSideBar className="nav-section update-parcel-status" />
+
+      <div className="main-section update-parcel-status">
+
+        <h2 className="label-update-parcel-status update-parcel-status">
+          อัพเดตสถานะพัสดุ
+        </h2>
+
+        <div className="block-search-update update-parcel-status">
+
+          <form className="block-search update-parcel-status">
+            <Input className="input-search update-parcel-status" type ="text" value={userInput.search} name="search" onChange={handleChange}/>
+            <Button className="button-search update-parcel-status" type="submit" text ="ค้นหา" onClick={handleSearch}/>
+          </form>
+
+          <div className="block-message-progress update-parcel-status">
+            <div className="message-progress update-parcel-status">
+              {messageProgress}
+            </div>
           </div>
-          <div style = {{display : mainPath === "postman" ? "block" : "none"}} >
-            <button name="กำลังนำส่ง" value={1} onClick={handleUpdate} >{"กำลังนำส่ง"}</button>
-            <button name="จัดส่งสำเร็จ" value={2} onClick={handleUpdate} >{"จัดส่งสำเร็จ"}</button>
-            <button name="หมายเหตุ" value={3} onClick={handleUpdate} >{"หมายเหตุ"}</button>
-            <Input type ="text" value={userInput.remark} name="remark" onChange={handleChange}/>
+
+          <div className="block-update update-parcel-status">
+            <button 
+              className="button-update update-parcel-status"
+              name="กำลังนำส่ง"
+              value={0}
+              onClick={handleUpdate} 
+              disabled={disabledButtonUpdate}
+              style={{display : trackingDatas.length > 0 ? "block" : "none"}}
+            >
+              อัพเดตสถานะพัสดุ
+            </button>
+          </div>
+          
+        </div>
+
+        <div className="block-list-parcel-status update-parcel-status">
+          <div className="list-parcel-status update-parcel-status">
+            {
+              trackingDatas.map((track, index) => {
+                return (
+                  <div className="item-parcel-status update-parcel-status" key={index}>
+                    <StateItem
+                      key={index} 
+                      state={track.itemStateId} 
+                      branch={track.branchName} 
+                      date={track.date} 
+                      time={track.time} 
+                      remark={track.remark
+                    }/>
+                  </div>
+                )
+              })
+            }
           </div>
         </div>
+
+      </div>
+
     </div>
   )
 }
