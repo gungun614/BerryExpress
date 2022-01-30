@@ -1,0 +1,124 @@
+.postman-page {
+    margin: 0;
+    padding: 0;
+}
+
+.block-search.postman-page {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    background-color: white;
+    border-radius: 0.5rem;
+    width: 80%;
+}
+
+input.postman-page {
+    margin: 20px 5px;
+    padding: 0px 10px;
+    border-radius: 0.5rem;
+    border: solid 1px #aaa;
+}
+
+input.postman-page:hover {
+    border: solid 1px rgb(112, 225, 240);
+}
+
+input.postman-page:focus {
+    outline: none !important;
+    border: solid 1px rgb(112, 225, 240);
+    box-shadow: 0 0 3px rgb(112, 225, 240);
+}
+
+.button-search.postman-page {
+    margin: 20px 5px;
+    padding: 0px 10px;
+    border-radius: 0.5rem;
+    border: solid 1px;
+}
+
+.button-search.postman-page:hover {
+    margin: 20px 5px;
+    padding: 0px 10px;
+    border-radius: 0.5rem;
+    border: solid 1px rgb(0, 132, 255);
+    background-color: rgb(0, 132, 255);
+}
+
+.button-search.postman-page:active {
+    margin: 20px 5px;
+    padding: 0px 10px;
+    border-radius: 0.5rem;
+    border: solid 1px;
+    border: solid 1px rgb(0, 90, 173);
+    background-color: rgb(0, 90, 173);
+}
+
+.item-status-parcel {
+    background-color: white;
+    border-radius: 0.5rem;
+    width: 80%;
+    margin: 10px auto;
+}
+
+.block-update-status.postman-page {
+    background-color: white;
+    margin: auto;
+    border-radius: 0.5rem;
+}
+
+/* -------------------------------------------------------------- */
+
+.block-update-status-delivering.postman-page {
+    background-color: white;
+    border-radius: 0.5rem;
+    width: 80%;
+    margin: 10px auto;
+    padding: 20px;
+}
+
+.button-delivering.postman-page {
+    margin: auto;
+    padding: 5px 10px;
+    border-radius: 0.5rem;
+}
+
+/* -------------------------------------------------------------- */
+
+.block-update-status-remark.postman-page {
+    background-color: white;
+    border-radius: 0.5rem;
+    width: 80%;
+    margin: 10px auto;
+    padding: 20px;
+}
+
+.label-remark.postman-page {
+    margin: 5px auto;
+}
+
+.input-remark.postman-page {
+    margin: 5px auto;
+    width: 100%;
+}
+
+.button-delivery-remark.postman-page {
+    margin: 5px auto;
+    padding: 5px 10px;
+    border-radius: 0.5rem;
+}
+
+/* -------------------------------------------------------------- */
+
+.block-update-status-success.postman-page {
+    background-color: white;
+    border-radius: 0.5rem;
+    width: 80%;
+    margin: 10px auto;
+    padding: 20px;
+}
+
+.button-delivery-success.postman-page {
+    margin: auto;
+    padding: 5px 10px;
+    border-radius: 0.5rem;
+}
