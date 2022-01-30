@@ -15,14 +15,16 @@ import SearchBarSelect from "../components/SearchBarSelect"
 import branchTypeService from "../services/branchType"
 import branchService from "../services/branch"
 
+// Styles
+import "./css/GetBranch.css"
 
 const GetBranch = () => {
 
   const GetTableBranch = (props) => {
-    const {data} = props
+    const { data , className } = props
     const rows = data.map((item) => {
       return (
-        <tr key={item.id}>
+        <tr key={item.id} className = {className}>
           <td>{item.id}</td>
           <td>{item.name}</td>
           <td>{item.tel}</td>
@@ -33,14 +35,14 @@ const GetBranch = () => {
     })
 
     return (
-    <table>
+    <table >
       <thead>
-        <tr>
-          <td>id</td>
-          <td>ชื่อ</td>
-          <td>เบอร์โทร</td>
-          <td>สถานะ</td>
-          <td></td>
+        <tr >
+          <th>id</th>
+          <th>ชื่อ</th>
+          <th>เบอร์โทร</th>
+          <th>สถานะ</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -68,7 +70,8 @@ const GetBranch = () => {
   const [searchBy,setSearchBy] = useState('0')
   const [searchBox,setSearchBox] = useState('')
   const [tableData,setTableData] = useState([])
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isEditFormConfirm, setIsEditFormConfirm] = useState(true)
+  const [isEditFormDisabled, setIsEditFormDisabled] = useState(true)
   const [editBranchData,setEditBranchData] = useState({
     id: "",
     branchTypeId: "",
@@ -117,7 +120,7 @@ const GetBranch = () => {
       })
     
     // Cleanup()
-    return () => {/* isSubscribed = false */}
+    return () => {}
   }, [])
 
 
@@ -220,7 +223,8 @@ const GetBranch = () => {
     const sliceIndex = (editBranchData.name.indexOf(" ") + 1)
     editBranchData.name = editBranchData.name.slice(sliceIndex)
     setEditBranchData(editBranchData)
-    setIsDisabled(false)
+    setBranchType(branchTypes[editBranchData.branchTypeId - 1])
+    setIsEditFormDisabled(false)
   }
 
   const handleSubmitEditBranch = async () => {
@@ -228,102 +232,140 @@ const GetBranch = () => {
     const response = await branchService.editById(editBranchData)
     console.log(response)
     await handleClickSearch()
-    setIsDisabled(true)
+    setIsEditFormDisabled(true)
   }
 
- 
-  return (
-    <div>
-      <HeaderBar />
-      <NavSideBar />
-      {/* <Select 
-        value={searchBy}
-        name={"dropDownList"}
-        options={dropDownList}
-        onChange={onChangeSelect}
-      /> */}
-      <Input
-        value={searchBox} 
-        // disabled={searchBy === '0' ? true : false}
-        onChange={handleChangeSearchBox}
-      />
-      <Button text="search" onClick = {handleClickSearch}/>
-      <Label text={warnNote} />
-      <GetTableBranch data = {tableData}/>
+  const handleCloseEditForm = () => {
+    setIsEditFormDisabled(true)
+  }
 
-      <div style = {{display : isDisabled ? "none" : "block"}}>
-        <Label 
-          text="แก้ไขข้อมูลสาขา" 
-        />
-        <br/>
-        <Label text="ประเภทสาขา" />
-        <Select
-          value={branchType.value}
-          name="branchType"
-          options={branchTypes}
-          onChange={handleBranchTypeChange}
-          // disabled="disabled"
-        />
-        <Input 
-          type="text" 
-          value={editBranchData.name} 
-          name="name"
-          onChange={handleChangeEditBranchData} 
-        />
-        <br/>
-        <Label text="ที่อยู่สาขา" />
-        <Input 
-          type="text" 
-          value={editBranchData.address} 
-          name="address"
-          onChange={handleChangeEditBranchData} 
-        />
-        <br/>
-        <SearchBarSelect
-          options={addressOptions}
-          handleChange={handleAddressChange}
-          minLength={5}
-          placeholder={`${editBranchData.subdistrict}, 
+  const toggleConfirmEditForm = () => {
+    setIsEditFormConfirm(!isEditFormConfirm)
+    
+  }
+
+  const SearchBranchForm = () => {
+    return (
+      <div className="main-section getbranch">
+        <h2>เรียกดูสาขา</h2>
+          <div className="form-section getbranch">
+            <div className="search-section getbranch">
+              <Input
+                value={searchBox} 
+                // disabled={searchBy === '0' ? true : false}
+                onChange={handleChangeSearchBox}
+              />
+              <Button text="search" onClick = {handleClickSearch}/>
+            </div>
+            <Label text={warnNote} />
+            <div className="table-data getbranch">
+              { tableData.length > 0 ?
+              <GetTableBranch data = {tableData}/> :
+              null
+              }
+          </div>
+        </div>
+      </div>
+      )
+    }
+
+const EditBranchForm = () => {
+  return (
+  <div className="main-section addbranch">
+  <div className="form-header addbranch">
+    { isEditFormConfirm
+      ? <h2>แก้ไขข้อมูลสาขา</h2>
+      : <h2>ยืนยันการการแก้ไข</h2>
+    }
+  </div>
+  <div className="form-section addbranch">
+    <form>
+      <div className="input-section addbranch">
+        <div className="branchtype-section addbranch">
+          <Label text="ประเภทสาขา" />
+          <Select
+            value={branchType.value}
+            name="branchType"
+            options={branchTypes}
+            onChange={handleBranchTypeChange}
+            disabled="disable"
+          />
+        </div >
+        <div className="branchname-section addbranch">
+          <Label text="ชื่อสาขา" />
+          <Input 
+            type="text" 
+            value={editBranchData.name} 
+            name="name"
+            onChange={handleChangeEditBranchData} 
+          />
+        </div>
+        <div className="address-section addbranch">
+          <Label text="ที่อยู่สาขา" />
+          <Input 
+            type="text" 
+            value={editBranchData.address} 
+            name="address"
+            onChange={handleChangeEditBranchData}
+          />
+        </div>
+        <div className="mainaddress-section addbranch">
+          <Label text="ที่อยู่ (ตำบล/อำเภอ/จังหวัด/รหัสไปรษณีย์)" />
+          <SearchBarSelect
+            options={addressOptions}
+            handleChange={handleAddressChange}
+            minLength={5}
+            placeholder={`${editBranchData.subdistrict}, 
             ${editBranchData.district}, 
             ${editBranchData.province}, 
             ${editBranchData.zipcode}`
           }
-        />
-        <br/>
-        <Label text="เบอร์โทร" />
-        <Input 
-          type="text" 
-          value={editBranchData.tel} 
-          name="tel"
-          onChange={handleChangeEditBranchData} 
-          onKeyPress={handleKeyPress} 
-        />
-        <br/>
-        <Label text="วันที่ก่อตั้ง" />
-        <Input 
-          type="date" 
-          value={editBranchData.dateStarted} 
-          name="dateStarted"
-          onChange={handleChangeEditBranchData} 
-        />
-        <br/>
-        <Button 
-          type={'button'} 
-          text={'บันทึก'} 
-          onClick = {handleSubmitEditBranch}  
-        />
-        {/* <Button 
-          type={'button'} 
-          text={'แก้ไข'} 
-          // onClick = {handleClickToggle} 
-        />
-        <Button 
-          type={'button'} 
-          text={'ยืนยันการบันทึก'} 
-          // onClick={handleSubmit}
-        /> */}
+          />
+        </div>
+        <div className="tel-section addbranch">
+          <Label text="เบอร์โทร" />
+          <Input 
+            type="text" 
+            value={editBranchData.tel} 
+            name="tel"
+            onChange={handleChangeEditBranchData} 
+            onKeyPress={handleKeyPress} 
+          />
+        </div>
+        <div className="date-section addbranch">
+          <Label text="วันที่ก่อตั้ง" />
+          <Input 
+            type="date" 
+            value={editBranchData.dateStarted} 
+            name="dateStarted"
+            onChange={handleChangeEditBranchData} 
+          />
+        </div>
       </div>
+      <div className="button-section addbranch">
+      <Button type={'button'} text={'ยกเลิก'} isHide = {!isEditFormConfirm} onClick = {handleCloseEditForm}  />
+        <Button type={'button'} text={'บันทึก'} isHide = {!isEditFormConfirm} onClick = {toggleConfirmEditForm}  />
+        <Button type={'button'} text={'แก้ไข'} isHide = {isEditFormConfirm} onClick = {toggleConfirmEditForm} />
+        <div className="wide-button addbranch">
+          <Button 
+            type={'button'} 
+            text={'ยืนยันการบันทึก'} 
+            isHide = {isEditFormConfirm} 
+            onClick={handleSubmitEditBranch}
+          />
+        </div>
+        
+      </div>
+    </form>
+  </div>
+  </div>)
+}
 
+  return (
+    <div className="page-container getbranch">
+      <HeaderBar className="header-section getbranch" />
+      <NavSideBar className="nav-section getbranch"/>
+      { isEditFormDisabled ? SearchBranchForm() : EditBranchForm() }
     </div>
   )
 }
