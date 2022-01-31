@@ -7,6 +7,9 @@ import StateItem from "../components/StateItem";
 import './css/Postman.css'
 // service
 import trackingHistoryService from "../services/trackingHistory"
+import HeaderBar from "../components/HeaderBar";
+import { Link } from "react-router-dom";
+import MaterialIcon from "../icons/MaterialIcon";
 
 const Postman = () => {
 
@@ -85,6 +88,17 @@ const Postman = () => {
 
   return (
     <div className="postman-page">
+      <div className="header-section postman-page">
+        <HeaderBar />
+        <div className="logout-section postman-page">
+          <Link to={"/login"} onClick={()=>{
+            sessionStorage.removeItem('session')
+          }}>
+            <MaterialIcon iconName="logout" />
+            {"Logout"}
+          </Link>
+        </div>
+      </div>
 
       <form className="block-search postman-page">
         <Input className="input-search postman-page" type="text" value={textSearch} onChange={handleChangeSearch} />

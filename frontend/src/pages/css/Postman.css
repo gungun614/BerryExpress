@@ -3,6 +3,18 @@
     padding: 0;
 }
 
+.header-section.postman-page {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px auto;
+    padding: 0rem 2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    width: 80%;
+    height: 5rem; 
+}
+
 .block-search.postman-page {
     display: flex;
     margin: auto;
