@@ -1,4 +1,11 @@
-ul.navlist-container {
+.navlist-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+}
+.navlist-container ul {
     padding-top: 2rem;
     display: flex;
     flex-direction: column;
@@ -11,7 +18,7 @@ ul.navlist-container {
     height: 2rem;
     display: flex;
     gap: 1rem;
-    padding-left: 2.5rem;
+    /* padding-left: 2.5rem; */
     align-items: center;
 }
 
@@ -30,6 +37,28 @@ li.active {
 .active a {
     color: black;
 }
-.material-icons-outlined.md-36 {
+li .material-icons-outlined.md-36 {
     font-size: 36px;
+}
+
+.logout-section {
+    padding-bottom: 15%;
+}
+
+.logout-section a {
+    display: flex;
+    height: 2rem;
+    gap: 1rem;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: hsl(240, 23%, 75%)
+}
+
+.logout-section .material-icons-outlined.md-36 {
+    font-size: 36px;
+}
+
+.logout-section a:hover {
+    color: black;
 }
