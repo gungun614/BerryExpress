@@ -52,4 +52,11 @@
 .login button {
     height: 2rem;
     width: 40%;
+    border-radius: 0.5rem;
+    padding: 5px 15px;
+}
+
+.message-login {
+    color: red;
+    font-size: 15px;
 }
