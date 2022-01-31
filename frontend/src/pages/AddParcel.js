@@ -412,63 +412,63 @@ const AddParcel = () => {
           <Label className="label-sender" text="ข้อมูลผู้ส่ง" fontWeight="bold" />
 
           <Label className="firstname-label-sender" text="ชื่อ" require={true} />
-          <Input className="firstname-input-sender" type="text" value={sender.firstname} name="firstname" onChange={handleChangeSender} />          
-          <Label className="firstname-invalid-sender" text={messageSender.firstname} fontSize="13px" color="red" />
+          <Input className="addParcel firstname-input-sender" type="text" value={sender.firstname} name="firstname" onChange={handleChangeSender} />          
+          {/* <Label className="firstname-invalid-sender" text={messageSender.firstname} fontSize="13px" color="red" /> */}
 
           <Label className="lastname-label-sender" text="นามสกุล" require={true} />
-          <Input className="lastname-input-sender" type="text" value={sender.lastname} name="lastname" onChange={handleChangeSender} />
-          <Label className="lastname-invalid-sender" text={messageSender.lastname} fontSize="13px" color="red" />
+          <Input className="addParcel lastname-input-sender" type="text" value={sender.lastname} name="lastname" onChange={handleChangeSender} />
+          {/* <Label className="lastname-invalid-sender" text={messageSender.lastname} fontSize="13px" color="red" /> */}
 
           <Label className="nation-id-label-sender" text="เลขบัตรประชาชน" require={true} />
-          <Input className="nation-id-input-sender" type="text" value={sender.nationId} name="nationId" onChange={handleChangeSender} length="13" />
-          <Label className="nation-id-invalid-sender" text={messageSender.nationId} fontSize="13px" color="red" />
+          <Input className="addParcel nation-id-input-sender" type="text" value={sender.nationId} name="nationId" onChange={handleChangeSender} length="13" />
+          {/* <Label className="nation-id-invalid-sender" text={messageSender.nationId} fontSize="13px" color="red" /> */}
 
           <Label className="tel-label-sender" text="เบอร์โทรศัพท์" require={true} />
-          <Input className="tel-input-sender" type="text" value={sender.tel} name="tel" onChange={handleChangeSender} length="10" />
-          <Label className="tel-invalid-sender" text={messageSender.tel} fontSize="13px" color="red" />
+          <Input className="addParcel tel-input-sender" type="text" value={sender.tel} name="tel" onChange={handleChangeSender} length="10" />
+          {/* <Label className="tel-invalid-sender" text={messageSender.tel} fontSize="13px" color="red" /> */}
         </div>
 
         <div className="receiver-block">
-          <Label className="label-receiver" text="ข้อมูลผู้รับ" fontWeight="bold" />
+          <Label className="label-receiver" text="ข้อมูลผู้รับ" fontWeight="bold" /><br/>
           
           <Label className="firstname-label-receiver" text="ชื่อ" require={true} />
-          <Label className="firstname-invalid-receiver" text={messageReceiver.firstname} color="red" />
-          <Input className="firstname-input-receiver" type="text" value={receiver.firstname} name="firstname" onChange={handleChangeReceiver} />
+          {/* <Label className="firstname-invalid-receiver" text={messageReceiver.firstname} color="red" /> */}
+          <Input className="addParcel firstname-input-receiver" type="text" value={receiver.firstname} name="firstname" onChange={handleChangeReceiver} />
           
           <Label className="lastname-label-receiver" text="นามสกุล" require={true} />
-          <Label className="lastname-invalid-receiver" text={messageReceiver.lastname} color="red" />
-          <Input className="lastname-input-receiver" type="text" value={receiver.lastname} name="lastname" onChange={handleChangeReceiver} />
+          {/* <Label className="lastname-invalid-receiver" text={messageReceiver.lastname} color="red" /> */}
+          <Input className="addParcel lastname-input-receiver" type="text" value={receiver.lastname} name="lastname" onChange={handleChangeReceiver} />
           
           <Label className="tel-label-receiver" text="เบอร์โทร" require={true} />
-          <Label className="tel-invalid-receiver" text={messageReceiver.tel} color="red" />
-          <Input className="tel-input-receiver" type="text" value={receiver.tel} name="tel" onChange={handleChangeReceiver} length="10" />
+          {/* <Label className="tel-invalid-receiver" text={messageReceiver.tel} color="red" /> */}
+          <Input className="addParcel tel-input-receiver" type="text" value={receiver.tel} name="tel" onChange={handleChangeReceiver} length="10" />
           
           <Label className="home-no-label-receiver" text="บ้านเลขที่" require={true} />
-          <Label className="home-no-invalid-receiver" text={messageReceiver.homeNo} color="red" />
-          <Input className="home-no-input-receiver" type="text" value={receiver.homeNo} name="homeNo" onChange={handleChangeReceiver} />
+          {/* <Label className="home-no-invalid-receiver" text={messageReceiver.homeNo} color="red" /> */}
+          <Input className="addParcel home-no-input-receiver" type="text" value={receiver.homeNo} name="homeNo" onChange={handleChangeReceiver} />
           
           <Label className="village-no-label-receiver" text="หมู่" />
-          <Label className="village-no-invalid-receiver" text={messageReceiver.villageNo} color="red" />
-          <Input className="village-no-input-receiver" type="text" value={receiver.villageNo} name="villageNo" onChange={handleChangeReceiver} />
+          {/* <Label className="village-no-invalid-receiver" text={messageReceiver.villageNo} color="red" /> */}
+          <Input className="addParcel village-no-input-receiver" type="text" value={receiver.villageNo} name="villageNo" onChange={handleChangeReceiver} />
           
           <Label className="alley-label-receiver" text="ซอย" require={true} />
-          <Label className="alley-invalid-receiver" text={messageReceiver.alley} color="red" />
-          <Input className="alley-input-receiver" type="text" value={receiver.alley} name="alley" onChange={handleChangeReceiver} />
+          {/* <Label className="alley-invalid-receiver" text={messageReceiver.alley} color="red" /> */}
+          <Input className="addParcel alley-input-receiver" type="text" value={receiver.alley} name="alley" onChange={handleChangeReceiver} />
           
           <Label className="road-label-receiver" text="ถนน" require={true} />
-          <Label className="road-invalid-receiver" text={messageReceiver.road} color="red" />
-          <Input className="road-input-receiver" type="text" value={receiver.road} name="road" onChange={handleChangeReceiver} />
+          {/* <Label className="road-invalid-receiver" text={messageReceiver.road} color="red" /> */}
+          <Input className="addParcel road-input-receiver" type="text" value={receiver.road} name="road" onChange={handleChangeReceiver} />
           
           <Label className="zipcode-label-receiver" text="รหัสไปรษณีย์" require={true} />
-          <Label className="zipcode-invalid-receiver" text={messageReceiver.zipcode} color="red" />
-          <Input className="zipcode-input-receiver" type="text" value={receiver.zipcode} name="zipcode" onChange={handleChangeReceiver} length="5" />
+          {/* <Label className="zipcode-invalid-receiver" text={messageReceiver.zipcode} color="red" /> */}
+          <Input className="addParcel zipcode-input-receiver" type="text" value={receiver.zipcode} name="zipcode" onChange={handleChangeReceiver} length="5" />
           
           <Label className="province-label-receiver" text="จังหวัด" require={true} />
-          <Label className="province-invalid-receiver" text={messageReceiver.province} color="red" />
-          <Input className="province-input-receiver" type="text" value={province} name="province" onChange={handleChangeReceiver} disabled={true}  />
+          {/* <Label className="province-invalid-receiver" text={messageReceiver.province} color="red" /> */}
+          <Input className="addParcel province-input-receiver" type="text" value={province} name="province" onChange={handleChangeReceiver} disabled={true}  />
 
           <Label className="district-label-receiver" text="เขต/อำเภอ" require={true} />
-          <Label className="district-invalid-receiver" text={messageReceiver.district} color="red" />
+          {/* <Label className="district-invalid-receiver" text={messageReceiver.district} color="red" /> */}
           <div className="district-input-receiver">
             <select   
               id="select-district" 
@@ -482,7 +482,7 @@ const AddParcel = () => {
           </div>
           
           <Label className="subdistrict-label-receiver" text="แขวง/ตำบล" require={true} />
-          <Label className="subdistrict-invalid-receiver" text={messageReceiver.subdistrict} color="red" />
+          {/* <Label className="subdistrict-invalid-receiver" text={messageReceiver.subdistrict} color="red" /> */}
           <div className="subdistrict-input-receiver">
             <select 
               id="select-subdistrict"
@@ -495,8 +495,8 @@ const AddParcel = () => {
           </div>
 
           <Label className="weight-label-receiver" text="น้ำหนัก (กรัม)" require={true} />
-          <Label className="weight-invalid-receiver" text={messageReceiver.weight} color="red" />
-          <Input className="weight-input-receiver" type="text" value={receiver.weight} name="weight" onChange={handleChangeReceiver}  />
+          {/* <Label className="weight-invalid-receiver" text={messageReceiver.weight} color="red" /> */}
+          <Input className="addParcel weight-input-receiver" type="text" value={receiver.weight} name="weight" onChange={handleChangeReceiver}  />
 
           <Label className="cost-label-receiver" text="ค่าจัดส่ง" />
           <Label className="cost-value-receiver" text={receiver.cost} />

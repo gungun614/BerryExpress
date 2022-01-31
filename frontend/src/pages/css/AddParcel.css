@@ -43,9 +43,25 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
-input {
+input.addParcel {
     margin: 5px;
     height: 30px;
+    border-radius: 0.5rem;
+    border: 1px solid #777;
+    padding: 0px 10px;
+}
+
+input.addParcel:hover {
+    /* margin: 5px;
+    height: 30px; */
+    border-radius: 0.5rem;
+    border: 1px solid rgb(0, 153, 255);
+}
+
+input.addParcel:focus {
+    outline: none !important;
+    border: solid 1px rgb(0, 153, 255);
+    box-shadow: 0 0 3px rgb(0, 153, 255);
 }
 
 select {
