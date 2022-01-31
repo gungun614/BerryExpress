@@ -26,24 +26,36 @@ const NavSideBar = ({className}) => {
     ]
   }
 
+  const handleLogout = () => {
+    sessionStorage.removeItem('session')
+  }
+
   return (
     <div className={className}>
-      <ul className="navlist-container"> { 
-        tabs[mainPath].map(({path, label, iconName}, index) => 
-          <li key={index}
-            className={ 
-              subPath === path
-              ? "active"
-              : "inactive"
-            }
-          >
-            <MaterialIcon iconName={iconName} />
-            <Link to={`/${mainPath}/${path}`}>
-              {label}
-            </Link>
-          </li>
-        )}
-      </ul>
+      <div className="navlist-container">
+        <ul> { 
+          tabs[mainPath].map(({path, label, iconName}, index) => 
+            <li key={index}
+              className={ 
+                subPath === path
+                ? "active"
+                : "inactive"
+              }
+            >
+              <MaterialIcon iconName={iconName} />
+              <Link to={`/${mainPath}/${path}`}>
+                {label}
+              </Link>
+            </li>
+          )}
+        </ul>
+        <div className="logout-section">
+          <Link to={"/login"} onClick={handleLogout}>
+            <MaterialIcon iconName="logout" />
+            {"Logout"}
+          </Link>
+        </div>
+      </div>
       
     </div>
  )
