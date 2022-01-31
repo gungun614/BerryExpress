@@ -161,13 +161,16 @@ const GetStaff = () => {
   const handleBranchChange = async (change) => {
     const selectedBranch = change.value
 
-    setStaff({
-      ...staff,
-      branchId: selectedBranch.id
-    })
+    
 
     const positionIds = helper.positionIdGenerator(selectedBranch.branchTypeId)
-    await setNewPositionOptions(positionIds)
+    await setNewPositionOptions(positionIds)  
+
+    setStaff({
+      ...staff,
+      branchId: selectedBranch.id,
+      positionId: positionIds[0]
+    })
 
   }
 

@@ -233,6 +233,7 @@ const GetBranch = () => {
     console.log(response)
     await handleClickSearch()
     setIsEditFormDisabled(true)
+    setIsEditFormConfirm(!isEditFormConfirm)
   }
 
   const handleCloseEditForm = () => {
@@ -241,7 +242,6 @@ const GetBranch = () => {
 
   const toggleConfirmEditForm = () => {
     setIsEditFormConfirm(!isEditFormConfirm)
-    
   }
 
   const SearchBranchForm = () => {
