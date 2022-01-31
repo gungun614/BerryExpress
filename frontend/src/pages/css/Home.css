@@ -66,6 +66,7 @@ footer {
 }
 
 .block-stete-item {
+    background-color: white;
     width:50%;
     border-radius: 20px;
     padding: 10px;
