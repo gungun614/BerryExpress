@@ -402,9 +402,9 @@ const AddParcel = () => {
         <HeaderBar />
       </div>
 
-      <div className="nav-section addParcel">
-        <NavSideBar />
-      </div>
+      {/* <div className="nav-section addParcel"> */}
+        <NavSideBar className="nav-section addParcel"/>
+      {/* </div> */}
 
       <div className="main-section addParcel">
             
