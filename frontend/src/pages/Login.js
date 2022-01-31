@@ -16,11 +16,14 @@ const Login = () => {
     password: ''
   })
 
+  const [message, setMessage] = useState('')
+
   const handleChange = (event) => {
     setUserInput({
       ...userInput,
       [event.target.name]: event.target.value
     })
+    setMessage('')
   }
 
   const handleLogin = async (event) => {
@@ -43,6 +46,7 @@ const Login = () => {
         username: '',
         password: ''
       })
+      setMessage('username or password invalid')
     }
 
   }
@@ -63,7 +67,8 @@ const Login = () => {
             <Label text="Password" />
             <Input type="password" value={userInput.password} name="password" onChange={handleChange} />
           </div>
-          <button type="submit">Login</button>
+          <div className="message-login">{message}</div>
+          <button className="btn-login" type="submit">Login</button>
         </form>
       </div>
     </div>
