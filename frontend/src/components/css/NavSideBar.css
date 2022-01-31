@@ -12,13 +12,14 @@
     font-size: 1.1rem;
     font-weight: bold;
     gap: 2rem;
+    width: 100%;
 }
 
 .navlist-container li {
     height: 2rem;
     display: flex;
     gap: 1rem;
-    /* padding-left: 2.5rem; */
+    padding-left: 2.5rem;
     align-items: center;
 }
 

@@ -129,10 +129,7 @@ const AddStaff = () => {
 
     const selectedBranch = change.value
 
-    setStaff({
-      ...staff,
-      branch: selectedBranch.id
-    })
+    
 
     const positionIds = helper.positionIdGenerator(selectedBranch.branchTypeId)
     const newPositionOptions = []
@@ -147,6 +144,11 @@ const AddStaff = () => {
     )
     console.log(newPositionOptions)
     setPositionOptions(newPositionOptions)
+    setStaff({
+      ...staff,
+      branch: selectedBranch.id,
+      position: newPositionOptions[0].value
+    })
   }
 
   const handleKeyPress = (event) => {
